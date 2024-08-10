@@ -1,0 +1,13 @@
+<UserControl
+    x:Class="SystemProgramm.Views.HomeControl"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Width="720"
+    Height="370"
+    d:DesignHeight="370"
+    d:DesignWidth="720"
+    mc:Ignorable="d">
+    Welcome to Avalonia!
+</UserControl>
