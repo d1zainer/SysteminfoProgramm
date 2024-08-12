@@ -8,23 +8,21 @@
     xmlns:views="clr-namespace:SystemProgramm.Views"
     xmlns:vm="using:SystemProgramm.ViewModels"
     Title="SystemProgramm"
-    Width="800"
-    Height="400"
-    MinWidth="800"
-    MinHeight="400"
-    d:DesignHeight="400"
-    d:DesignWidth="800"
+    Width="1000"
+    Height="600"
+    MinWidth="1000"
+    MinHeight="600"
+    d:DesignHeight="600"
+    d:DesignWidth="1000"
     x:DataType="vm:MainWindowViewModel"
     CanResize="False"
     ExtendClientAreaChromeHints="NoChrome"
-    ExtendClientAreaTitleBarHeightHint="30"
     ExtendClientAreaToDecorationsHint="True"
     Icon="/Assets/avalonia-logo.ico"
     SizeToContent="WidthAndHeight"
     WindowStartupLocation="CenterScreen"
     WindowState="Normal"
     mc:Ignorable="d">
-
 
     <Window.Resources />
     <Window.Styles>
@@ -34,174 +32,27 @@
         <vm:MainWindowViewModel />
     </Design.DataContext>
 
+
     <Grid>
 
 
-        <!--  Определяем две колонки  -->
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="80" />
-            <!--  Ширина боковой панели  -->
-            <ColumnDefinition Width="*" />
-            <!--  Основное содержимое занимает оставшееся пространство  -->
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
 
-        <Border BorderBrush="Lime" BorderThickness="2" />
-        <Grid Grid.Column="0" VerticalAlignment="Stretch">
-
-            <StackPanel
-                Margin="0,15,0,15"
-                VerticalAlignment="Top"
-                Orientation="Vertical">
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
 
-                <ToggleButton
-                    x:Name="ToggleButtonHome"
-                    Width="50"
-                    Height="50"
-                    Margin="5"
-                    HorizontalAlignment="Center"
-                    BorderBrush="Lime"
-                    BorderThickness="2"
-                    Classes="accent btn"
-                    CornerRadius="15"
-                    FontSize="30"
-                    Foreground="Lime"
-                    Theme="{StaticResource MaterialOutlineButton}">
-                    <materialIcons:MaterialIcon
-                        Width="40"
-                        Height="40"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Kind="Home" />
-                    <!--  Замените "DefaultIcon" на нужный вам Kind  -->
-                </ToggleButton>
-                <ToggleButton
-                    x:Name="ToggleButtonMemory"
-                    Width="50"
-                    Height="50"
-                    Margin="5"
-                    HorizontalAlignment="Center"
-                    BorderBrush="Lime"
-                    BorderThickness="2"
-                    Classes="accent btn"
-                    CornerRadius="15"
-                    FontSize="30"
-                    Foreground="Lime"
-                    Theme="{StaticResource MaterialOutlineButton}">
-                    <materialIcons:MaterialIcon
-                        Width="40"
-                        Height="40"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Kind="Memory" />
-                </ToggleButton>
-
-
-                <ToggleButton
-                    x:Name="ToggleButtonGPU"
-                    Width="50"
-                    Height="50"
-                    Margin="5"
-                    HorizontalAlignment="Center"
-                    BorderBrush="Lime"
-                    BorderThickness="2"
-                    Classes="accent btn"
-                    CornerRadius="15"
-                    FontSize="30"
-                    Foreground="Lime"
-                    Theme="{StaticResource MaterialOutlineButton}">
-                    <materialIcons:MaterialIcon
-                        Width="40"
-                        Height="40"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Kind="ExpansionCard" />
-                </ToggleButton>
-
-                <ToggleButton
-                    x:Name="ToggleButtonNet"
-                    Width="50"
-                    Height="50"
-                    Margin="5"
-                    HorizontalAlignment="Center"
-                    BorderBrush="Lime"
-                    BorderThickness="2"
-                    Classes="accent btn"
-                    CornerRadius="15"
-                    FontSize="30"
-                    Foreground="Lime"
-                    Theme="{StaticResource MaterialOutlineButton}">
-                    <materialIcons:MaterialIcon
-                        Width="35"
-                        Height="35"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Kind="NetworkPos" />
-                </ToggleButton>
-
-
-
-                <ToggleButton
-                    x:Name="ToggleButtonCPU"
-                    Width="50"
-                    Height="50"
-                    Margin="5"
-                    HorizontalAlignment="Center"
-                    BorderBrush="Lime"
-                    BorderThickness="2"
-                    Classes="accent btn"
-                    CornerRadius="15"
-                    FontSize="30"
-                    Foreground="Lime"
-                    Theme="{StaticResource MaterialOutlineButton}">
-                    <materialIcons:MaterialIcon
-                        Width="40"
-                        Height="40"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Kind="Cpu64Bit" />
-                </ToggleButton>
-
-                <ToggleButton
-                    x:Name="ToggleButtonSetting"
-                    Width="50"
-                    Height="50"
-                    Margin="5"
-                    HorizontalAlignment="Center"
-                    HorizontalContentAlignment="Center"
-                    BorderBrush="Lime"
-                    BorderThickness="2"
-                    Classes="accent btn"
-                    CornerRadius="15"
-                    FontSize="30"
-                    Foreground="Lime"
-                    Theme="{StaticResource MaterialOutlineButton}">
-                    <materialIcons:MaterialIcon
-                        Width="40"
-                        Height="40"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Kind="CogOutline" />
-                </ToggleButton>
-
-
-
-
-
-            </StackPanel>
-        </Grid>
-
-
-        <Grid Grid.Column="1">
-
-            <Border BorderBrush="Lime" BorderThickness="0,2,2,2" />
-            <!--  Первый ряд с кнопками  -->
+        <Grid
+            x:Name="Chrome"
+            Background="#C77DFF"
+            IsHitTestVisible="True"
+            Row="0">
             <StackPanel
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
                 Orientation="Horizontal">
 
-                <!--  Кнопка изменения размера окна  -->
                 <Button
                     x:Name="ButtonResize"
                     Width="30"
@@ -216,7 +67,6 @@
                         Kind="WindowMinimize" />
                 </Button>
 
-                <!--  Кнопка выхода  -->
                 <Button
                     x:Name="ButtonExit"
                     Width="30"
@@ -232,18 +82,103 @@
                 </Button>
 
             </StackPanel>
-
-
-
-
-            <!--  Второй ряд с другим содержимым  -->
-            <Grid x:Name="ContentGrid" Margin="0,30,0,0">
-                <views:HomeControl />
-                <!--  Здесь вы можете добавить содержимое для второго ряда  -->
-            </Grid>
-
         </Grid>
 
+        <Grid x:Name="MainGrid" Row="1">
+            <Grid
+                x:Name="LeftGrid"
+                VerticalAlignment="Stretch"
+                Background="#7B2CBF">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80" />
+                    <!--  Первая колонка  -->
+                    <ColumnDefinition Width="*" />
+                    <!--  Вторая колонка  -->
+                </Grid.ColumnDefinitions>
+
+
+                <StackPanel
+                    Grid.Column="0"
+                    Margin="0,15,0,15"
+                    VerticalAlignment="Top"
+                    Orientation="Vertical">
+
+
+                    <Button
+                        x:Name="ToggleButtonMenu"
+                        Width="50"
+                        Height="50"
+                        Margin="5"
+                        HorizontalAlignment="Center"
+                        BorderBrush="White"
+                        BorderThickness="2"
+                        Classes="accent btn"
+                        CornerRadius="15"
+                        FontSize="30"
+                        Foreground="White"
+                        Theme="{StaticResource MaterialOutlineButton}">
+                        <materialIcons:MaterialIcon
+                            Name="IconMenu"
+                            Width="40"
+                            Height="40"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Kind="Menu" />
+                    </Button>
+                    <Button
+                        x:Name="ToggleButtonHome"
+                        Width="50"
+                        Height="50"
+                        Margin="5"
+                        HorizontalAlignment="Center"
+                        BorderBrush="White"
+                        BorderThickness="2"
+                        Classes="accent btn"
+                        CornerRadius="15"
+                        FontSize="30"
+                        Foreground="White"
+                        Theme="{StaticResource MaterialOutlineButton}">
+                        <materialIcons:MaterialIcon
+                            Width="40"
+                            Height="40"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Kind="Home" />
+                    </Button>
+
+
+
+                    <Button
+                        x:Name="ToggleButtonSetting"
+                        Width="50"
+                        Height="50"
+                        Margin="5"
+                        HorizontalAlignment="Center"
+                        BorderBrush="White"
+                        BorderThickness="2"
+                        Classes="accent btn"
+                        CornerRadius="15"
+                        FontSize="30"
+                        Foreground="White"
+                        Theme="{StaticResource MaterialOutlineButton}">
+                        <materialIcons:MaterialIcon
+                            Width="40"
+                            Height="40"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Kind="CogOutline" />
+                    </Button>
+                </StackPanel>
+                <Grid
+                    x:Name="RightGrid"
+                    Background="#E0AAFF"
+                    Column="1">
+                    <Grid x:Name="ContentGrid" />
+
+                </Grid>
+
+            </Grid>
+        </Grid>
 
 
     </Grid>

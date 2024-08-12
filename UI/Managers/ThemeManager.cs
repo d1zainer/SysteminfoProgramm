@@ -12,9 +12,12 @@ namespace SystemProgramm.UI.Managers
 {
     public class ThemeManager
     {
-     
-
         public static ThemeManager Instance { get; private set; }
+        private IBrush _brushForegrBrush => Brushes.White;
+        public IBrush BrushForegrBrush => _brushForegrBrush;
+        private IBrush _brushBackBrush => Brush.Parse("#7B2CBF");
+
+        public IBrush BrushBackBrush => _brushBackBrush;
 
         public static void Initialize()
         {

@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using SystemProgramm.UI.Managers;
 using SystemProgramm.ViewModels;
 using SystemProgramm.Views;
 
@@ -13,6 +14,7 @@ namespace SystemProgramm.App
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
+            ThemeManager.Initialize();
         }
 
         public override void OnFrameworkInitializationCompleted()
@@ -24,6 +26,7 @@ namespace SystemProgramm.App
                 BindingPlugins.DataValidators.RemoveAt(0);
                 desktop.MainWindow = new MainWindow
                 {
+
                     DataContext = new MainWindowViewModel(),
                 };
             }

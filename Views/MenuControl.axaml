@@ -1,0 +1,264 @@
+<UserControl
+    x:Class="SystemProgramm.Views.MenuControl"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Margin="0"
+    Padding="0"
+    d:DesignHeight="400"
+    d:DesignWidth="1020"
+    IsVisible="True"
+    mc:Ignorable="d">
+    <Grid
+        x:Name="MenuPanel"
+        Width="1020"
+        PointerPressed="SecondGrid_OnPointerPressed">
+        <!--  Определяем две колонки  -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="140" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Border BorderBrush="White" BorderThickness="0,0,2,0" />
+        <Grid Background="#7B2CBF" Column="0">
+
+            <StackPanel
+                Margin="0,15,0,15"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Vertical">
+                <ToggleButton
+                    x:Name="ToggleButtonGPU"
+                    Width="120"
+                    Height="40"
+                    Margin="5,5,5,5"
+                    HorizontalAlignment="Center"
+                    HorizontalContentAlignment="Left"
+                    BorderBrush="White"
+                    BorderThickness="2"
+                    Classes="accent btn"
+                    CornerRadius="10"
+                    FontSize="30"
+                    Foreground="White"
+                    Theme="{StaticResource MaterialOutlineButton}">
+                    <Grid>
+                        <avalonia:MaterialIcon
+                            Width="25"
+                            Height="25"
+                            Margin="90,0,0,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Kind="Gpu" />
+
+                        <!--  Текст слева  -->
+                        <TextBlock
+                            Margin="0,0,0,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="16"
+                            Foreground="White"
+                            Text="GPU" />
+
+                        <!--  Иконка справа  -->
+
+                    </Grid>
+                </ToggleButton>
+
+                <ToggleButton
+                    x:Name="ToggleButtonNet"
+                    Width="120"
+                    Height="40"
+                    Margin="5"
+                    HorizontalAlignment="Center"
+                    HorizontalContentAlignment="Left"
+                    BorderBrush="White"
+                    BorderThickness="2"
+                    Classes="accent btn"
+                    CornerRadius="10"
+                    FontSize="30"
+                    Foreground="White"
+                    Theme="{StaticResource MaterialOutlineButton}">
+                    <Grid>
+                        <avalonia:MaterialIcon
+                            Width="25"
+                            Height="25"
+                            Margin="70,0,0,0"
+                            VerticalAlignment="Center"
+                            Kind="Network" />
+
+                        <!--  Текст слева  -->
+                        <TextBlock
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="16"
+                            Foreground="White"
+                            Text="Network" />
+
+                        <!--  Иконка справа  -->
+
+                    </Grid>
+                </ToggleButton>
+
+
+
+                <ToggleButton
+                    x:Name="ToggleButtonCPU"
+                    Width="120"
+                    Height="40"
+                    Margin="5"
+                    HorizontalAlignment="Center"
+                    HorizontalContentAlignment="Left"
+                    BorderBrush="White"
+                    BorderThickness="2"
+                    Classes="accent btn"
+                    CornerRadius="10"
+                    FontSize="30"
+                    Foreground="White"
+                    Theme="{StaticResource MaterialOutlineButton}">
+                    <Grid>
+                        <avalonia:MaterialIcon
+                            Width="25"
+                            Height="25"
+                            Margin="70,0,0,0"
+                            VerticalAlignment="Center"
+                            Kind="Cpu64Bit" />
+
+                        <!--  Текст слева  -->
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="16"
+                            Foreground="White"
+                            Text="CPU" />
+
+                        <!--  Иконка справа  -->
+
+                    </Grid>
+                </ToggleButton>
+
+
+                <ToggleButton
+                    x:Name="ToggleButtonMemory"
+                    Width="120"
+                    Height="40"
+                    Margin="5"
+                    HorizontalAlignment="Center"
+                    HorizontalContentAlignment="Left"
+                    BorderBrush="White"
+                    BorderThickness="2"
+                    Classes="accent btn"
+                    CornerRadius="10"
+                    FontSize="30"
+                    Foreground="White"
+                    Theme="{StaticResource MaterialOutlineButton}">
+
+                    <Grid>
+                        <avalonia:MaterialIcon
+                            Width="25"
+                            Height="25"
+                            Margin="70,0,0,0"
+                            VerticalAlignment="Center"
+                            Kind="Memory" />
+
+                        <!--  Текст слева  -->
+                        <TextBlock
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="16"
+                            Foreground="White"
+                            Text="Memory" />
+
+                        <!--  Иконка справа  -->
+
+                    </Grid>
+
+                </ToggleButton>
+
+                <ToggleButton
+                    x:Name="ToggleButtonDevices"
+                    Width="120"
+                    Height="40"
+                    Margin="5"
+                    HorizontalAlignment="Center"
+                    HorizontalContentAlignment="Left"
+                    BorderBrush="White"
+                    BorderThickness="2"
+                    Classes="accent btn"
+                    CornerRadius="10"
+                    FontSize="30"
+                    Foreground="White"
+                    Theme="{StaticResource MaterialOutlineButton}">
+
+                    <Grid>
+                        <avalonia:MaterialIcon
+                            Width="25"
+                            Height="25"
+                            Margin="70,0,0,0"
+                            VerticalAlignment="Center"
+                            Kind="Devices" />
+
+                        <!--  Текст слева  -->
+                        <TextBlock
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="16"
+                            Foreground="White"
+                            Text="Devices" />
+
+                        <!--  Иконка справа  -->
+
+                    </Grid>
+
+                </ToggleButton>
+
+                <ToggleButton
+                    x:Name="ToggleButtonDisk"
+                    Width="120"
+                    Height="40"
+                    Margin="5"
+                    HorizontalAlignment="Center"
+                    HorizontalContentAlignment="Left"
+                    BorderBrush="White"
+                    BorderThickness="2"
+                    Classes="accent btn"
+                    CornerRadius="10"
+                    FontSize="30"
+                    Foreground="White"
+                    Theme="{StaticResource MaterialOutlineButton}">
+
+                    <Grid>
+                        <avalonia:MaterialIcon
+                            Width="25"
+                            Height="25"
+                            Margin="70,0,0,0"
+                            VerticalAlignment="Center"
+                            Kind="Harddisk" />
+
+                        <!--  Текст слева  -->
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="16"
+                            Foreground="White"
+                            Text="Disk" />
+
+                        <!--  Иконка справа  -->
+
+                    </Grid>
+
+                </ToggleButton>
+
+            </StackPanel>
+
+        </Grid>
+        <Grid
+            Name="ShadowGrid"
+            Background="#50000000"
+            Column="1" />
+
+
+
+    </Grid>
+
+</UserControl>

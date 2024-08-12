@@ -2,12 +2,264 @@
     x:Class="SystemProgramm.Views.HomeControl"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Width="720"
-    Height="370"
-    d:DesignHeight="370"
-    d:DesignWidth="720"
+    xmlns:svg="clr-namespace:Avalonia.Svg;assembly=Avalonia.Svg"
+    Margin="0"
+    Padding="0"
+    d:DesignHeight="570"
+    d:DesignWidth="940"
+    Background="Transparent"
+    IsVisible="True"
     mc:Ignorable="d">
-    Welcome to Avalonia!
+
+
+
+    <Grid
+        x:Name="MenuPanel"
+        Width="940"
+        Height="570">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+
+        <!--  CPU Information  -->
+        <Border
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="10"
+            Padding="10"
+            Background="#5A189A"
+            BoxShadow="0 4 8 #90000000"
+            CornerRadius="10">
+            <StackPanel Background="#5A189A">
+                <TextBlock
+                    Padding="0,0,0,0"
+                    FontSize="25"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Text="CPU" />
+                <svg:Svg
+                    Width="120"
+                    Height="120"
+                    Path="/Assets/cpu-z.svg" />
+                <TextBlock
+                    Padding="0,10,0,0"
+                    FontSize="17"
+                    Foreground="White"
+                    Text="Intel Core i7-10700K" />
+                <TextBlock
+                    FontSize="14"
+                    Foreground="Gray"
+                    Text="8 Cores, 16 Threads" />
+                <ProgressBar
+                    Foreground="Lime"
+                    Maximum="100"
+                    Minimum="0"
+                    Value="30" />
+                <TextBlock
+                    FontSize="13"
+                    Foreground="Gray"
+                    Text="Usage: 30%" />
+            </StackPanel>
+        </Border>
+
+        <!--  Memory Information  -->
+        <Border
+            Grid.Row="0"
+            Grid.Column="1"
+            Margin="10"
+            Padding="10"
+            Background="#5A189A"
+            BoxShadow="0 4 8 #90000000"
+            CornerRadius="10">
+            <StackPanel>
+                <TextBlock
+                    Padding="0,0,0,10"
+                    FontSize="25"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Text="Memory" />
+                <svg:Svg
+                    Width="100"
+                    Height="100"
+                    Path="/Assets/memory.svg" />
+                <TextBlock
+                    Padding="0,20,0,0"
+                    FontSize="17"
+                    Foreground="White"
+                    Text="16 GB DDR4" />
+                <TextBlock
+                    FontSize="14"
+                    Foreground="Gray"
+                    Text="Usage: 8 GB / 16 GB" />
+                <ProgressBar
+                    Foreground="Lime"
+                    Maximum="16"
+                    Minimum="0"
+                    Value="8" />
+                <TextBlock
+                    FontSize="13"
+                    Foreground="Gray"
+                    Text="Usage: 50%" />
+            </StackPanel>
+        </Border>
+
+        <!--  Disk Information  -->
+        <Border
+            Grid.Row="0"
+            Grid.Column="2"
+            Margin="10"
+            Padding="10"
+            Background="#5A189A"
+            BoxShadow="0 4 8 #90000000"
+            CornerRadius="10">
+            <StackPanel>
+                <TextBlock
+                    Padding="0,0,0,0"
+                    FontSize="25"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Text="Disk" />
+                <avalonia:MaterialIcon
+                    Width="110"
+                    Height="110"
+                    Foreground="White"
+                    Kind="Harddisk" />
+                <TextBlock
+                    Padding="0,20,0,0"
+                    FontSize="17"
+                    Foreground="White"
+                    Text="1 TB SSD" />
+                <TextBlock
+                    FontSize="14"
+                    Foreground="Gray"
+                    Text="Usage: 500 GB / 1 TB" />
+                <ProgressBar
+                    Foreground="Lime"
+                    Maximum="16"
+                    Minimum="0"
+                    Value="8" />
+                <TextBlock
+                    FontSize="13"
+                    Foreground="Gray"
+                    Text="Usage: 50%" />
+            </StackPanel>
+        </Border>
+
+        <!--  GPU Information  -->
+        <Border
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="10"
+            Padding="10"
+            Background="#5A189A"
+            BoxShadow="0 4 8 #90000000"
+            CornerRadius="10">
+            <StackPanel>
+                <TextBlock
+                    Padding="0,0,0,5"
+                    FontSize="25"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Text="GPU" />
+                <svg:Svg
+                    Width="110"
+                    Height="110"
+                    HorizontalAlignment="Center"
+                    Path="/Assets/gpu.svg" />
+                <TextBlock
+                    Padding="0,15,0,0"
+                    FontSize="17"
+                    Foreground="White"
+                    Text="NVIDIA GeForce RTX 3080" />
+                <TextBlock
+                    FontSize="14"
+                    Foreground="Gray"
+                    Text="Gpu memory - " />
+                <ProgressBar
+                    Foreground="Lime"
+                    Maximum="100"
+                    Minimum="0"
+                    Value="45" />
+                <TextBlock
+                    FontSize="13"
+                    Foreground="Gray"
+                    Text="Usage: 50%" />
+            </StackPanel>
+        </Border>
+
+        <!--  Connected Devices Information  -->
+        <Border
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="10"
+            Padding="10"
+            Background="#5A189A"
+            BoxShadow="0 4 8 #90000000"
+            CornerRadius="10">
+            <StackPanel>
+                <TextBlock
+                    Padding="0,0,0,15"
+                    FontSize="25"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Text="Connected Devices" />
+                <avalonia:MaterialIcon
+                    Width="100"
+                    Height="100"
+                    Foreground="White"
+                    Kind="Usb" />
+                <TextBlock
+                    Padding="0,15,0,0"
+                    FontSize="17"
+                    Foreground="White"
+                    Text="3 Devices Connected" />
+                <TextBlock
+                    FontSize="14"
+                    Foreground="Gray"
+                    Text="1 USB Drive, 1 Mouse, 1 Keyboard" />
+            </StackPanel>
+        </Border>
+
+        <!--  Network Information (Unchanged)  -->
+        <Border
+            Grid.Row="1"
+            Grid.Column="2"
+            Margin="10"
+            Padding="10"
+            Background="#5A189A"
+            BoxShadow="0 4 8 #90000000"
+            CornerRadius="10">
+            <StackPanel>
+                <TextBlock
+                    Padding="0,0,0,0"
+                    FontSize="25"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Text="Network" />
+                <avalonia:MaterialIcon
+                    Width="120"
+                    Height="120"
+                    Foreground="White"
+                    Kind="NetworkOutline" />
+                <TextBlock
+                    Padding="0,10,0,0"
+                    FontSize="17"
+                    Foreground="White"
+                    Text="Ethernet: Connected, 1 Gbps" />
+                <TextBlock
+                    FontSize="14"
+                    Foreground="Gray"
+                    Text="Wi-Fi: Not Connected" />
+            </StackPanel>
+        </Border>
+    </Grid>
 </UserControl>
