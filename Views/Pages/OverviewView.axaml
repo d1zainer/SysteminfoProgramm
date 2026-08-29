@@ -1,0 +1,11 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:SystemProgramm.ViewModels"
+             x:Class="SystemProgramm.Views.OverviewView"
+             x:DataType="vm:OverviewViewModel">
+
+    <TextBlock Margin="24"
+               FontSize="14"
+               Text="Здесь будет сводка по компьютеру." />
+
+</UserControl>

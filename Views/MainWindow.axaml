@@ -1,0 +1,47 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:views="clr-namespace:SystemProgramm.Views"
+        xmlns:vm="clr-namespace:SystemProgramm.ViewModels"
+        x:Class="SystemProgramm.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="Сведения о системе"
+        Width="1000"
+        Height="640"
+        MinWidth="800"
+        MinHeight="500"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid ColumnDefinitions="220,*">
+
+        <Border Grid.Column="0"
+                Background="{DynamicResource SystemChromeLowColor}"
+                BorderBrush="{DynamicResource SystemChromeMediumLowColor}"
+                BorderThickness="0,0,1,0">
+            <ListBox ItemsSource="{Binding Pages}"
+                     SelectedItem="{Binding CurrentPage}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="vm:PageViewModel">
+                        <TextBlock Text="{Binding Title}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Border>
+
+        <ContentControl Grid.Column="1" Content="{Binding CurrentPage}">
+            <ContentControl.DataTemplates>
+
+                <DataTemplate DataType="vm:OverviewViewModel">
+                    <views:OverviewView />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:PageViewModel">
+                    <TextBlock Margin="24"
+                               FontSize="14"
+                               Text="{Binding Title, StringFormat='Раздел «{0}» ещё не сделан.'}" />
+                </DataTemplate>
+
+            </ContentControl.DataTemplates>
+        </ContentControl>
+
+    </Grid>
+</Window>
