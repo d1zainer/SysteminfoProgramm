@@ -11,15 +11,13 @@
 
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal" />
+                    <UniformGrid Columns="3" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="cards:OverviewCardViewModel">
-                    <views:OverviewCardView Width="260"
-                                            Height="170"
-                                            Margin="0 0 16 16" />
+                    <views:OverviewCardView Margin="0 0 16 16" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
 
