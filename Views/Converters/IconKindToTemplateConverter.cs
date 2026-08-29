@@ -5,11 +5,11 @@ using SystemProgramm.Models;
 
 namespace SystemProgramm.Views.Converters;
 
-public sealed class PageKindToIconConverter : IValueConverter
+public sealed class IconKindToTemplateConverter : IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value is not PageKind kind || Application.Current is not { } app)
+        if (value is not IconKind kind || Application.Current is not { } app)
             return null;
 
         return app.Resources.TryGetResource($"Icon.{kind}", app.ActualThemeVariant, out var icon)

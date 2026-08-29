@@ -14,54 +14,75 @@
   </resheader>
 
   <data name="AppTitle" xml:space="preserve">
-    <value>System Information</value>
+    <value>Сведения о системе</value>
   </data>
 
   <data name="PageOverview" xml:space="preserve">
-    <value>Overview</value>
+    <value>Обзор</value>
   </data>
   <data name="PageCpu" xml:space="preserve">
-    <value>Processor</value>
+    <value>Процессор</value>
   </data>
   <data name="PageGpu" xml:space="preserve">
-    <value>Graphics</value>
+    <value>Видеокарта</value>
   </data>
   <data name="PageMemory" xml:space="preserve">
-    <value>Memory</value>
+    <value>Память</value>
   </data>
   <data name="PageStorage" xml:space="preserve">
-    <value>Storage</value>
+    <value>Накопители</value>
   </data>
   <data name="PageNetwork" xml:space="preserve">
-    <value>Network</value>
+    <value>Сеть</value>
   </data>
   <data name="PageSettings" xml:space="preserve">
-    <value>AppSettings</value>
+    <value>Настройки</value>
   </data>
 
   <data name="OverviewPlaceholder" xml:space="preserve">
-    <value>A summary of this computer will appear here.</value>
+    <value>Здесь будет сводка по компьютеру.</value>
   </data>
   <data name="PageNotImplemented" xml:space="preserve">
-    <value>This section is not built yet.</value>
+    <value>Раздел ещё не сделан.</value>
   </data>
 
   <data name="SettingsAppearance" xml:space="preserve">
-    <value>Appearance</value>
+    <value>Оформление</value>
   </data>
   <data name="SettingsTheme" xml:space="preserve">
-    <value>Theme</value>
+    <value>Тема</value>
   </data>
   <data name="ThemeSystem" xml:space="preserve">
-    <value>Match system</value>
+    <value>Как в системе</value>
   </data>
   <data name="ThemeLight" xml:space="preserve">
-    <value>Light</value>
+    <value>Светлая</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
-    <value>Dark</value>
+    <value>Тёмная</value>
   </data>
   <data name="SettingsLanguage" xml:space="preserve">
-    <value>Language</value>
+    <value>Язык</value>
+  </data>
+  <data name="CardCpu" xml:space="preserve">
+    <value>Процессор</value>
+  </data>
+  <data name="CardGpu" xml:space="preserve">
+    <value>Видеокарта</value>
+  </data>
+  <data name="CardMemory" xml:space="preserve">
+    <value>Память</value>
+  </data>
+  <data name="CardStorage" xml:space="preserve">
+    <value>Накопители</value>
+  </data>
+  <data name="CardNetwork" xml:space="preserve">
+    <value>Сеть</value>
+  </data>
+  <data name="CardDevices" xml:space="preserve">
+    <value>Устройства</value>
+  </data>
+  <data name="ValueUnknown" xml:space="preserve">
+    <value>Неизвестно</value>
   </data>
 </root>

@@ -1,8 +1,8 @@
 namespace SystemProgramm.Models;
 
-public sealed class PageInfo(string title, PageKind kind)
+public sealed class PageInfo(string title, IconKind icon)
 {
     public string Title { get; } = title;
 
-    public PageKind Kind { get; } = kind;
+    public IconKind Icon { get; } = icon;
 }

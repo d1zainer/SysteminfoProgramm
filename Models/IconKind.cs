@@ -1,6 +1,6 @@
 namespace SystemProgramm.Models;
 
-public enum PageKind
+public enum IconKind
 {
     Overview,
     Cpu,
@@ -8,5 +8,6 @@ public enum PageKind
     Memory,
     Storage,
     Network,
+    Devices,
     Settings
 }

@@ -1,0 +1,18 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style Selector="Border.card">
+        <Setter Property="Padding" Value="18" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="BorderThickness" Value="1" />
+
+        <Setter Property="Background">
+            <SolidColorBrush Color="{DynamicResource SystemBaseHighColor}" Opacity="0.04" />
+        </Setter>
+
+        <Setter Property="BorderBrush">
+            <SolidColorBrush Color="{DynamicResource SystemBaseHighColor}" Opacity="0.1" />
+        </Setter>
+    </Style>
+
+</Styles>

@@ -1,11 +1,29 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:loc="clr-namespace:SystemProgramm"
+             xmlns:cards="clr-namespace:SystemProgramm.ViewModels.Cards"
              xmlns:pages="clr-namespace:SystemProgramm.ViewModels.Pages"
+             xmlns:views="clr-namespace:SystemProgramm.Views.Cards"
              x:Class="SystemProgramm.Views.OverviewView"
              x:DataType="pages:OverviewViewModel">
 
-    <TextBlock Margin="24"
-               Text="{x:Static loc:Localization.OverviewPlaceholder}" />
+    <ScrollViewer>
+        <ItemsControl Margin="24" ItemsSource="{Binding Cards}">
+
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="cards:OverviewCardViewModel">
+                    <views:OverviewCardView Width="260"
+                                            Height="170"
+                                            Margin="0 0 16 16" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+
+        </ItemsControl>
+    </ScrollViewer>
 
 </UserControl>

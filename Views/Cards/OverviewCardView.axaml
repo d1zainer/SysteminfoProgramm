@@ -1,0 +1,54 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:cards="clr-namespace:SystemProgramm.ViewModels.Cards"
+             xmlns:conv="clr-namespace:SystemProgramm.Views.Converters"
+             x:Class="SystemProgramm.Views.Cards.OverviewCardView"
+             x:DataType="cards:OverviewCardViewModel">
+
+    <UserControl.Resources>
+        <conv:IconKindToTemplateConverter x:Key="CardIcon" />
+    </UserControl.Resources>
+
+    <Border Classes="card">
+        <Grid RowDefinitions="Auto,*,Auto">
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="10">
+                <ContentControl Width="18"
+                                Height="18"
+                                VerticalAlignment="Center"
+                                Template="{Binding Icon, Converter={StaticResource CardIcon}}"
+                                Foreground="{DynamicResource SystemAccentColor}" />
+
+                <TextBlock Classes="medium"
+                           VerticalAlignment="Center"
+                           Text="{Binding Title}" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Margin="0 14 0 0" Spacing="4">
+                <TextBlock Text="{Binding Headline}"
+                           TextWrapping="Wrap" />
+
+                <TextBlock Classes="small"
+                           Opacity="0.65"
+                           Text="{Binding Detail}"
+                           IsVisible="{Binding Detail, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                           TextWrapping="Wrap" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="2"
+                        Margin="0 14 0 0"
+                        Spacing="6"
+                        IsVisible="{Binding Load, Converter={x:Static ObjectConverters.IsNotNull}}">
+
+                <ProgressBar Maximum="100"
+                             Minimum="0"
+                             Value="{Binding Load}" />
+
+                <TextBlock Classes="small"
+                           Opacity="0.65"
+                           Text="{Binding LoadText}" />
+            </StackPanel>
+
+        </Grid>
+    </Border>
+</UserControl>
