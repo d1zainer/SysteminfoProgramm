@@ -17,7 +17,8 @@ public sealed partial class SettingsViewModel : PageViewModel
     [ObservableProperty]
     private LanguageOption _selectedLanguage;
 
-    public SettingsViewModel(AppSettings settings) : base(Localization.PageSettings)
+    public SettingsViewModel(AppSettings settings)
+        : base(new PageInfo(Localization.PageSettings, PageKind.Settings))
     {
         _settings = settings;
 

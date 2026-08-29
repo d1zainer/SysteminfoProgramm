@@ -6,7 +6,6 @@
              x:DataType="pages:OverviewViewModel">
 
     <TextBlock Margin="24"
-               FontSize="14"
                Text="{x:Static loc:Localization.OverviewPlaceholder}" />
 
 </UserControl>

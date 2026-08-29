@@ -18,11 +18,11 @@ public partial class MainWindowViewModel : ObservableObject
         Pages =
         [
             new OverviewViewModel(),
-            new PageViewModel(Localization.PageCpu),
-            new PageViewModel(Localization.PageGpu),
-            new PageViewModel(Localization.PageMemory),
-            new PageViewModel(Localization.PageStorage),
-            new PageViewModel(Localization.PageNetwork),
+            new PageViewModel(new PageInfo(Localization.PageCpu, PageKind.Cpu)),
+            new PageViewModel(new PageInfo(Localization.PageGpu, PageKind.Gpu)),
+            new PageViewModel(new PageInfo(Localization.PageMemory, PageKind.Memory)),
+            new PageViewModel(new PageInfo(Localization.PageStorage, PageKind.Storage)),
+            new PageViewModel(new PageInfo(Localization.PageNetwork, PageKind.Network)),
             settingsPage
         ];
 

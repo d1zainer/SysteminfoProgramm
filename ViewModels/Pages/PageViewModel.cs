@@ -1,8 +1,9 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using SystemProgramm.Models;
 
 namespace SystemProgramm.ViewModels.Pages;
 
-public class PageViewModel(string title) : ObservableObject
+public class PageViewModel(PageInfo info) : ObservableObject
 {
-    public string Title { get; } = title;
+    public PageInfo Info { get; } = info;
 }

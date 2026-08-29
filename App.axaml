@@ -4,7 +4,13 @@
              RequestedThemeVariant="Dark">
 
     <Application.Resources>
-        <FontFamily x:Key="AppFont">avares://SystemProgramm/Assets/Fonts#Onest</FontFamily>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://SystemProgramm/Styles/Icons.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <FontFamily x:Key="AppFont">avares://SystemProgramm/Assets/Fonts#Onest</FontFamily>
+        </ResourceDictionary>
     </Application.Resources>
 
     <Application.Styles>

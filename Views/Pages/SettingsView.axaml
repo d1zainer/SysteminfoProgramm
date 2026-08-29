@@ -8,8 +8,7 @@
 
     <StackPanel Margin="24" Spacing="20">
 
-        <TextBlock FontSize="16"
-                   FontWeight="SemiBold"
+        <TextBlock Classes="title"
                    Text="{x:Static loc:Localization.SettingsAppearance}" />
 
         <StackPanel Spacing="6">

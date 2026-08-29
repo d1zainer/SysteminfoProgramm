@@ -1,5 +1,6 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:conv="clr-namespace:SystemProgramm.Converters"
         xmlns:loc="clr-namespace:SystemProgramm"
         xmlns:pages="clr-namespace:SystemProgramm.ViewModels.Pages"
         xmlns:views="clr-namespace:SystemProgramm.Views"
@@ -18,6 +19,10 @@
         <SolidColorBrush Color="{DynamicResource SystemChromeMediumColor}" />
     </Window.TransparencyBackgroundFallback>
 
+    <Window.Resources>
+        <conv:PageKindToIconConverter x:Key="PageIcon" />
+    </Window.Resources>
+
     <Grid ColumnDefinitions="Auto,*">
         <ListBox Grid.Column="0"
                  Padding="0 30 0 0 "
@@ -25,7 +30,15 @@
                  SelectedItem="{Binding CurrentPage}">
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="pages:PageViewModel">
-                    <TextBlock Text="{Binding Title}" />
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <ContentControl 
+                                        Template="{Binding Info.Kind, Converter={StaticResource PageIcon}}"
+                                        Foreground="{Binding $parent[ListBoxItem].Foreground}" />
+
+                        <TextBlock Margin="0 0 10 0"
+                                   VerticalAlignment="Center"
+                                   Text="{Binding Info.Title}" />
+                    </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
@@ -49,7 +62,6 @@
 
                     <DataTemplate DataType="pages:PageViewModel">
                         <TextBlock Margin="24"
-                                   FontSize="14"
                                    Text="{x:Static loc:Localization.PageNotImplemented}" />
                     </DataTemplate>
 
