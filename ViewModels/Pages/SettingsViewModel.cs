@@ -1,15 +1,12 @@
-using System.Globalization;
-using Avalonia;
-using Avalonia.Styling;
 using CommunityToolkit.Mvvm.ComponentModel;
 using SystemProgramm.Models;
-using SystemProgramm.Settings;
+using SystemProgramm.Services;
 
 namespace SystemProgramm.ViewModels.Pages;
 
 public sealed partial class SettingsViewModel : PageViewModel
 {
-    private readonly AppSettings _settings;
+    private readonly AppStore _store;
 
     [ObservableProperty]
     private ThemeOption _selectedTheme;
@@ -17,16 +14,16 @@ public sealed partial class SettingsViewModel : PageViewModel
     [ObservableProperty]
     private LanguageOption _selectedLanguage;
 
-    public SettingsViewModel(AppSettings settings)
+    public SettingsViewModel(AppStore store)
         : base(new PageInfo(Localization.PageSettings, PageKind.Settings))
     {
-        _settings = settings;
+        _store = store;
 
         Themes =
         [
-            new ThemeOption("System", Localization.ThemeSystem, ThemeVariant.Default),
-            new ThemeOption("Light", Localization.ThemeLight, ThemeVariant.Light),
-            new ThemeOption("Dark", Localization.ThemeDark, ThemeVariant.Dark)
+            new ThemeOption("System", Localization.ThemeSystem),
+            new ThemeOption("Light", Localization.ThemeLight),
+            new ThemeOption("Dark", Localization.ThemeDark)
         ];
 
         Languages =
@@ -35,35 +32,16 @@ public sealed partial class SettingsViewModel : PageViewModel
             new LanguageOption("en", "English")
         ];
 
-        _selectedTheme = Themes.FirstOrDefault(t => t.Id == settings.Theme) ?? Themes[0];
+        _selectedTheme = Themes.FirstOrDefault(t => t.Id == store.Theme) ?? Themes[0];
 
-        _selectedLanguage =
-            Languages.FirstOrDefault(l => l.Culture == CultureInfo.CurrentUICulture.TwoLetterISOLanguageName)
-            ?? Languages[0];
+        _selectedLanguage = Languages.FirstOrDefault(l => l.Culture == store.Language) ?? Languages[0];
     }
-
-    public event EventHandler? LanguageChanged;
-
 
     public IReadOnlyList<ThemeOption> Themes { get; }
 
     public IReadOnlyList<LanguageOption> Languages { get; }
 
-    partial void OnSelectedThemeChanged(ThemeOption value)
-    {
-        if (Application.Current is { } app)
-            app.RequestedThemeVariant = value.Variant;
+    partial void OnSelectedThemeChanged(ThemeOption value) => _store.SetTheme(value.Id);
 
-        _settings.Theme = value.Id;
-        SettingsStore.Save(_settings);
-    }
-
-    partial void OnSelectedLanguageChanged(LanguageOption value)
-    {
-        _settings.Language = value.Culture;
-        SettingsStore.Save(_settings);
-
-        Localization.Culture = new CultureInfo(value.Culture);
-        LanguageChanged?.Invoke(this, EventArgs.Empty);
-    }
+    partial void OnSelectedLanguageChanged(LanguageOption value) => _store.SetLanguage(value.Culture);
 }

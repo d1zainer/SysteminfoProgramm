@@ -1,7 +1,7 @@
 using System.Text.Json;
 using SystemProgramm.Models;
 
-namespace SystemProgramm.Settings;
+namespace SystemProgramm.Services;
 
 public static class SettingsStore
 {

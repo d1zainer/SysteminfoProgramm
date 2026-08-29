@@ -3,7 +3,7 @@ using Avalonia;
 using Avalonia.Data.Converters;
 using SystemProgramm.Models;
 
-namespace SystemProgramm.Converters;
+namespace SystemProgramm.Views.Converters;
 
 public sealed class PageKindToIconConverter : IValueConverter
 {

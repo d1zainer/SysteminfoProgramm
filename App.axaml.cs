@@ -1,10 +1,8 @@
-using System.Globalization;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Styling;
-using SystemProgramm.Models;
-using SystemProgramm.Settings;
+using SystemProgramm.Services;
 using SystemProgramm.ViewModels;
 using SystemProgramm.Views;
 
@@ -12,7 +10,7 @@ namespace SystemProgramm;
 
 public partial class App : Application
 {
-    private AppSettings _settings = new();
+    private readonly AppStore _store = new();
 
     public override void Initialize() => AvaloniaXamlLoader.Load(this);
 
@@ -20,38 +18,40 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            _settings = SettingsStore.Load();
+            CultureSetup.Apply(_store.Language);
+            ApplyTheme();
 
-            if (_settings.Language is { Length: > 0 } language)
-                Localization.Culture = new CultureInfo(language);
-
-            RequestedThemeVariant = _settings.Theme switch
+            _store.ThemeChanged += (_, _) => ApplyTheme();
+            _store.LanguageChanged += (_, _) =>
             {
-                "Light" => ThemeVariant.Light,
-                "Dark" => ThemeVariant.Dark,
-                _ => ThemeVariant.Default
+                CultureSetup.Apply(_store.Language);
+                Recreate(desktop);
             };
 
-            desktop.MainWindow = CreateMainWindow(desktop);
+            desktop.MainWindow = CreateMainWindow();
         }
 
         base.OnFrameworkInitializationCompleted();
     }
 
-    private MainWindow CreateMainWindow(IClassicDesktopStyleApplicationLifetime desktop)
-    {
-        var viewModel = new MainWindowViewModel(_settings);
-        
-        viewModel.LanguageChanged += (_, _) =>
+    private void ApplyTheme() =>
+        RequestedThemeVariant = _store.Theme switch
         {
-            var previous = desktop.MainWindow;
-            var replacement = CreateMainWindow(desktop);
-
-            desktop.MainWindow = replacement;
-            replacement.Show();
-            previous?.Close();
+            "Light" => ThemeVariant.Light,
+            "Dark" => ThemeVariant.Dark,
+            _ => ThemeVariant.Default
         };
 
-        return new MainWindow { DataContext = viewModel };
+    private MainWindow CreateMainWindow() =>
+        new() { DataContext = new MainWindowViewModel(_store) };
+
+    private void Recreate(IClassicDesktopStyleApplicationLifetime desktop)
+    {
+        var previous = desktop.MainWindow;
+        var replacement = CreateMainWindow();
+
+        desktop.MainWindow = replacement;
+        replacement.Show();
+        previous?.Close();
     }
 }
