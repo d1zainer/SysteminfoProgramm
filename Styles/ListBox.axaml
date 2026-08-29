@@ -5,10 +5,7 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
     </Style>
-
-    <Style Selector="ListBoxItem">
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-    </Style>
+    
 
     <Style Selector="ListBoxItem /template/ ContentPresenter#PART_ContentPresenter">
         <Setter Property="Background" Value="Transparent" />

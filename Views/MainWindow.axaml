@@ -18,9 +18,9 @@
         <SolidColorBrush Color="{DynamicResource SystemChromeMediumColor}" />
     </Window.TransparencyBackgroundFallback>
 
-    <Grid ColumnDefinitions="220,*">
-
+    <Grid ColumnDefinitions="Auto,*">
         <ListBox Grid.Column="0"
+                 Padding="0 30 0 0 "
                  ItemsSource="{Binding Pages}"
                  SelectedItem="{Binding CurrentPage}">
             <ListBox.ItemTemplate>

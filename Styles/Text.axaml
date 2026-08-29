@@ -1,0 +1,16 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style Selector="TextBlock">
+        <Setter Property="FontFamily" Value="{DynamicResource AppFont}" />
+    </Style>
+
+    <Style Selector="TextBox">
+        <Setter Property="FontFamily" Value="{DynamicResource AppFont}" />
+    </Style>
+
+    <Style Selector="ContentPresenter">
+        <Setter Property="FontFamily" Value="{DynamicResource AppFont}" />
+    </Style>
+
+</Styles>
