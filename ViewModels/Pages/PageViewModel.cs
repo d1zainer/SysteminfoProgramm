@@ -1,6 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace SystemProgramm.ViewModels;
+namespace SystemProgramm.ViewModels.Pages;
 
 public class PageViewModel(string title) : ObservableObject
 {

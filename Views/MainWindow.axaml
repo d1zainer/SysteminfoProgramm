@@ -1,51 +1,56 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:loc="clr-namespace:SystemProgramm"
+        xmlns:pages="clr-namespace:SystemProgramm.ViewModels.Pages"
         xmlns:views="clr-namespace:SystemProgramm.Views"
         xmlns:vm="clr-namespace:SystemProgramm.ViewModels"
         x:Class="SystemProgramm.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        Title="Сведения о системе"
         Width="1000"
         Height="640"
         MinWidth="800"
         MinHeight="500"
+        Background="Transparent"
+        TransparencyLevelHint="Mica"
         WindowStartupLocation="CenterScreen">
+
+    <Window.TransparencyBackgroundFallback>
+        <SolidColorBrush Color="{DynamicResource SystemChromeMediumColor}" />
+    </Window.TransparencyBackgroundFallback>
 
     <Grid ColumnDefinitions="220,*">
 
         <ListBox Grid.Column="0"
                  ItemsSource="{Binding Pages}"
                  SelectedItem="{Binding CurrentPage}">
-            <ListBox.Background>
-                <SolidColorBrush Color="{DynamicResource SystemChromeLowColor}" />
-            </ListBox.Background>
             <ListBox.ItemTemplate>
-                <DataTemplate DataType="vm:PageViewModel">
+                <DataTemplate DataType="pages:PageViewModel">
                     <TextBlock Text="{Binding Title}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
 
+
         <Border Grid.Column="1">
             <Border.Background>
-                <LinearGradientBrush StartPoint="0%,0%" EndPoint="35%,100%">
-                    <GradientStop Offset="0" Color="{DynamicResource SystemChromeMediumLowColor}" />
-                    <GradientStop Offset="0.55" Color="{DynamicResource SystemChromeMediumColor}" />
-                    <GradientStop Offset="1" Color="{DynamicResource SystemRegionColor}" />
-                </LinearGradientBrush>
+                <SolidColorBrush Color="{DynamicResource SystemChromeMediumColor}" />
             </Border.Background>
 
             <ContentControl Content="{Binding CurrentPage}">
                 <ContentControl.DataTemplates>
 
-                    <DataTemplate DataType="vm:OverviewViewModel">
+                    <DataTemplate DataType="pages:OverviewViewModel">
                         <views:OverviewView />
                     </DataTemplate>
 
-                    <DataTemplate DataType="vm:PageViewModel">
+                    <DataTemplate DataType="pages:SettingsViewModel">
+                        <views:SettingsView />
+                    </DataTemplate>
+
+                    <DataTemplate DataType="pages:PageViewModel">
                         <TextBlock Margin="24"
                                    FontSize="14"
-                                   Text="{Binding Title, StringFormat='Раздел «{0}» ещё не сделан.'}" />
+                                   Text="{x:Static loc:Localization.PageNotImplemented}" />
                     </DataTemplate>
 
                 </ContentControl.DataTemplates>

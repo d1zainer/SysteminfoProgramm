@@ -1,0 +1,44 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:models="clr-namespace:SystemProgramm.Models"
+             xmlns:pages="clr-namespace:SystemProgramm.ViewModels.Pages"
+             xmlns:loc="clr-namespace:SystemProgramm"
+             x:Class="SystemProgramm.Views.SettingsView"
+             x:DataType="pages:SettingsViewModel">
+
+    <StackPanel Margin="24" Spacing="20">
+
+        <TextBlock FontSize="16"
+                   FontWeight="SemiBold"
+                   Text="{x:Static loc:Localization.SettingsAppearance}" />
+
+        <StackPanel Spacing="6">
+            <TextBlock Text="{x:Static loc:Localization.SettingsTheme}" />
+            <ComboBox Width="240"
+                      HorizontalAlignment="Left"
+                      ItemsSource="{Binding Themes}"
+                      SelectedItem="{Binding SelectedTheme}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate DataType="models:ThemeOption">
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </StackPanel>
+
+        <StackPanel Spacing="6">
+            <TextBlock Text="{x:Static loc:Localization.SettingsLanguage}" />
+            <ComboBox Width="240"
+                      HorizontalAlignment="Left"
+                      ItemsSource="{Binding Languages}"
+                      SelectedItem="{Binding SelectedLanguage}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate DataType="models:LanguageOption">
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </StackPanel>
+
+    </StackPanel>
+</UserControl>

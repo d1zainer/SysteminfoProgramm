@@ -19,14 +19,23 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\Pages\OverviewView.axaml.cs">
-      <DependentUpon>OverviewView.axaml</DependentUpon>
-      <SubType>Code</SubType>
+    <EmbeddedResource Update="Localization\Localization.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Localization.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>SystemProgramm</CustomToolNamespace>
+    </EmbeddedResource>
+    <Compile Update="Localization\Localization.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Localization.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
+    <Compile Update="Views\Pages\OverviewView.axaml.cs">
+      <DependentUpon>OverviewView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
 </Project>

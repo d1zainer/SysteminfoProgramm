@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="AppTitle" xml:space="preserve">
+    <value>System Information</value>
+  </data>
+
+  <data name="PageOverview" xml:space="preserve">
+    <value>Overview</value>
+  </data>
+  <data name="PageCpu" xml:space="preserve">
+    <value>Processor</value>
+  </data>
+  <data name="PageGpu" xml:space="preserve">
+    <value>Graphics</value>
+  </data>
+  <data name="PageMemory" xml:space="preserve">
+    <value>Memory</value>
+  </data>
+  <data name="PageStorage" xml:space="preserve">
+    <value>Storage</value>
+  </data>
+  <data name="PageNetwork" xml:space="preserve">
+    <value>Network</value>
+  </data>
+  <data name="PageSettings" xml:space="preserve">
+    <value>AppSettings</value>
+  </data>
+
+  <data name="OverviewPlaceholder" xml:space="preserve">
+    <value>A summary of this computer will appear here.</value>
+  </data>
+  <data name="PageNotImplemented" xml:space="preserve">
+    <value>This section is not built yet.</value>
+  </data>
+
+  <data name="SettingsAppearance" xml:space="preserve">
+    <value>Appearance</value>
+  </data>
+  <data name="SettingsTheme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="ThemeSystem" xml:space="preserve">
+    <value>Match system</value>
+  </data>
+  <data name="ThemeLight" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="ThemeDark" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="SettingsLanguage" xml:space="preserve">
+    <value>Language</value>
+  </data>
+</root>

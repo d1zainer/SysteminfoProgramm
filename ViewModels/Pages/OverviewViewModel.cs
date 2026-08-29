@@ -1,3 +1,3 @@
-namespace SystemProgramm.ViewModels;
+namespace SystemProgramm.ViewModels.Pages;
 
-public class OverviewViewModel() : PageViewModel("Обзор");
+public class OverviewViewModel() : PageViewModel(Localization.PageOverview);
