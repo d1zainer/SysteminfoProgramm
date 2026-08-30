@@ -85,4 +85,25 @@
   <data name="ValueUnknown" xml:space="preserve">
     <value>Неизвестно</value>
   </data>
+  <data name="StorageDetail" xml:space="preserve">
+    <value>Занято {0} из {1}</value>
+  </data>
+  <data name="UsedPercent" xml:space="preserve">
+    <value>Занято {0:0} %</value>
+  </data>
+  <data name="CpuCoresThreads" xml:space="preserve">
+    <value>Ядра: {0}, потоки: {1}</value>
+  </data>
+  <data name="CpuLoad" xml:space="preserve">
+    <value>Загрузка {0:0} %</value>
+  </data>
+  <data name="MemoryDetail" xml:space="preserve">
+    <value>Занято {0}, свободно {1}</value>
+  </data>
+  <data name="UnitGigabyte" xml:space="preserve">
+    <value>ГБ</value>
+  </data>
+  <data name="UnitTerabyte" xml:space="preserve">
+    <value>ТБ</value>
+  </data>
 </root>

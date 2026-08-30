@@ -91,6 +91,24 @@ namespace SystemProgramm {
             }
         }
 
+        public static string CpuCoresThreads {
+            get {
+                return ResourceManager.GetString("CpuCoresThreads", resourceCulture);
+            }
+        }
+
+        public static string CpuLoad {
+            get {
+                return ResourceManager.GetString("CpuLoad", resourceCulture);
+            }
+        }
+
+        public static string MemoryDetail {
+            get {
+                return ResourceManager.GetString("MemoryDetail", resourceCulture);
+            }
+        }
+
         public static string OverviewPlaceholder {
             get {
                 return ResourceManager.GetString("OverviewPlaceholder", resourceCulture);
@@ -163,6 +181,12 @@ namespace SystemProgramm {
             }
         }
 
+        public static string StorageDetail {
+            get {
+                return ResourceManager.GetString("StorageDetail", resourceCulture);
+            }
+        }
+
         public static string ThemeDark {
             get {
                 return ResourceManager.GetString("ThemeDark", resourceCulture);
@@ -178,6 +202,24 @@ namespace SystemProgramm {
         public static string ThemeSystem {
             get {
                 return ResourceManager.GetString("ThemeSystem", resourceCulture);
+            }
+        }
+
+        public static string UnitGigabyte {
+            get {
+                return ResourceManager.GetString("UnitGigabyte", resourceCulture);
+            }
+        }
+
+        public static string UnitTerabyte {
+            get {
+                return ResourceManager.GetString("UnitTerabyte", resourceCulture);
+            }
+        }
+
+        public static string UsedPercent {
+            get {
+                return ResourceManager.GetString("UsedPercent", resourceCulture);
             }
         }
 

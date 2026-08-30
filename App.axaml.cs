@@ -21,6 +21,9 @@ public partial class App : Application
             CultureSetup.Apply(_store.Language);
             ApplyTheme();
 
+            _store.Open();
+            desktop.Exit += (_, _) => _store.Dispose();
+
             _store.ThemeChanged += (_, _) => ApplyTheme();
             _store.LanguageChanged += (_, _) =>
             {

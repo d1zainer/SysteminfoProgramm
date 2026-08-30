@@ -1,14 +1,26 @@
 using SystemProgramm.Models;
+using SystemProgramm.Services.Readers;
 
 namespace SystemProgramm.Services;
 
-public sealed class AppStore
+public sealed class AppStore : IDisposable
 {
+    private readonly HardwareMonitor _monitor = new();
+
     private AppSettings _settings = SettingsStore.Load();
+
+    public AppStore() =>
+        OverviewReaders = [new CpuReader(_monitor), new MemoryReader(_monitor), new StorageReader()];
+
+    public IReadOnlyList<IHardwareReader> OverviewReaders { get; }
 
     public string Theme => _settings.Theme;
 
     public string Language => CultureSetup.Resolve(_settings);
+
+    public void Open() => _monitor.Open();
+
+    public void Dispose() => _monitor.Dispose();
 
     public event EventHandler? ThemeChanged;
 

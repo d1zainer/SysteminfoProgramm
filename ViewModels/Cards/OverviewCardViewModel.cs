@@ -23,4 +23,12 @@ public sealed partial class OverviewCardViewModel(string title, IconKind icon) :
     public string Title { get; } = title;
 
     public IconKind Icon { get; } = icon;
+
+    public void Apply(HardwareReading reading)
+    {
+        Headline = reading.Headline;
+        Detail = reading.Detail;
+        Load = reading.Load;
+        LoadText = reading.LoadText;
+    }
 }

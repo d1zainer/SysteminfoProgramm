@@ -15,7 +15,7 @@ public partial class MainWindowViewModel : ObservableObject
     {
         Pages =
         [
-            new OverviewViewModel(),
+            new OverviewViewModel(store.OverviewReaders),
             new PageViewModel(new PageInfo(Localization.PageCpu, IconKind.Cpu)),
             new PageViewModel(new PageInfo(Localization.PageGpu, IconKind.Gpu)),
             new PageViewModel(new PageInfo(Localization.PageMemory, IconKind.Memory)),
