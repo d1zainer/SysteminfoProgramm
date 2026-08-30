@@ -97,9 +97,9 @@ namespace SystemProgramm {
             }
         }
 
-        public static string CpuLoad {
+        public static string LoadPercent {
             get {
-                return ResourceManager.GetString("CpuLoad", resourceCulture);
+                return ResourceManager.GetString("LoadPercent", resourceCulture);
             }
         }
 
@@ -205,9 +205,27 @@ namespace SystemProgramm {
             }
         }
 
+        public static string TemperatureCelsius {
+            get {
+                return ResourceManager.GetString("TemperatureCelsius", resourceCulture);
+            }
+        }
+
+        public static string UnitGigabitPerSecond {
+            get {
+                return ResourceManager.GetString("UnitGigabitPerSecond", resourceCulture);
+            }
+        }
+
         public static string UnitGigabyte {
             get {
                 return ResourceManager.GetString("UnitGigabyte", resourceCulture);
+            }
+        }
+
+        public static string UnitMegabitPerSecond {
+            get {
+                return ResourceManager.GetString("UnitMegabitPerSecond", resourceCulture);
             }
         }
 

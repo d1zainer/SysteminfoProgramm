@@ -7,7 +7,8 @@ public sealed class HardwareMonitor : IDisposable
     private readonly Computer _computer = new()
     {
         IsCpuEnabled = true,
-        IsMemoryEnabled = true
+        IsMemoryEnabled = true,
+        IsGpuEnabled = true
     };
 
     private bool _opened;

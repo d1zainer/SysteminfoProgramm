@@ -10,7 +10,14 @@ public sealed class AppStore : IDisposable
     private AppSettings _settings = SettingsStore.Load();
 
     public AppStore() =>
-        OverviewReaders = [new CpuReader(_monitor), new MemoryReader(_monitor), new StorageReader()];
+        OverviewReaders =
+        [
+            new CpuReader(_monitor),
+            new GpuReader(_monitor),
+            new MemoryReader(_monitor),
+            new StorageReader(),
+            new NetworkReader()
+        ];
 
     public IReadOnlyList<IHardwareReader> OverviewReaders { get; }
 

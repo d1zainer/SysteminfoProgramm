@@ -94,14 +94,23 @@
   <data name="CpuCoresThreads" xml:space="preserve">
     <value>Ядра: {0}, потоки: {1}</value>
   </data>
-  <data name="CpuLoad" xml:space="preserve">
+  <data name="LoadPercent" xml:space="preserve">
     <value>Загрузка {0:0} %</value>
   </data>
   <data name="MemoryDetail" xml:space="preserve">
     <value>Занято {0}, свободно {1}</value>
   </data>
+  <data name="TemperatureCelsius" xml:space="preserve">
+    <value>{0:0} °C</value>
+  </data>
   <data name="UnitGigabyte" xml:space="preserve">
     <value>ГБ</value>
+  </data>
+  <data name="UnitGigabitPerSecond" xml:space="preserve">
+    <value>Гбит/с</value>
+  </data>
+  <data name="UnitMegabitPerSecond" xml:space="preserve">
+    <value>Мбит/с</value>
   </data>
   <data name="UnitTerabyte" xml:space="preserve">
     <value>ТБ</value>

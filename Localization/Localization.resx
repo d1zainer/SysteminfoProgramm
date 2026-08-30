@@ -94,14 +94,23 @@
   <data name="CpuCoresThreads" xml:space="preserve">
     <value>Cores: {0}, threads: {1}</value>
   </data>
-  <data name="CpuLoad" xml:space="preserve">
+  <data name="LoadPercent" xml:space="preserve">
     <value>{0:0} % load</value>
   </data>
   <data name="MemoryDetail" xml:space="preserve">
     <value>{0} used, {1} free</value>
   </data>
+  <data name="TemperatureCelsius" xml:space="preserve">
+    <value>{0:0} °C</value>
+  </data>
   <data name="UnitGigabyte" xml:space="preserve">
     <value>GB</value>
+  </data>
+  <data name="UnitGigabitPerSecond" xml:space="preserve">
+    <value>Gbit/s</value>
+  </data>
+  <data name="UnitMegabitPerSecond" xml:space="preserve">
+    <value>Mbit/s</value>
   </data>
   <data name="UnitTerabyte" xml:space="preserve">
     <value>TB</value>

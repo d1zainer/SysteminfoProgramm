@@ -22,7 +22,7 @@ public sealed class CpuReader(HardwareMonitor monitor) : IHardwareReader
             cpu.Name,
             Cores(),
             load,
-            load is null ? null : string.Format(Localization.CpuLoad, load));
+            load is null ? null : string.Format(Localization.LoadPercent, load));
     }
 
     private string? Cores()
