@@ -7,32 +7,50 @@ public sealed partial class MetricViewModel : ObservableObject
 {
     private readonly Queue<double> _points = new();
 
+    private readonly double? _fixedMaximum;
+
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasData))]
     private IReadOnlyList<double> _values = [];
 
     [ObservableProperty]
     private string _current = Localization.ValueUnknown;
 
-    public MetricViewModel(MetricKind kind, string title, int capacity = 120)
+    [ObservableProperty]
+    private double _maximum;
+
+    public MetricViewModel(MetricInfo info, int capacity = 60)
     {
-        Kind = kind;
-        Title = title;
+        Kind = info.Kind;
+        Title = info.Title;
         Capacity = capacity;
 
-        Maximum = 100;
+        _fixedMaximum = info.Maximum;
+        _maximum = info.Maximum ?? 1;
+
+        Unit = info.Kind switch
+        {
+            MetricKind.Temperature => Localization.UnitCelsius,
+            _ => Localization.UnitPercent
+        };
+
+        // Тик сэмплера - секунда, поэтому окно графика это ёмкость в секундах.
+        Window = string.Format(Localization.ChartWindow, TimeSpan.FromSeconds(capacity).TotalMinutes);
     }
 
     public MetricKind Kind { get; }
 
-    public bool IsTemperature => Kind == MetricKind.Temperature;
+    public bool HasData => Values.Count > 0;
 
     public string Title { get; }
 
     public int Capacity { get; }
 
-    public double Minimum { get; }
+    public double Minimum => 0;
 
-    public double Maximum { get; }
+    public string Unit { get; }
+
+    public string Window { get; }
 
     public void Push(double? value)
     {
@@ -46,6 +64,16 @@ public sealed partial class MetricViewModel : ObservableObject
 
         Values = _points.ToArray();
         Current = Format(value.Value);
+        Maximum = _fixedMaximum ?? Scale();
+    }
+
+    // Своя шкала нужна там, где потолка не существует: скорость сети, например.
+    private double Scale()
+    {
+        var peak = _points.Max();
+        var step = Math.Pow(10, Math.Floor(Math.Log10(Math.Max(peak, 1))));
+
+        return Math.Max(Math.Ceiling(peak * 1.2 / step) * step, 1);
     }
 
     private string Format(double value) => Kind switch

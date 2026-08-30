@@ -10,7 +10,7 @@ public sealed class AppStore : IDisposable
     private AppSettings _settings = SettingsStore.Load();
 
     public AppStore() =>
-        Overview = new HardwareSampler(
+        Overview = new HardwareSampler(_monitor,
         [
             new CpuReader(_monitor),
             new GpuReader(_monitor),
@@ -24,14 +24,26 @@ public sealed class AppStore : IDisposable
 
     public bool IsAdministrator => Elevation.IsAdministrator;
 
+    public ISectionReader? Section(SectionKind section) =>
+        Overview.Readers.OfType<ISectionReader>().FirstOrDefault(reader => reader.Section == section);
+
+    public void Activate(SectionKind section) => Overview.Watch(Section(section));
+
     public string Theme => _settings.Theme;
 
     public string Language => CultureSetup.Resolve(_settings);
 
+    // Открытие монитора и первый снимок стоят около полусекунды, поэтому уходят в фон:
+    // окно показывается сразу и заполняется, когда придут данные.
     public void Open()
     {
-        _monitor.Open();
-        Overview.Start(TimeSpan.FromSeconds(1));
+        var context = SynchronizationContext.Current;
+
+        _ = Task.Run(() =>
+        {
+            _monitor.Open();
+            Overview.Start(TimeSpan.FromSeconds(1), context);
+        });
     }
 
     public void Dispose()

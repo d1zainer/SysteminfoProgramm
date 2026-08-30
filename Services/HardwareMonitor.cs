@@ -13,9 +13,17 @@ public sealed class HardwareMonitor : IDisposable
         IsStorageEnabled = Elevation.IsAdministrator
     };
 
+    private readonly Dictionary<IHardware, int> _updated = [];
+
     private bool _opened;
 
+    private int _tick;
+
     public SMBios? Smbios => _opened ? _computer.SMBios : null;
+
+    // За один тик одну и ту же железку просят и карточка обзора, и страница раздела.
+    // Update() у видеокарты стоит 78 мс, поэтому обновляем её в тике один раз.
+    public void NextTick() => _tick++;
 
     public void Open()
     {
@@ -38,7 +46,15 @@ public sealed class HardwareMonitor : IDisposable
     public IHardware? Read(Func<IHardware, bool> match)
     {
         var hardware = _opened ? _computer.Hardware.FirstOrDefault(match) : null;
-        hardware?.Update();
+
+        if (hardware is null)
+            return null;
+
+        if (_updated.TryGetValue(hardware, out var tick) && tick == _tick)
+            return hardware;
+
+        hardware.Update();
+        _updated[hardware] = _tick;
 
         return hardware;
     }

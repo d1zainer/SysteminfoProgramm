@@ -1,0 +1,86 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:charts="clr-namespace:SystemProgramm.ViewModels.Charts"
+             xmlns:controls="clr-namespace:SystemProgramm.Views.Controls"
+             xmlns:conv="clr-namespace:SystemProgramm.Views.Converters"
+             xmlns:loc="clr-namespace:SystemProgramm"
+             xmlns:models="clr-namespace:SystemProgramm.Models"
+             xmlns:pages="clr-namespace:SystemProgramm.ViewModels.Pages"
+             x:Class="SystemProgramm.Views.SectionView"
+             x:DataType="pages:SectionViewModel">
+
+    <UserControl.Resources>
+        <conv:EqualsConverter x:Key="Same" />
+    </UserControl.Resources>
+
+    <Grid Margin="10" RowDefinitions="2*,*" RowSpacing="10">
+
+        <Border Grid.Row="0"
+                Classes="card"
+                Classes.temperature="{Binding SelectedMetric.Kind,
+                                              Converter={StaticResource Same},
+                                              ConverterParameter={x:Static models:MetricKind.Temperature}}">
+
+            <Grid RowDefinitions="Auto,*">
+
+                <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                    <TextBlock Grid.Column="0"
+                               Classes="title"
+                               VerticalAlignment="Center"
+                               Text="{Binding SelectedMetric.Current}" />
+
+                    <ListBox Grid.Column="1"
+                             VerticalAlignment="Center"
+                             IsVisible="{Binding HasSwitch}"
+                             ItemsSource="{Binding Charts}"
+                             SelectedItem="{Binding SelectedMetric}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="charts:MetricViewModel">
+                                <TextBlock Classes="small" Text="{Binding Title}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                </Grid>
+
+                <controls:MetricChart Grid.Row="1"
+                                      Margin="0 14 0 0"
+                                      Capacity="{Binding SelectedMetric.Capacity}"
+                                      Minimum="{Binding SelectedMetric.Minimum}"
+                                      Maximum="{Binding SelectedMetric.Maximum}"
+                                      Unit="{Binding SelectedMetric.Unit}"
+                                      WindowLabel="{Binding SelectedMetric.Window}"
+                                      NowLabel="{x:Static loc:Localization.ChartNow}"
+                                      Values="{Binding SelectedMetric.Values}" />
+
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="1" Classes="card">
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding Details}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="pages:DetailRowViewModel">
+                            <Grid Margin="0 0 0 8" ColumnDefinitions="220,*">
+                                <TextBlock Grid.Column="0"
+                                           Opacity="0.65"
+                                           VerticalAlignment="Top"
+                                           Text="{Binding Name, StringFormat='{}{0}:'}" />
+
+                                <TextBlock Grid.Column="1"
+                                           TextWrapping="Wrap"
+                                           Text="{Binding Value, TargetNullValue=—}" />
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</UserControl>

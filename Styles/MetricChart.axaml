@@ -3,6 +3,12 @@
         xmlns:controls="clr-namespace:SystemProgramm.Views.Controls">
 
     <Style Selector="controls|MetricChart">
+        <Setter Property="LabelFontFamily" Value="{DynamicResource AppFont}" />
+
+        <Setter Property="LabelBrush">
+            <SolidColorBrush Color="{DynamicResource SystemBaseHighColor}" Opacity="0.45" />
+        </Setter>
+
         <Setter Property="GridStroke">
             <SolidColorBrush Color="{DynamicResource SystemBaseHighColor}" Opacity="0.08" />
         </Setter>

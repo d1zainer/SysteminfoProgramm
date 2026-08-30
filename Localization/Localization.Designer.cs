@@ -97,9 +97,99 @@ namespace SystemProgramm {
             }
         }
 
+        public static string ChartNow {
+            get {
+                return ResourceManager.GetString("ChartNow", resourceCulture);
+            }
+        }
+
+        public static string ChartWindow {
+            get {
+                return ResourceManager.GetString("ChartWindow", resourceCulture);
+            }
+        }
+
         public static string CpuCoresThreads {
             get {
                 return ResourceManager.GetString("CpuCoresThreads", resourceCulture);
+            }
+        }
+
+        public static string DetailBusClock {
+            get {
+                return ResourceManager.GetString("DetailBusClock", resourceCulture);
+            }
+        }
+
+        public static string DetailCache {
+            get {
+                return ResourceManager.GetString("DetailCache", resourceCulture);
+            }
+        }
+
+        public static string DetailClock {
+            get {
+                return ResourceManager.GetString("DetailClock", resourceCulture);
+            }
+        }
+
+        public static string DetailCores {
+            get {
+                return ResourceManager.GetString("DetailCores", resourceCulture);
+            }
+        }
+
+        public static string DetailFamily {
+            get {
+                return ResourceManager.GetString("DetailFamily", resourceCulture);
+            }
+        }
+
+        public static string DetailFeatures {
+            get {
+                return ResourceManager.GetString("DetailFeatures", resourceCulture);
+            }
+        }
+
+        public static string DetailLoad {
+            get {
+                return ResourceManager.GetString("DetailLoad", resourceCulture);
+            }
+        }
+
+        public static string DetailMaxClock {
+            get {
+                return ResourceManager.GetString("DetailMaxClock", resourceCulture);
+            }
+        }
+
+        public static string DetailModel {
+            get {
+                return ResourceManager.GetString("DetailModel", resourceCulture);
+            }
+        }
+
+        public static string DetailPower {
+            get {
+                return ResourceManager.GetString("DetailPower", resourceCulture);
+            }
+        }
+
+        public static string DetailPowerCores {
+            get {
+                return ResourceManager.GetString("DetailPowerCores", resourceCulture);
+            }
+        }
+
+        public static string DetailSocket {
+            get {
+                return ResourceManager.GetString("DetailSocket", resourceCulture);
+            }
+        }
+
+        public static string DetailVendor {
+            get {
+                return ResourceManager.GetString("DetailVendor", resourceCulture);
             }
         }
 
@@ -283,6 +373,12 @@ namespace SystemProgramm {
             }
         }
 
+        public static string UnitCelsius {
+            get {
+                return ResourceManager.GetString("UnitCelsius", resourceCulture);
+            }
+        }
+
         public static string UnitGigabitPerSecond {
             get {
                 return ResourceManager.GetString("UnitGigabitPerSecond", resourceCulture);
@@ -304,6 +400,36 @@ namespace SystemProgramm {
         public static string UnitMegabitPerSecond {
             get {
                 return ResourceManager.GetString("UnitMegabitPerSecond", resourceCulture);
+            }
+        }
+
+        public static string UnitKilobyte {
+            get {
+                return ResourceManager.GetString("UnitKilobyte", resourceCulture);
+            }
+        }
+
+        public static string UnitMegabyte {
+            get {
+                return ResourceManager.GetString("UnitMegabyte", resourceCulture);
+            }
+        }
+
+        public static string UnitMegahertzValue {
+            get {
+                return ResourceManager.GetString("UnitMegahertzValue", resourceCulture);
+            }
+        }
+
+        public static string UnitPercent {
+            get {
+                return ResourceManager.GetString("UnitPercent", resourceCulture);
+            }
+        }
+
+        public static string UnitWattValue {
+            get {
+                return ResourceManager.GetString("UnitWattValue", resourceCulture);
             }
         }
 

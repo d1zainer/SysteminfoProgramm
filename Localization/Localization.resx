@@ -14,7 +14,7 @@
   </resheader>
 
   <data name="AppTitle" xml:space="preserve">
-    <value>System Information</value>
+    <value>SysVue</value>
   </data>
 
   <data name="PageOverview" xml:space="preserve">
@@ -36,7 +36,7 @@
     <value>Network</value>
   </data>
   <data name="PageSettings" xml:space="preserve">
-    <value>AppSettings</value>
+    <value>Settings</value>
   </data>
 
   <data name="OverviewPlaceholder" xml:space="preserve">
@@ -144,6 +144,69 @@
   </data>
   <data name="RightsRestart" xml:space="preserve">
     <value>Restart as administrator</value>
+  </data>
+  <data name="ChartNow" xml:space="preserve">
+    <value>now</value>
+  </data>
+  <data name="ChartWindow" xml:space="preserve">
+    <value>−{0:0} min</value>
+  </data>
+  <data name="DetailModel" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="DetailCores" xml:space="preserve">
+    <value>Cores and threads</value>
+  </data>
+  <data name="DetailSocket" xml:space="preserve">
+    <value>Socket</value>
+  </data>
+  <data name="DetailClock" xml:space="preserve">
+    <value>Clock</value>
+  </data>
+  <data name="DetailMaxClock" xml:space="preserve">
+    <value>Max clock</value>
+  </data>
+  <data name="DetailPower" xml:space="preserve">
+    <value>Power</value>
+  </data>
+  <data name="DetailPowerCores" xml:space="preserve">
+    <value>Cores power</value>
+  </data>
+  <data name="DetailVendor" xml:space="preserve">
+    <value>Vendor</value>
+  </data>
+  <data name="DetailFamily" xml:space="preserve">
+    <value>Family</value>
+  </data>
+  <data name="DetailBusClock" xml:space="preserve">
+    <value>Bus clock</value>
+  </data>
+  <data name="DetailLoad" xml:space="preserve">
+    <value>Load</value>
+  </data>
+  <data name="DetailFeatures" xml:space="preserve">
+    <value>Features</value>
+  </data>
+  <data name="DetailCache" xml:space="preserve">
+    <value>Cache</value>
+  </data>
+  <data name="UnitCelsius" xml:space="preserve">
+    <value>°C</value>
+  </data>
+  <data name="UnitPercent" xml:space="preserve">
+    <value>%</value>
+  </data>
+  <data name="UnitKilobyte" xml:space="preserve">
+    <value>KB</value>
+  </data>
+  <data name="UnitMegabyte" xml:space="preserve">
+    <value>MB</value>
+  </data>
+  <data name="UnitMegahertzValue" xml:space="preserve">
+    <value>{0:0} MHz</value>
+  </data>
+  <data name="UnitWattValue" xml:space="preserve">
+    <value>{0:0.#} W</value>
   </data>
   <data name="MetricLoad" xml:space="preserve">
     <value>Load</value>

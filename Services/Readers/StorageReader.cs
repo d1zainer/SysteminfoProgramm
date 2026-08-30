@@ -27,7 +27,7 @@ public sealed class StorageReader(HardwareMonitor monitor) : IHardwareReader
         var disk = monitor.Read(HardwareType.Storage);
         var temperature = disk?.Sensors.FirstOrDefault(sensor => sensor.SensorType == SensorType.Temperature)?.Value;
 
-        var space = string.Format(Localization.StorageDetail, SizeFormat.Gigabytes(used), SizeFormat.Gigabytes(total));
+        var space = string.Format(Localization.StorageDetail, Format.Gigabytes(used), Format.Gigabytes(total));
 
         return new HardwareReading(
             disk?.Name ?? drive.Name,

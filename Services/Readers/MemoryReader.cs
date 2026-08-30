@@ -23,8 +23,8 @@ public sealed class MemoryReader(HardwareMonitor monitor) : IHardwareReader
         var load = memory?.Value(SensorType.Load, "Memory");
 
         return new HardwareReading(
-            SizeFormat.Gigabytes(used.Value + available.Value),
-            string.Format(Localization.MemoryDetail, SizeFormat.Gigabytes(used.Value), SizeFormat.Gigabytes(available.Value)),
+            Format.Gigabytes(used.Value + available.Value),
+            string.Format(Localization.MemoryDetail, Format.Gigabytes(used.Value), Format.Gigabytes(available.Value)),
             load,
             load is null ? null : string.Format(Localization.UsedPercent, load));
     }

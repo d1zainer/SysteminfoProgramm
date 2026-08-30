@@ -36,8 +36,8 @@ public sealed class
         var memory = used is null || total is null
             ? null
             : string.Format(Localization.StorageDetail,
-                SizeFormat.Gigabytes(used.Value / 1024),
-                SizeFormat.Gigabytes(total.Value / 1024));
+                Format.Gigabytes(used.Value / 1024),
+                Format.Gigabytes(total.Value / 1024));
 
         var heat = temperature is null
             ? null

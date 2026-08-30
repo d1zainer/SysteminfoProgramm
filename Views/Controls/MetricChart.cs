@@ -1,3 +1,4 @@
+using System.Globalization;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
@@ -18,6 +19,15 @@ public sealed class MetricChart : Control
     public static readonly StyledProperty<int> CapacityProperty =
         AvaloniaProperty.Register<MetricChart, int>(nameof(Capacity), 120);
 
+    public static readonly StyledProperty<string?> UnitProperty =
+        AvaloniaProperty.Register<MetricChart, string?>(nameof(Unit));
+
+    public static readonly StyledProperty<string?> WindowLabelProperty =
+        AvaloniaProperty.Register<MetricChart, string?>(nameof(WindowLabel));
+
+    public static readonly StyledProperty<string?> NowLabelProperty =
+        AvaloniaProperty.Register<MetricChart, string?>(nameof(NowLabel));
+
     public static readonly StyledProperty<IBrush?> StrokeProperty =
         AvaloniaProperty.Register<MetricChart, IBrush?>(nameof(Stroke));
 
@@ -27,16 +37,30 @@ public sealed class MetricChart : Control
     public static readonly StyledProperty<IBrush?> GridStrokeProperty =
         AvaloniaProperty.Register<MetricChart, IBrush?>(nameof(GridStroke));
 
+    public static readonly StyledProperty<IBrush?> LabelBrushProperty =
+        AvaloniaProperty.Register<MetricChart, IBrush?>(nameof(LabelBrush));
+
+    public static readonly StyledProperty<FontFamily?> LabelFontFamilyProperty =
+        AvaloniaProperty.Register<MetricChart, FontFamily?>(nameof(LabelFontFamily));
+
+    public static readonly StyledProperty<double> LabelFontSizeProperty =
+        AvaloniaProperty.Register<MetricChart, double>(nameof(LabelFontSize), 11);
+
     public static readonly StyledProperty<double> StrokeThicknessProperty =
         AvaloniaProperty.Register<MetricChart, double>(nameof(StrokeThickness), 1.5);
 
     public static readonly StyledProperty<int> DivisionsProperty =
         AvaloniaProperty.Register<MetricChart, int>(nameof(Divisions), 4);
 
+    public static readonly StyledProperty<int> ColumnsProperty =
+        AvaloniaProperty.Register<MetricChart, int>(nameof(Columns), 4);
+
     static MetricChart() =>
         AffectsRender<MetricChart>(
             ValuesProperty, MinimumProperty, MaximumProperty, CapacityProperty,
-            StrokeProperty, FillProperty, GridStrokeProperty, StrokeThicknessProperty, DivisionsProperty);
+            UnitProperty, WindowLabelProperty, NowLabelProperty,
+            StrokeProperty, FillProperty, GridStrokeProperty, LabelBrushProperty,
+            LabelFontFamilyProperty, LabelFontSizeProperty, StrokeThicknessProperty, DivisionsProperty, ColumnsProperty);
 
     public IReadOnlyList<double>? Values
     {
@@ -64,6 +88,24 @@ public sealed class MetricChart : Control
         set => SetValue(CapacityProperty, value);
     }
 
+    public string? Unit
+    {
+        get => GetValue(UnitProperty);
+        set => SetValue(UnitProperty, value);
+    }
+
+    public string? WindowLabel
+    {
+        get => GetValue(WindowLabelProperty);
+        set => SetValue(WindowLabelProperty, value);
+    }
+
+    public string? NowLabel
+    {
+        get => GetValue(NowLabelProperty);
+        set => SetValue(NowLabelProperty, value);
+    }
+
     public IBrush? Stroke
     {
         get => GetValue(StrokeProperty);
@@ -82,6 +124,24 @@ public sealed class MetricChart : Control
         set => SetValue(GridStrokeProperty, value);
     }
 
+    public IBrush? LabelBrush
+    {
+        get => GetValue(LabelBrushProperty);
+        set => SetValue(LabelBrushProperty, value);
+    }
+
+    public FontFamily? LabelFontFamily
+    {
+        get => GetValue(LabelFontFamilyProperty);
+        set => SetValue(LabelFontFamilyProperty, value);
+    }
+
+    public double LabelFontSize
+    {
+        get => GetValue(LabelFontSizeProperty);
+        set => SetValue(LabelFontSizeProperty, value);
+    }
+
     public double StrokeThickness
     {
         get => GetValue(StrokeThicknessProperty);
@@ -94,53 +154,123 @@ public sealed class MetricChart : Control
         set => SetValue(DivisionsProperty, value);
     }
 
+    public int Columns
+    {
+        get => GetValue(ColumnsProperty);
+        set => SetValue(ColumnsProperty, value);
+    }
+
     public override void Render(DrawingContext context)
     {
-        var size = Bounds.Size;
-
-        if (size.Width <= 0 || size.Height <= 0)
+        if (Bounds.Width <= 0 || Bounds.Height <= 0)
             return;
 
-        DrawGrid(context, size);
+        var labels = ScaleLabels();
+        var left = labels.Count == 0 ? 0 : labels.Max(label => label.Width) + 8;
+        var bottom = HasTimeAxis() ? LabelFontSize + 8 : 0;
 
-        var values = Values;
+        var plot = new Rect(left, 0, Bounds.Width - left, Bounds.Height - bottom);
 
-        if (values is not { Count: > 1 })
+        if (plot.Width <= 0 || plot.Height <= 0)
             return;
 
-        var step = size.Width / Math.Max(Capacity - 1, 1);
+        DrawScale(context, plot, labels);
+        DrawSeries(context, plot);
+        DrawTimeAxis(context, plot);
+    }
+
+    private bool HasTimeAxis() => !string.IsNullOrEmpty(WindowLabel) || !string.IsNullOrEmpty(NowLabel);
+
+    private FormattedText Text(string value) =>
+        new(value, CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
+            new Typeface(LabelFontFamily ?? FontFamily.Default), LabelFontSize,
+            LabelBrush ?? Brushes.Gray);
+
+    // Подписи по Y: от максимума сверху до минимума снизу, по числу делений сетки.
+    private List<FormattedText> ScaleLabels()
+    {
+        if (LabelBrush is null || Divisions <= 0)
+            return [];
+
+        var span = Maximum - Minimum;
+        var labels = new List<FormattedText>(Divisions + 1);
+
+        for (var i = 0; i <= Divisions; i++)
+        {
+            var value = Maximum - span / Divisions * i;
+            labels.Add(Text(Unit is null ? $"{value:0.#}" : $"{value:0.#} {Unit}"));
+        }
+
+        return labels;
+    }
+
+    private void DrawScale(DrawingContext context, Rect plot, List<FormattedText> labels)
+    {
+        var pen = GridStroke is null ? null : new Pen(GridStroke);
+
+        for (var i = 0; i <= Divisions; i++)
+        {
+            var y = plot.Top + plot.Height / Divisions * i;
+
+            if (pen is not null)
+                context.DrawLine(pen, new Point(plot.Left, y), new Point(plot.Right, y));
+
+            if (i < labels.Count)
+                context.DrawText(labels[i], new Point(plot.Left - labels[i].Width - 8, y - labels[i].Height / 2));
+        }
+
+        if (pen is null || Columns <= 0)
+            return;
+
+        // Вертикальные деления по времени: сетка замыкается и по краям области.
+        for (var i = 0; i <= Columns; i++)
+        {
+            var x = plot.Left + plot.Width / Columns * i;
+            context.DrawLine(pen, new Point(x, plot.Top), new Point(x, plot.Bottom));
+        }
+    }
+
+    private void DrawSeries(DrawingContext context, Rect plot)
+    {
+        if (Values is not { Count: > 1 } values)
+            return;
+
+        // Свежая точка всегда у правого края, история уходит влево:
+        // пока окно не заполнено, пустое место остаётся слева, а не справа.
+        var step = plot.Width / Math.Max(Capacity - 1, 1);
         var points = new Point[values.Count];
 
         for (var i = 0; i < values.Count; i++)
-            points[i] = new Point(i * step, Offset(values[i], size.Height));
+            points[i] = new Point(plot.Right - (values.Count - 1 - i) * step, Offset(values[i], plot));
 
         if (Fill is { } fill)
-            context.DrawGeometry(fill, null, Area(points, size.Height));
+            context.DrawGeometry(fill, null, Area(points, plot.Bottom));
 
         if (Stroke is { } stroke)
             context.DrawGeometry(null, new Pen(stroke, StrokeThickness), Line(points));
     }
 
-    private double Offset(double value, double height)
+    private void DrawTimeAxis(DrawingContext context, Rect plot)
+    {
+        if (LabelBrush is null)
+            return;
+
+        if (WindowLabel is { Length: > 0 } past)
+            context.DrawText(Text(past), new Point(plot.Left, plot.Bottom + 4));
+
+        if (NowLabel is { Length: > 0 } now)
+        {
+            var text = Text(now);
+            context.DrawText(text, new Point(plot.Right - text.Width, plot.Bottom + 4));
+        }
+    }
+
+    private double Offset(double value, Rect plot)
     {
         var span = Maximum - Minimum;
         var share = span <= 0 ? 0 : (value - Minimum) / span;
 
-        return height - Math.Clamp(share, 0, 1) * height;
-    }
-
-    private void DrawGrid(DrawingContext context, Size size)
-    {
-        if (GridStroke is not { } brush || Divisions <= 0)
-            return;
-
-        var pen = new Pen(brush);
-
-        for (var i = 0; i <= Divisions; i++)
-        {
-            var y = size.Height / Divisions * i;
-            context.DrawLine(pen, new Point(0, y), new Point(size.Width, y));
-        }
+        return plot.Bottom - Math.Clamp(share, 0, 1) * plot.Height;
     }
 
     private static StreamGeometry Line(IReadOnlyList<Point> points)
@@ -158,17 +288,17 @@ public sealed class MetricChart : Control
         return geometry;
     }
 
-    private static StreamGeometry Area(IReadOnlyList<Point> points, double height)
+    private static StreamGeometry Area(IReadOnlyList<Point> points, double bottom)
     {
         var geometry = new StreamGeometry();
 
         using var area = geometry.Open();
-        area.BeginFigure(new Point(points[0].X, height), true);
+        area.BeginFigure(new Point(points[0].X, bottom), true);
 
         foreach (var point in points)
             area.LineTo(point);
 
-        area.LineTo(new Point(points[^1].X, height));
+        area.LineTo(new Point(points[^1].X, bottom));
         area.EndFigure(true);
 
         return geometry;
