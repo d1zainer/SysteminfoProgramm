@@ -1,0 +1,13 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Fluent подчёркивает ссылку при наведении. Цвета и курсора достаточно. -->
+    <Style Selector="HyperlinkButton /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="TextBlock.TextDecorations" Value="{x:Null}" />
+    </Style>
+
+    <Style Selector="HyperlinkButton:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="TextBlock.TextDecorations" Value="{x:Null}" />
+    </Style>
+
+</Styles>

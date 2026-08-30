@@ -4,5 +4,6 @@
     <StyleInclude Source="avares://SystemProgramm/Styles/Text.axaml" />
     <StyleInclude Source="avares://SystemProgramm/Styles/ListBox.axaml" />
     <StyleInclude Source="avares://SystemProgramm/Styles/Card.axaml" />
+    <StyleInclude Source="avares://SystemProgramm/Styles/HyperlinkButton.axaml" />
 
 </Styles>
