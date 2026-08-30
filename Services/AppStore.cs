@@ -40,12 +40,28 @@ public sealed class AppStore : IDisposable
         _monitor.Dispose();
     }
 
-    // Повышение прав - это перезапуск процесса: подняли новый экземпляр, закрываем себя.
+    public bool RunElevated => _settings.RunElevated;
+
+    public void SetRunElevated(bool value)
+    {
+        if (_settings.RunElevated == value)
+            return;
+
+        _settings = _settings with { RunElevated = value };
+        SettingsStore.Save(_settings);
+    }
+    
+    
     public void Elevate()
     {
-        if (Elevation.Restart())
-            ExitRequested?.Invoke(this, EventArgs.Empty);
+        if (!Elevation.Restart())
+            return;
+
+        SetRunElevated(true);
+        ExitRequested?.Invoke(this, EventArgs.Empty);
     }
+    
+    public bool ElevateOnStart() => RunElevated && !Elevation.IsAdministrator && Elevation.Restart();
 
     public event EventHandler? ExitRequested;
 

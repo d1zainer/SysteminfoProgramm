@@ -229,6 +229,24 @@ namespace SystemProgramm {
             }
         }
 
+        public static string SettingsRights {
+            get {
+                return ResourceManager.GetString("SettingsRights", resourceCulture);
+            }
+        }
+
+        public static string SettingsRunElevated {
+            get {
+                return ResourceManager.GetString("SettingsRunElevated", resourceCulture);
+            }
+        }
+
+        public static string SettingsRunElevatedHint {
+            get {
+                return ResourceManager.GetString("SettingsRunElevatedHint", resourceCulture);
+            }
+        }
+
         public static string SettingsTheme {
             get {
                 return ResourceManager.GetString("SettingsTheme", resourceCulture);

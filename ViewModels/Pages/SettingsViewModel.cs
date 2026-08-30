@@ -14,6 +14,9 @@ public sealed partial class SettingsViewModel : PageViewModel
     [ObservableProperty]
     private LanguageOption _selectedLanguage;
 
+    [ObservableProperty]
+    private bool _runElevated;
+
     public SettingsViewModel(AppStore store)
         : base(new PageInfo(Localization.PageSettings, SectionKind.Settings))
     {
@@ -35,6 +38,8 @@ public sealed partial class SettingsViewModel : PageViewModel
         _selectedTheme = Themes.FirstOrDefault(t => t.Id == store.Theme) ?? Themes[0];
 
         _selectedLanguage = Languages.FirstOrDefault(l => l.Culture == store.Language) ?? Languages[0];
+
+        _runElevated = store.RunElevated;
     }
 
     public IReadOnlyList<ThemeOption> Themes { get; }
@@ -44,4 +49,6 @@ public sealed partial class SettingsViewModel : PageViewModel
     partial void OnSelectedThemeChanged(ThemeOption value) => _store.SetTheme(value.Id);
 
     partial void OnSelectedLanguageChanged(LanguageOption value) => _store.SetLanguage(value.Culture);
+    
+    partial void OnRunElevatedChanged(bool value) => _store.SetRunElevated(value);
 }

@@ -127,6 +127,15 @@
   <data name="UnitTerabyte" xml:space="preserve">
     <value>TB</value>
   </data>
+  <data name="SettingsRights" xml:space="preserve">
+    <value>Rights</value>
+  </data>
+  <data name="SettingsRunElevated" xml:space="preserve">
+    <value>Start with administrator rights</value>
+  </data>
+  <data name="SettingsRunElevatedHint" xml:space="preserve">
+    <value>Applies on the next start: Windows asks for confirmation every time. Cancelling the prompt just starts the app without the rights.</value>
+  </data>
   <data name="RightsMissing" xml:space="preserve">
     <value>Some data is unavailable: storage devices are not visible without administrator rights.</value>
   </data>

@@ -127,6 +127,15 @@
   <data name="UnitTerabyte" xml:space="preserve">
     <value>ТБ</value>
   </data>
+  <data name="SettingsRights" xml:space="preserve">
+    <value>Права</value>
+  </data>
+  <data name="SettingsRunElevated" xml:space="preserve">
+    <value>Запускать с правами администратора</value>
+  </data>
+  <data name="SettingsRunElevatedHint" xml:space="preserve">
+    <value>Применится со следующего запуска: Windows будет спрашивать подтверждение каждый раз. Если отменить запрос, приложение просто откроется без прав.</value>
+  </data>
   <data name="RightsMissing" xml:space="preserve">
     <value>Часть данных недоступна: без прав администратора не видны накопители.</value>
   </data>

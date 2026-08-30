@@ -39,5 +39,19 @@
             </ComboBox>
         </StackPanel>
 
+        <TextBlock Classes="title"
+                   Margin="0 12 0 0"
+                   Text="{x:Static loc:Localization.SettingsRights}" />
+
+        <StackPanel Spacing="6">
+            <CheckBox Content="{x:Static loc:Localization.SettingsRunElevated}"
+                      IsChecked="{Binding RunElevated}" />
+
+            <TextBlock Classes="small"
+                       Opacity="0.65"
+                       TextWrapping="Wrap"
+                       Text="{x:Static loc:Localization.SettingsRunElevatedHint}" />
+        </StackPanel>
+
     </StackPanel>
 </UserControl>

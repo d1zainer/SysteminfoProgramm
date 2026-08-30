@@ -20,6 +20,12 @@ public partial class App : Application
         {
             CultureSetup.Apply(_store.Language);
             ApplyTheme();
+            
+            if (_store.ElevateOnStart())
+            {
+                Environment.Exit(0);
+                return;
+            }
 
             _store.Open();
             desktop.Exit += (_, _) => _store.Dispose();
