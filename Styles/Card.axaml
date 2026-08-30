@@ -1,11 +1,25 @@
-<Styles xmlns="https://github.com/avaloniaui"
+﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Style Selector="Border.card">
+    <Style Selector="Button.card">
         <Setter Property="Padding" Value="18" />
         <Setter Property="CornerRadius" Value="10" />
         <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
 
+        <Setter Property="Foreground">
+            <SolidColorBrush Color="{DynamicResource SystemBaseHighColor}" />
+        </Setter>
+    </Style>
+
+    <Style Selector="Button.card:pointerover">
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+
+    <!-- Fluent красит кнопку в своих состояниях, а карточка должна оставаться карточкой:
+         задаём фон сами для всех четырёх состояний. -->
+    <Style Selector="Button.card /template/ ContentPresenter#PART_ContentPresenter">
         <Setter Property="Background">
             <SolidColorBrush Color="{DynamicResource SystemBaseHighColor}" Opacity="0.04" />
         </Setter>
@@ -15,13 +29,25 @@
         </Setter>
     </Style>
 
-    <Style Selector="Border.card.clickable">
-        <Setter Property="Cursor" Value="Hand" />
+    <Style Selector="Button.card:disabled /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background">
+            <SolidColorBrush Color="{DynamicResource SystemBaseHighColor}" Opacity="0.04" />
+        </Setter>
+
+        <Setter Property="BorderBrush">
+            <SolidColorBrush Color="{DynamicResource SystemBaseHighColor}" Opacity="0.1" />
+        </Setter>
     </Style>
 
-    <Style Selector="Border.card.clickable:pointerover">
+    <Style Selector="Button.card:pointerover /template/ ContentPresenter#PART_ContentPresenter">
         <Setter Property="Background">
             <SolidColorBrush Color="{DynamicResource SystemBaseHighColor}" Opacity="0.09" />
+        </Setter>
+    </Style>
+
+    <Style Selector="Button.card:pressed /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background">
+            <SolidColorBrush Color="{DynamicResource SystemBaseHighColor}" Opacity="0.13" />
         </Setter>
     </Style>
 

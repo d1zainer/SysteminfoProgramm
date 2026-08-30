@@ -6,7 +6,7 @@ public sealed class StorageReader : IHardwareReader
 {
     private const double Gigabyte = 1024d * 1024 * 1024;
 
-    public IconKind Icon => IconKind.Storage;
+    public SectionKind Section => SectionKind.Storage;
 
     public string Title => Localization.CardStorage;
     

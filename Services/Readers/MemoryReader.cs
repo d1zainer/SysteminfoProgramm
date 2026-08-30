@@ -5,7 +5,7 @@ namespace SystemProgramm.Services.Readers;
 
 public sealed class MemoryReader(HardwareMonitor monitor) : IHardwareReader
 {
-    public IconKind Icon => IconKind.Memory;
+    public SectionKind Section => SectionKind.Memory;
 
     public string Title => Localization.CardMemory;
 

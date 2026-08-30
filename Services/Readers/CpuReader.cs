@@ -5,7 +5,7 @@ namespace SystemProgramm.Services.Readers;
 
 public sealed class CpuReader(HardwareMonitor monitor) : IHardwareReader
 {
-    public IconKind Icon => IconKind.Cpu;
+    public SectionKind Section => SectionKind.Cpu;
 
     public string Title => Localization.CardCpu;
 

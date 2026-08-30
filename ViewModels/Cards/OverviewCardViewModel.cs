@@ -1,9 +1,10 @@
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using SystemProgramm.Models;
 
 namespace SystemProgramm.ViewModels.Cards;
 
-public sealed partial class OverviewCardViewModel(string title, IconKind icon) : ObservableObject
+public sealed partial class OverviewCardViewModel(string title, SectionKind section) : ObservableObject
 {
     // Главная строка: модель процессора, объём памяти и так далее.
     [ObservableProperty]
@@ -22,13 +23,9 @@ public sealed partial class OverviewCardViewModel(string title, IconKind icon) :
 
     public string Title { get; } = title;
 
-    public IconKind Icon { get; } = icon;
+    public SectionKind Section { get; } = section;
     
-    public Action? Open { get; set; }
-
-    public bool CanOpen => Open is not null;
-
-    public void Activate() => Open?.Invoke();
+    public ICommand? Open { get; set; }
 
     public void Apply(HardwareReading reading)
     {

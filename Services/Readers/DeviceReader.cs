@@ -11,7 +11,7 @@ public sealed class DeviceReader : IHardwareReader
 
     private DateTime _taken;
 
-    public IconKind Icon => IconKind.Devices;
+    public SectionKind Section => SectionKind.Devices;
 
     public string Title => Localization.CardDevices;
     

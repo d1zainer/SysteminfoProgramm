@@ -1,6 +1,6 @@
 namespace SystemProgramm.Models;
 
-public enum IconKind
+public enum SectionKind
 {
     Overview,
     Cpu,

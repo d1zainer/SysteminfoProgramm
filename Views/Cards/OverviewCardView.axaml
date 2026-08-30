@@ -6,17 +6,19 @@
              x:DataType="cards:OverviewCardViewModel">
 
     <UserControl.Resources>
-        <conv:IconKindToTemplateConverter x:Key="CardIcon" />
+        <conv:SectionToIconConverter x:Key="CardIcon" />
     </UserControl.Resources>
 
-    <Border Classes="card" Classes.clickable="{Binding CanOpen}">
+    <Button Classes="card"
+            Command="{Binding Open}"
+            IsEnabled="{Binding Open, Converter={x:Static ObjectConverters.IsNotNull}}">
         <Grid RowDefinitions="Auto,*,Auto">
 
             <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="10">
                 <ContentControl Width="18"
                                 Height="18"
                                 VerticalAlignment="Center"
-                                Template="{Binding Icon, Converter={StaticResource CardIcon}}"
+                                Template="{Binding Section, Converter={StaticResource CardIcon}}"
                                 Foreground="{DynamicResource SystemAccentColor}" />
 
                 <TextBlock Classes="medium"
@@ -50,5 +52,5 @@
             </StackPanel>
 
         </Grid>
-    </Border>
+    </Button>
 </UserControl>

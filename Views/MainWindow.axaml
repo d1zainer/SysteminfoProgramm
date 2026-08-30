@@ -20,7 +20,7 @@
     </Window.TransparencyBackgroundFallback>
 
     <Window.Resources>
-        <conv:IconKindToTemplateConverter x:Key="PageIcon" />
+        <conv:SectionToIconConverter x:Key="PageIcon" />
     </Window.Resources>
 
     <Grid ColumnDefinitions="Auto,*">
@@ -37,7 +37,7 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="pages:PageViewModel">
                         <StackPanel Orientation="Horizontal" Spacing="12">
-                            <ContentControl Template="{Binding Info.Icon, Converter={StaticResource PageIcon}}"
+                            <ContentControl Template="{Binding Info.Section, Converter={StaticResource PageIcon}}"
                                             Foreground="{Binding $parent[ListBoxItem].Foreground}" />
 
                             <TextBlock Margin="0 0 10 0"

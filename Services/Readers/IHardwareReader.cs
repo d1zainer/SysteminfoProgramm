@@ -7,7 +7,7 @@ namespace SystemProgramm.Services.Readers;
 /// </summary>
 public interface IHardwareReader
 {
-    IconKind Icon { get; }
+    SectionKind Section { get; }
 
     string Title { get; }
 

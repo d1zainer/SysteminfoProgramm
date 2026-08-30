@@ -9,12 +9,12 @@ public sealed class OverviewViewModel : PageViewModel, IDisposable
 {
     private readonly HardwareSampler _sampler;
 
-    public OverviewViewModel(HardwareSampler sampler) : base(new PageInfo(Localization.PageOverview, IconKind.Overview))
+    public OverviewViewModel(HardwareSampler sampler) : base(new PageInfo(Localization.PageOverview, SectionKind.Overview))
     {
         _sampler = sampler;
 
         Cards = new ObservableCollection<OverviewCardViewModel>(
-            sampler.Readers.Select(reader => new OverviewCardViewModel(reader.Title, reader.Icon)));
+            sampler.Readers.Select(reader => new OverviewCardViewModel(reader.Title, reader.Section)));
 
         if (sampler.Latest is { } readings)
             Apply(readings);

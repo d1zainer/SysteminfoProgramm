@@ -6,7 +6,7 @@ namespace SystemProgramm.Services.Readers;
 
 public sealed class NetworkReader(HardwareMonitor monitor) : IHardwareReader
 {
-    public IconKind Icon => IconKind.Network;
+    public SectionKind Section => SectionKind.Network;
 
     public string Title => Localization.CardNetwork;
 

@@ -6,7 +6,7 @@ namespace SystemProgramm.Services.Readers;
 public sealed class 
     GpuReader(HardwareMonitor monitor) : IHardwareReader
 {
-    public IconKind Icon => IconKind.Gpu;
+    public SectionKind Section => SectionKind.Gpu;
 
     public string Title => Localization.CardGpu;
 

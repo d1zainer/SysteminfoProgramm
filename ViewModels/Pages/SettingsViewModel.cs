@@ -15,7 +15,7 @@ public sealed partial class SettingsViewModel : PageViewModel
     private LanguageOption _selectedLanguage;
 
     public SettingsViewModel(AppStore store)
-        : base(new PageInfo(Localization.PageSettings, IconKind.Settings))
+        : base(new PageInfo(Localization.PageSettings, SectionKind.Settings))
     {
         _store = store;
 

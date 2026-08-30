@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using SystemProgramm.Models;
 using SystemProgramm.Services;
 using SystemProgramm.ViewModels.Pages;
@@ -18,19 +19,19 @@ public partial class MainWindowViewModel : ObservableObject, IDisposable
         Pages =
         [
             overview,
-            new PageViewModel(new PageInfo(Localization.PageCpu, IconKind.Cpu)),
-            new PageViewModel(new PageInfo(Localization.PageGpu, IconKind.Gpu)),
-            new PageViewModel(new PageInfo(Localization.PageMemory, IconKind.Memory)),
-            new PageViewModel(new PageInfo(Localization.PageStorage, IconKind.Storage)),
-            new PageViewModel(new PageInfo(Localization.PageNetwork, IconKind.Network)),
+            new PageViewModel(new PageInfo(Localization.PageCpu, SectionKind.Cpu)),
+            new PageViewModel(new PageInfo(Localization.PageGpu, SectionKind.Gpu)),
+            new PageViewModel(new PageInfo(Localization.PageMemory, SectionKind.Memory)),
+            new PageViewModel(new PageInfo(Localization.PageStorage, SectionKind.Storage)),
+            new PageViewModel(new PageInfo(Localization.PageNetwork, SectionKind.Network)),
             new SettingsViewModel(store)
         ];
 
         _currentPage = Pages[0];
         
         foreach (var card in overview.Cards)
-            if (Pages.FirstOrDefault(page => page.Info.Icon == card.Icon) is { } target)
-                card.Open = () => CurrentPage = target;
+            if (Pages.FirstOrDefault(page => page.Info.Section == card.Section) is { } target)
+                card.Open = new RelayCommand(() => CurrentPage = target);
     }
 
     public ObservableCollection<PageViewModel> Pages { get; }
