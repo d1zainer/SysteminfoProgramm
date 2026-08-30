@@ -15,4 +15,14 @@
         </Setter>
     </Style>
 
+    <Style Selector="Border.card.clickable">
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+
+    <Style Selector="Border.card.clickable:pointerover">
+        <Setter Property="Background">
+            <SolidColorBrush Color="{DynamicResource SystemBaseHighColor}" Opacity="0.09" />
+        </Setter>
+    </Style>
+
 </Styles>

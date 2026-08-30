@@ -13,9 +13,11 @@ public partial class MainWindowViewModel : ObservableObject, IDisposable
 
     public MainWindowViewModel(AppStore store)
     {
+        var overview = new OverviewViewModel(store.Overview);
+
         Pages =
         [
-            new OverviewViewModel(store.Overview),
+            overview,
             new PageViewModel(new PageInfo(Localization.PageCpu, IconKind.Cpu)),
             new PageViewModel(new PageInfo(Localization.PageGpu, IconKind.Gpu)),
             new PageViewModel(new PageInfo(Localization.PageMemory, IconKind.Memory)),
@@ -25,6 +27,10 @@ public partial class MainWindowViewModel : ObservableObject, IDisposable
         ];
 
         _currentPage = Pages[0];
+        
+        foreach (var card in overview.Cards)
+            if (Pages.FirstOrDefault(page => page.Info.Icon == card.Icon) is { } target)
+                card.Open = () => CurrentPage = target;
     }
 
     public ObservableCollection<PageViewModel> Pages { get; }
