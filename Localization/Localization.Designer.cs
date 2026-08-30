@@ -199,6 +199,24 @@ namespace SystemProgramm {
             }
         }
 
+        public static string RightsGranted {
+            get {
+                return ResourceManager.GetString("RightsGranted", resourceCulture);
+            }
+        }
+
+        public static string RightsMissing {
+            get {
+                return ResourceManager.GetString("RightsMissing", resourceCulture);
+            }
+        }
+
+        public static string RightsRestart {
+            get {
+                return ResourceManager.GetString("RightsRestart", resourceCulture);
+            }
+        }
+
         public static string SettingsAppearance {
             get {
                 return ResourceManager.GetString("SettingsAppearance", resourceCulture);

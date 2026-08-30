@@ -1,8 +1,9 @@
+using LibreHardwareMonitor.Hardware;
 using SystemProgramm.Models;
 
 namespace SystemProgramm.Services.Readers;
 
-public sealed class StorageReader : IHardwareReader
+public sealed class StorageReader(HardwareMonitor monitor) : IHardwareReader
 {
     private const double Gigabyte = 1024d * 1024 * 1024;
 
@@ -21,9 +22,16 @@ public sealed class StorageReader : IHardwareReader
         var used = total - drive.AvailableFreeSpace / Gigabyte;
         var load = used / total * 100;
 
+        // Модель диска и его температуру отдаёт только LibreHardwareMonitor,
+        // и только под администратором. Без них показываем сам том.
+        var disk = monitor.Read(HardwareType.Storage);
+        var temperature = disk?.Sensors.FirstOrDefault(sensor => sensor.SensorType == SensorType.Temperature)?.Value;
+
+        var space = string.Format(Localization.StorageDetail, SizeFormat.Gigabytes(used), SizeFormat.Gigabytes(total));
+
         return new HardwareReading(
-            drive.Name,
-            string.Format(Localization.StorageDetail, SizeFormat.Gigabytes(used), SizeFormat.Gigabytes(total)),
+            disk?.Name ?? drive.Name,
+            temperature is null ? space : $"{space}, {string.Format(Localization.TemperatureCelsius, temperature)}",
             load,
             string.Format(Localization.UsedPercent, load));
     }

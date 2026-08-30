@@ -127,6 +127,15 @@
   <data name="UnitTerabyte" xml:space="preserve">
     <value>ТБ</value>
   </data>
+  <data name="RightsMissing" xml:space="preserve">
+    <value>Часть данных недоступна: без прав администратора не видны накопители.</value>
+  </data>
+  <data name="RightsGranted" xml:space="preserve">
+    <value>Запущено с правами администратора.</value>
+  </data>
+  <data name="RightsRestart" xml:space="preserve">
+    <value>Перезапустить с правами</value>
+  </data>
   <data name="MetricLoad" xml:space="preserve">
     <value>Загрузка</value>
   </data>

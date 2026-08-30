@@ -15,12 +15,14 @@ public sealed class AppStore : IDisposable
             new CpuReader(_monitor),
             new GpuReader(_monitor),
             new MemoryReader(_monitor),
-            new StorageReader(),
+            new StorageReader(_monitor),
             new NetworkReader(_monitor),
             new DeviceReader()
         ]);
 
     public HardwareSampler Overview { get; }
+
+    public bool IsAdministrator => Elevation.IsAdministrator;
 
     public string Theme => _settings.Theme;
 
@@ -37,6 +39,15 @@ public sealed class AppStore : IDisposable
         Overview.Dispose();
         _monitor.Dispose();
     }
+
+    // Повышение прав - это перезапуск процесса: подняли новый экземпляр, закрываем себя.
+    public void Elevate()
+    {
+        if (Elevation.Restart())
+            ExitRequested?.Invoke(this, EventArgs.Empty);
+    }
+
+    public event EventHandler? ExitRequested;
 
     public event EventHandler? ThemeChanged;
 

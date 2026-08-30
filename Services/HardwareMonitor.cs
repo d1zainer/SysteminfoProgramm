@@ -9,7 +9,8 @@ public sealed class HardwareMonitor : IDisposable
         IsCpuEnabled = true,
         IsMemoryEnabled = true,
         IsGpuEnabled = true,
-        IsNetworkEnabled = true
+        IsNetworkEnabled = true,
+        IsStorageEnabled = Elevation.IsAdministrator
     };
 
     private bool _opened;

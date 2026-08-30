@@ -28,6 +28,10 @@ public partial class MainWindowViewModel : ObservableObject, IDisposable
         ];
 
         _currentPage = Pages[0];
+
+        IsAdministrator = store.IsAdministrator;
+        RightsNotice = IsAdministrator ? Localization.RightsGranted : Localization.RightsMissing;
+        Elevate = new RelayCommand(store.Elevate);
         
         foreach (var card in overview.Cards)
             if (Pages.FirstOrDefault(page => page.Info.Section == card.Section) is { } target)
@@ -35,6 +39,12 @@ public partial class MainWindowViewModel : ObservableObject, IDisposable
     }
 
     public ObservableCollection<PageViewModel> Pages { get; }
+
+    public bool IsAdministrator { get; }
+
+    public string RightsNotice { get; }
+
+    public IRelayCommand Elevate { get; }
     
     public void Dispose()
     {

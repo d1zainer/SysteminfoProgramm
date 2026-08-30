@@ -23,6 +23,7 @@ public partial class App : Application
 
             _store.Open();
             desktop.Exit += (_, _) => _store.Dispose();
+            _store.ExitRequested += (_, _) => desktop.Shutdown();
 
             _store.ThemeChanged += (_, _) => ApplyTheme();
             _store.LanguageChanged += (_, _) =>

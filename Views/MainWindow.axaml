@@ -23,10 +23,10 @@
         <conv:SectionToIconConverter x:Key="PageIcon" />
     </Window.Resources>
 
-    <Grid ColumnDefinitions="Auto,*">
+    <Grid ColumnDefinitions="Auto,*" RowDefinitions="*,Auto">
         <!-- Подложка под меню: там, где Mica работает, она просвечивает сквозь неё,
              а там, где система её не рисует, окно не превращается в дыру. -->
-        <Border Grid.Column="0">
+        <Border Grid.Row="0" Grid.Column="0">
             <Border.Background>
                 <SolidColorBrush Color="{DynamicResource SystemChromeLowColor}" Opacity="0.85" />
             </Border.Background>
@@ -51,7 +51,7 @@
         </Border>
 
 
-        <Border Grid.Column="1">
+        <Border Grid.Row="0" Grid.Column="1">
             <Border.Background>
                 <SolidColorBrush Color="{DynamicResource SystemChromeMediumColor}" />
             </Border.Background>
@@ -78,6 +78,39 @@
 
                 </ContentControl.DataTemplates>
             </ContentControl>
+        </Border>
+
+        <Border Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Padding="18 8"
+                BorderThickness="0 1 0 0">
+
+            <Border.Background>
+                <SolidColorBrush Color="{DynamicResource SystemChromeLowColor}" Opacity="0.85" />
+            </Border.Background>
+
+            <Border.BorderBrush>
+                <SolidColorBrush Color="{DynamicResource SystemBaseHighColor}" Opacity="0.1" />
+            </Border.BorderBrush>
+
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Grid.Column="0"
+                           Classes="small"
+                           Opacity="0.65"
+                           VerticalAlignment="Center"
+                           TextWrapping="Wrap"
+                           Text="{Binding RightsNotice}" />
+
+                <HyperlinkButton Grid.Column="1"
+                                 Padding="0"
+                                 Margin="16 0 0 0"
+                                 FontSize="12"
+                                 VerticalAlignment="Center"
+                                 Content="{x:Static loc:Localization.RightsRestart}"
+                                 Command="{Binding Elevate}"
+                                 IsVisible="{Binding !IsAdministrator}" />
+            </Grid>
         </Border>
 
     </Grid>

@@ -127,6 +127,15 @@
   <data name="UnitTerabyte" xml:space="preserve">
     <value>TB</value>
   </data>
+  <data name="RightsMissing" xml:space="preserve">
+    <value>Some data is unavailable: storage devices are not visible without administrator rights.</value>
+  </data>
+  <data name="RightsGranted" xml:space="preserve">
+    <value>Running as administrator.</value>
+  </data>
+  <data name="RightsRestart" xml:space="preserve">
+    <value>Restart as administrator</value>
+  </data>
   <data name="MetricLoad" xml:space="preserve">
     <value>Load</value>
   </data>
