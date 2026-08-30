@@ -91,6 +91,9 @@
   <data name="UsedPercent" xml:space="preserve">
     <value>Занято {0:0} %</value>
   </data>
+  <data name="CardDetails" xml:space="preserve">
+    <value>Подробности</value>
+  </data>
   <data name="DeviceCount" xml:space="preserve">
     <value>Устройств: {0}</value>
   </data>

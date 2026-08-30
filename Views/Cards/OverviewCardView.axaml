@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:cards="clr-namespace:SystemProgramm.ViewModels.Cards"
              xmlns:conv="clr-namespace:SystemProgramm.Views.Converters"
+             xmlns:loc="clr-namespace:SystemProgramm"
              x:Class="SystemProgramm.Views.Cards.OverviewCardView"
              x:DataType="cards:OverviewCardViewModel">
 
@@ -9,10 +10,8 @@
         <conv:SectionToIconConverter x:Key="CardIcon" />
     </UserControl.Resources>
 
-    <Button Classes="card"
-            Command="{Binding Open}"
-            IsEnabled="{Binding Open, Converter={x:Static ObjectConverters.IsNotNull}}">
-        <Grid RowDefinitions="Auto,*,Auto">
+    <Border Classes="card">
+        <Grid RowDefinitions="Auto,*,Auto,Auto">
 
             <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="10">
                 <ContentControl Width="18"
@@ -51,6 +50,23 @@
                            Text="{Binding LoadText}" />
             </StackPanel>
 
+            <Border Grid.Row="3"
+                    Margin="0 14 0 0"
+                    Padding="0 10 0 0"
+                    BorderThickness="0 1 0 0"
+                    IsVisible="{Binding Open, Converter={x:Static ObjectConverters.IsNotNull}}">
+
+                <Border.BorderBrush>
+                    <SolidColorBrush Color="{DynamicResource SystemBaseHighColor}" Opacity="0.08" />
+                </Border.BorderBrush>
+
+                <HyperlinkButton Padding="0"
+                                 HorizontalAlignment="Left"
+                                 FontSize="12"
+                                 Content="{x:Static loc:Localization.CardDetails}"
+                                 Command="{Binding Open}" />
+            </Border>
+
         </Grid>
-    </Button>
+    </Border>
 </UserControl>

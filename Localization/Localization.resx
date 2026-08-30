@@ -91,6 +91,9 @@
   <data name="UsedPercent" xml:space="preserve">
     <value>{0:0} % used</value>
   </data>
+  <data name="CardDetails" xml:space="preserve">
+    <value>Details</value>
+  </data>
   <data name="DeviceCount" xml:space="preserve">
     <value>Devices: {0}</value>
   </data>

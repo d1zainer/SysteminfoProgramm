@@ -61,6 +61,12 @@ namespace SystemProgramm {
             }
         }
 
+        public static string CardDetails {
+            get {
+                return ResourceManager.GetString("CardDetails", resourceCulture);
+            }
+        }
+
         public static string CardDevices {
             get {
                 return ResourceManager.GetString("CardDevices", resourceCulture);
