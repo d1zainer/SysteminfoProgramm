@@ -91,6 +91,9 @@
   <data name="UsedPercent" xml:space="preserve">
     <value>Занято {0:0} %</value>
   </data>
+  <data name="DeviceCount" xml:space="preserve">
+    <value>Устройств: {0}</value>
+  </data>
   <data name="CpuCoresThreads" xml:space="preserve">
     <value>Ядра: {0}, потоки: {1}</value>
   </data>

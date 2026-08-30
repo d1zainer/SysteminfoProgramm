@@ -91,6 +91,9 @@
   <data name="UsedPercent" xml:space="preserve">
     <value>{0:0} % used</value>
   </data>
+  <data name="DeviceCount" xml:space="preserve">
+    <value>Devices: {0}</value>
+  </data>
   <data name="CpuCoresThreads" xml:space="preserve">
     <value>Cores: {0}, threads: {1}</value>
   </data>

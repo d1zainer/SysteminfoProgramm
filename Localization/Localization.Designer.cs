@@ -97,6 +97,12 @@ namespace SystemProgramm {
             }
         }
 
+        public static string DeviceCount {
+            get {
+                return ResourceManager.GetString("DeviceCount", resourceCulture);
+            }
+        }
+
         public static string LoadPercent {
             get {
                 return ResourceManager.GetString("LoadPercent", resourceCulture);

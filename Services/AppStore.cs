@@ -16,7 +16,8 @@ public sealed class AppStore : IDisposable
             new GpuReader(_monitor),
             new MemoryReader(_monitor),
             new StorageReader(),
-            new NetworkReader()
+            new NetworkReader(),
+            new DeviceReader()
         ];
 
     public IReadOnlyList<IHardwareReader> OverviewReaders { get; }
