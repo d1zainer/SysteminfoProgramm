@@ -3,7 +3,7 @@
              xmlns:models="clr-namespace:SystemProgramm.Models"
              xmlns:pages="clr-namespace:SystemProgramm.ViewModels.Pages"
              xmlns:loc="clr-namespace:SystemProgramm"
-             x:Class="SystemProgramm.Views.SettingsView"
+             x:Class="SystemProgramm.Views.Pages.SettingsView"
              x:DataType="pages:SettingsViewModel">
 
     <StackPanel Margin="24" Spacing="20">

@@ -6,6 +6,12 @@ namespace SystemProgramm.Services.Readers;
 
 public sealed class NetworkReader(HardwareMonitor monitor) : IHardwareReader
 {
+    private const string DownloadSpeed = "Download Speed";
+
+    private const string UploadSpeed = "Upload Speed";
+
+    private const string Utilization = "Network Utilization";
+
     public SectionKind Section => SectionKind.Network;
 
     public string Title => Localization.CardNetwork;
@@ -15,36 +21,49 @@ public sealed class NetworkReader(HardwareMonitor monitor) : IHardwareReader
         var adapter = Active();
 
         if (adapter is null)
+        {
             return new HardwareReading(Localization.ValueUnknown);
+        }
 
         var nic = Nic(adapter);
 
-        var download = nic?.Value(SensorType.Throughput, "Download Speed");
-        var upload = nic?.Value(SensorType.Throughput, "Upload Speed");
+        var download = nic?.Value(SensorType.Throughput, DownloadSpeed);
+        var upload = nic?.Value(SensorType.Throughput, UploadSpeed);
 
-        return new HardwareReading(
-            adapter.Name,
-            adapter.Speed > 0 ? $"{adapter.Description}, {Speed(adapter.Speed)}" : adapter.Description,
-            nic?.Value(SensorType.Load, "Network Utilization"),
-            download is null || upload is null
-                ? null
-                : string.Format(Localization.NetworkTraffic, Speed(download.Value * 8), Speed(upload.Value * 8)));
+        var detail = adapter.Speed > 0
+            ? $"{adapter.Description}, {Format.BitsPerSecond(adapter.Speed)}"
+            : adapter.Description;
+
+        var traffic = download is null || upload is null
+            ? null
+            : string.Format(
+                Localization.NetworkTraffic,
+                Format.BitsPerSecond(download.Value * 8),
+                Format.BitsPerSecond(upload.Value * 8));
+
+        return new HardwareReading(adapter.Name, detail, nic?.Value(SensorType.Load, Utilization), traffic);
     }
 
     // LibreHardwareMonitor опознаёт адаптер как /nic/%7BGUID%7D - тот же GUID,
     // что и NetworkInterface.Id, только фигурные скобки в url-кодировке.
-    private IHardware? Nic(NetworkInterface adapter) =>
-        monitor.Read(hardware => hardware.HardwareType == HardwareType.Network
-                                 && Uri.UnescapeDataString(hardware.Identifier.ToString())
-                                     .Equals($"/nic/{adapter.Id}", StringComparison.OrdinalIgnoreCase));
+    private IHardware? Nic(NetworkInterface adapter)
+    {
+        return monitor.Read(hardware => hardware.HardwareType == HardwareType.Network
+                                        && Uri.UnescapeDataString(hardware.Identifier.ToString())
+                                            .Equals($"/nic/{adapter.Id}", StringComparison.OrdinalIgnoreCase));
+    }
 
-    private static NetworkInterface? Active() =>
-        NetworkInterface.GetAllNetworkInterfaces()
+    // Активным считаем поднятый адаптер со шлюзом, а из таких - тот, через который
+    // реально идёт трафик: виртуальных и туннельных в системе десятки.
+    private static NetworkInterface? Active()
+    {
+        return NetworkInterface.GetAllNetworkInterfaces()
             .Where(adapter => adapter.OperationalStatus == OperationalStatus.Up
                               && adapter.NetworkInterfaceType != NetworkInterfaceType.Loopback
                               && adapter.GetIPProperties().GatewayAddresses.Count > 0)
             .OrderByDescending(Received)
             .FirstOrDefault();
+    }
 
     private static long Received(NetworkInterface adapter)
     {
@@ -56,17 +75,5 @@ public sealed class NetworkReader(HardwareMonitor monitor) : IHardwareReader
         {
             return 0;
         }
-    }
-
-    private static string Speed(double bitsPerSecond)
-    {
-        var megabits = bitsPerSecond / 1_000_000;
-
-        return megabits switch
-        {
-            >= 1000 => $"{megabits / 1000:0.#} {Localization.UnitGigabitPerSecond}",
-            >= 1 => $"{megabits:0.#} {Localization.UnitMegabitPerSecond}",
-            _ => $"{bitsPerSecond / 1000:0} {Localization.UnitKilobitPerSecond}"
-        };
     }
 }

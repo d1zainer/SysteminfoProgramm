@@ -11,7 +11,9 @@ public static class Elevation
     public static bool Restart()
     {
         if (Environment.ProcessPath is not { } path)
+        {
             return false;
+        }
 
         try
         {

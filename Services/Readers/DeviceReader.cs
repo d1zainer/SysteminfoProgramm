@@ -14,27 +14,37 @@ public sealed class DeviceReader : IHardwareReader
     public SectionKind Section => SectionKind.Devices;
 
     public string Title => Localization.CardDevices;
-    
+
+    // Перебор HID стоит около 90 мс, а устройства меняются редко:
+    // держим прошлый ответ и обновляем его не каждый тик.
     public HardwareReading Read()
     {
         if (_cached is not null && DateTime.UtcNow - _taken < Lifetime)
+        {
             return _cached;
+        }
 
         string[] names = [..Removable(), ..Hid()];
-        _taken = DateTime.UtcNow;
 
-        return _cached = new HardwareReading(
+        _taken = DateTime.UtcNow;
+        _cached = new HardwareReading(
             string.Format(Localization.DeviceCount, names.Length),
             names.Length == 0 ? null : string.Join(", ", names));
+
+        return _cached;
     }
 
-    private static IEnumerable<string> Removable() =>
-        DriveInfo.GetDrives()
+    private static IEnumerable<string> Removable()
+    {
+        return DriveInfo.GetDrives()
             .Where(drive => drive.DriveType is DriveType.Removable && drive.IsReady)
             .Select(drive => string.IsNullOrEmpty(drive.VolumeLabel)
                 ? drive.Name
                 : $"{drive.VolumeLabel} ({drive.Name})");
-    
+    }
+
+    // Одно физическое устройство отдаёт несколько HID-интерфейсов,
+    // поэтому схлопываем по паре идентификаторов.
     private static IEnumerable<string> Hid()
     {
         try

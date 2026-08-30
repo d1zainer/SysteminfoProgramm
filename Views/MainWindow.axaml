@@ -3,7 +3,7 @@
         xmlns:conv="clr-namespace:SystemProgramm.Views.Converters"
         xmlns:loc="clr-namespace:SystemProgramm"
         xmlns:pages="clr-namespace:SystemProgramm.ViewModels.Pages"
-        xmlns:views="clr-namespace:SystemProgramm.Views"
+        xmlns:views="clr-namespace:SystemProgramm.Views.Pages"
         xmlns:vm="clr-namespace:SystemProgramm.ViewModels"
         x:Class="SystemProgramm.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"

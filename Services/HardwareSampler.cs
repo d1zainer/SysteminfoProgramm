@@ -16,16 +16,23 @@ public sealed class HardwareSampler(HardwareMonitor monitor, IReadOnlyList<IHard
     public IReadOnlyList<HardwareReading>? Latest { get; private set; }
 
     public event EventHandler<IReadOnlyList<HardwareReading>>? Updated;
-    
+
     public event EventHandler<SectionSample>? SectionUpdated;
 
-    public void Watch(ISectionReader? section) => _section = section;
+    // Раздел открытой страницы. Опрашиваем только его: обновление видеокарты стоит 78 мс,
+    // держать живыми все разделы разом незачем.
+    public void Watch(ISectionReader? section)
+    {
+        _section = section;
+    }
 
     // Контекст берём у вызывающего: старт уходит в фон, а события должны приходить в UI-поток.
     public void Start(TimeSpan interval, SynchronizationContext? context)
     {
         if (_cancellation is not null)
+        {
             return;
+        }
 
         _context = context;
         _cancellation = new CancellationTokenSource();
@@ -48,7 +55,9 @@ public sealed class HardwareSampler(HardwareMonitor monitor, IReadOnlyList<IHard
         {
             // Первый снимок сразу, не дожидаясь тика: окно уже открыто и ждёт данных.
             do
+            {
                 Publish(Sample(), SampleSection());
+            }
             while (await timer.WaitForNextTickAsync(token));
         }
         catch (OperationCanceledException)
@@ -69,7 +78,12 @@ public sealed class HardwareSampler(HardwareMonitor monitor, IReadOnlyList<IHard
         // страница отбросит чужие данные.
         var section = _section;
 
-        return section is null ? null : new SectionSample(section.Section, section.ReadSection());
+        if (section is null)
+        {
+            return null;
+        }
+
+        return new SectionSample(section.Section, section.ReadSection());
     }
 
     private void Publish(IReadOnlyList<HardwareReading> readings, SectionSample? section)
@@ -77,6 +91,7 @@ public sealed class HardwareSampler(HardwareMonitor monitor, IReadOnlyList<IHard
         if (_context is null)
         {
             Deliver(readings, section);
+
             return;
         }
 
@@ -89,7 +104,8 @@ public sealed class HardwareSampler(HardwareMonitor monitor, IReadOnlyList<IHard
         Updated?.Invoke(this, readings);
 
         if (section is not null)
+        {
             SectionUpdated?.Invoke(this, section);
+        }
     }
 }
-

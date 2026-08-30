@@ -163,7 +163,9 @@ public sealed class MetricChart : Control
     public override void Render(DrawingContext context)
     {
         if (Bounds.Width <= 0 || Bounds.Height <= 0)
+        {
             return;
+        }
 
         var labels = ScaleLabels();
         var left = labels.Count == 0 ? 0 : labels.Max(label => label.Width) + 8;
@@ -172,7 +174,9 @@ public sealed class MetricChart : Control
         var plot = new Rect(left, 0, Bounds.Width - left, Bounds.Height - bottom);
 
         if (plot.Width <= 0 || plot.Height <= 0)
+        {
             return;
+        }
 
         DrawScale(context, plot, labels);
         DrawSeries(context, plot);
@@ -190,7 +194,9 @@ public sealed class MetricChart : Control
     private List<FormattedText> ScaleLabels()
     {
         if (LabelBrush is null || Divisions <= 0)
+        {
             return [];
+        }
 
         var span = Maximum - Minimum;
         var labels = new List<FormattedText>(Divisions + 1);
@@ -213,14 +219,20 @@ public sealed class MetricChart : Control
             var y = plot.Top + plot.Height / Divisions * i;
 
             if (pen is not null)
+            {
                 context.DrawLine(pen, new Point(plot.Left, y), new Point(plot.Right, y));
+            }
 
             if (i < labels.Count)
+            {
                 context.DrawText(labels[i], new Point(plot.Left - labels[i].Width - 8, y - labels[i].Height / 2));
+            }
         }
 
         if (pen is null || Columns <= 0)
+        {
             return;
+        }
 
         // Вертикальные деления по времени: сетка замыкается и по краям области.
         for (var i = 0; i <= Columns; i++)
@@ -233,7 +245,9 @@ public sealed class MetricChart : Control
     private void DrawSeries(DrawingContext context, Rect plot)
     {
         if (Values is not { Count: > 1 } values)
+        {
             return;
+        }
 
         // Свежая точка всегда у правого края, история уходит влево:
         // пока окно не заполнено, пустое место остаётся слева, а не справа.
@@ -241,22 +255,32 @@ public sealed class MetricChart : Control
         var points = new Point[values.Count];
 
         for (var i = 0; i < values.Count; i++)
+        {
             points[i] = new Point(plot.Right - (values.Count - 1 - i) * step, Offset(values[i], plot));
+        }
 
         if (Fill is { } fill)
+        {
             context.DrawGeometry(fill, null, Area(points, plot.Bottom));
+        }
 
         if (Stroke is { } stroke)
+        {
             context.DrawGeometry(null, new Pen(stroke, StrokeThickness), Line(points));
+        }
     }
 
     private void DrawTimeAxis(DrawingContext context, Rect plot)
     {
         if (LabelBrush is null)
+        {
             return;
+        }
 
         if (WindowLabel is { Length: > 0 } past)
+        {
             context.DrawText(Text(past), new Point(plot.Left, plot.Bottom + 4));
+        }
 
         if (NowLabel is { Length: > 0 } now)
         {
@@ -281,7 +305,9 @@ public sealed class MetricChart : Control
         line.BeginFigure(points[0], false);
 
         for (var i = 1; i < points.Count; i++)
+        {
             line.LineTo(points[i]);
+        }
 
         line.EndFigure(false);
 
@@ -296,7 +322,9 @@ public sealed class MetricChart : Control
         area.BeginFigure(new Point(points[0].X, bottom), true);
 
         foreach (var point in points)
+        {
             area.LineTo(point);
+        }
 
         area.LineTo(new Point(points[^1].X, bottom));
         area.EndFigure(true);

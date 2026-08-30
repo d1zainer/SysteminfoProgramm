@@ -10,13 +10,15 @@ public sealed class StorageReader(HardwareMonitor monitor) : IHardwareReader
     public SectionKind Section => SectionKind.Storage;
 
     public string Title => Localization.CardStorage;
-    
+
     public HardwareReading Read()
     {
         var drive = SystemDrive();
 
         if (drive is null)
+        {
             return new HardwareReading(Localization.ValueUnknown);
+        }
 
         var total = drive.TotalSize / Gigabyte;
         var used = total - drive.AvailableFreeSpace / Gigabyte;
@@ -28,10 +30,11 @@ public sealed class StorageReader(HardwareMonitor monitor) : IHardwareReader
         var temperature = disk?.Sensors.FirstOrDefault(sensor => sensor.SensorType == SensorType.Temperature)?.Value;
 
         var space = string.Format(Localization.StorageDetail, Format.Gigabytes(used), Format.Gigabytes(total));
+        var heat = Format.Celsius(temperature);
 
         return new HardwareReading(
             disk?.Name ?? drive.Name,
-            temperature is null ? space : $"{space}, {string.Format(Localization.TemperatureCelsius, temperature)}",
+            heat is null ? space : $"{space}, {heat}",
             load,
             string.Format(Localization.UsedPercent, load));
     }
@@ -40,10 +43,16 @@ public sealed class StorageReader(HardwareMonitor monitor) : IHardwareReader
     {
         var root = Path.GetPathRoot(Environment.SystemDirectory);
 
+        if (root is null)
+        {
+            return null;
+        }
+
         try
         {
-            var drive = root is null ? null : new DriveInfo(root);
-            return drive is { IsReady: true } ? drive : null;
+            var drive = new DriveInfo(root);
+
+            return drive.IsReady ? drive : null;
         }
         catch (Exception e) when (e is ArgumentException or IOException or UnauthorizedAccessException)
         {

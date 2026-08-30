@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using SystemProgramm.Models;
+using SystemProgramm.Services;
 
 namespace SystemProgramm.ViewModels.Charts;
 
@@ -16,14 +17,21 @@ public sealed partial class MetricViewModel : ObservableObject
     [ObservableProperty]
     private double _maximum;
 
-    public MetricViewModel(MetricInfo info, int capacity = 60)
+    public MetricViewModel(MetricInfo info, int capacity = Sampling.Window)
     {
         Kind = info.Kind;
-        Title = info.Title;
         Capacity = capacity;
 
         _fixedMaximum = info.Maximum;
         _maximum = info.Maximum ?? 1;
+
+        // Заголовок и единица берутся здесь, а не в ридере: они локализованные,
+        // а вью-модель пересоздаётся вместе с окном при смене языка.
+        Title = info.Kind switch
+        {
+            MetricKind.Temperature => Localization.MetricTemperature,
+            _ => Localization.MetricLoad
+        };
 
         Unit = info.Kind switch
         {
@@ -31,33 +39,36 @@ public sealed partial class MetricViewModel : ObservableObject
             _ => Localization.UnitPercent
         };
 
-        // Тик сэмплера - секунда, поэтому окно графика это ёмкость в секундах.
-        Window = string.Format(Localization.ChartWindow, TimeSpan.FromSeconds(capacity).TotalMinutes);
+        Window = string.Format(Localization.ChartWindow, capacity * Sampling.Interval.TotalMinutes);
     }
 
     public MetricKind Kind { get; }
 
-    public bool HasData => Values.Count > 0;
-
     public string Title { get; }
-
-    public int Capacity { get; }
-
-    public double Minimum => 0;
 
     public string Unit { get; }
 
     public string Window { get; }
 
+    public int Capacity { get; }
+
+    public double Minimum => 0;
+
+    public bool HasData => Values.Count > 0;
+
     public void Push(double? value)
     {
         if (value is null)
+        {
             return;
+        }
 
         _points.Enqueue(value.Value);
 
         while (_points.Count > Capacity)
+        {
             _points.Dequeue();
+        }
 
         Values = _points.ToArray();
         Maximum = _fixedMaximum ?? Scale();

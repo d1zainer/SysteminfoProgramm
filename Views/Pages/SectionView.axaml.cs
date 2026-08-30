@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace SystemProgramm.Views;
+namespace SystemProgramm.Views.Pages;
 
 public partial class SectionView : UserControl
 {

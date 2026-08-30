@@ -3,7 +3,7 @@
              xmlns:cards="clr-namespace:SystemProgramm.ViewModels.Cards"
              xmlns:pages="clr-namespace:SystemProgramm.ViewModels.Pages"
              xmlns:views="clr-namespace:SystemProgramm.Views.Cards"
-             x:Class="SystemProgramm.Views.OverviewView"
+             x:Class="SystemProgramm.Views.Pages.OverviewView"
              x:DataType="pages:OverviewViewModel">
 
     <ScrollViewer>

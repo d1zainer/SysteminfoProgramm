@@ -20,27 +20,16 @@ public partial class MainWindowViewModel : ObservableObject, IDisposable
 
         var overview = new OverviewViewModel(store.Overview);
 
-        Pages =
-        [
-            overview,
-            Page(store, Localization.PageCpu, SectionKind.Cpu),
-            Page(store, Localization.PageGpu, SectionKind.Gpu),
-            Page(store, Localization.PageMemory, SectionKind.Memory),
-            Page(store, Localization.PageStorage, SectionKind.Storage),
-            Page(store, Localization.PageNetwork, SectionKind.Network),
-            new SettingsViewModel(store)
-        ];
+        Pages = Build(store, overview);
 
-        _currentPage = Pages[0];
-        store.Activate(_currentPage.Info.Section);
+        _currentPage = overview;
+        store.Activate(overview.Info.Section);
 
         IsAdministrator = store.IsAdministrator;
         RightsNotice = IsAdministrator ? Localization.RightsGranted : Localization.RightsMissing;
         Elevate = new RelayCommand(store.Elevate);
-        
-        foreach (var card in overview.Cards)
-            if (Pages.FirstOrDefault(page => page.Info.Section == card.Section) is { } target)
-                card.Open = new RelayCommand(() => CurrentPage = target);
+
+        Link(overview);
     }
 
     public ObservableCollection<PageViewModel> Pages { get; }
@@ -50,22 +39,55 @@ public partial class MainWindowViewModel : ObservableObject, IDisposable
     public string RightsNotice { get; }
 
     public IRelayCommand Elevate { get; }
-    
+
     public void Dispose()
     {
         foreach (var page in Pages.OfType<IDisposable>())
+        {
             page.Dispose();
+        }
     }
+
+    private static ObservableCollection<PageViewModel> Build(AppStore store, OverviewViewModel overview) =>
+    [
+        overview,
+        Page(store, Localization.PageCpu, SectionKind.Cpu),
+        Page(store, Localization.PageGpu, SectionKind.Gpu),
+        Page(store, Localization.PageMemory, SectionKind.Memory),
+        Page(store, Localization.PageStorage, SectionKind.Storage),
+        Page(store, Localization.PageNetwork, SectionKind.Network),
+        new SettingsViewModel(store)
+    ];
 
     // Раздел без своего ридера остаётся заглушкой - страница появится вместе с ридером.
     private static PageViewModel Page(AppStore store, string title, SectionKind section)
     {
         var info = new PageInfo(title, section);
 
-        return store.Section(section) is { } reader
-            ? new SectionViewModel(info, store.Overview, reader.Metrics)
-            : new PageViewModel(info);
+        if (store.Section(section) is not { } reader)
+        {
+            return new PageViewModel(info);
+        }
+
+        return new SectionViewModel(info, store.Overview, reader.Metrics);
     }
 
-    partial void OnCurrentPageChanged(PageViewModel value) => _store.Activate(value.Info.Section);
+    // Ссылка «Подробности» на карточке ведёт на страницу того же раздела.
+    private void Link(OverviewViewModel overview)
+    {
+        foreach (var card in overview.Cards)
+        {
+            if (Pages.FirstOrDefault(page => page.Info.Section == card.Section) is not { } target)
+            {
+                continue;
+            }
+
+            card.Open = new RelayCommand(() => CurrentPage = target);
+        }
+    }
+
+    partial void OnCurrentPageChanged(PageViewModel value)
+    {
+        _store.Activate(value.Info.Section);
+    }
 }

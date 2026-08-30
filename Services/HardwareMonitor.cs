@@ -10,6 +10,8 @@ public sealed class HardwareMonitor : IDisposable
         IsMemoryEnabled = true,
         IsGpuEnabled = true,
         IsNetworkEnabled = true,
+
+        // Без прав администратора раздел пуст, а открытие с ним дороже почти на секунду.
         IsStorageEnabled = Elevation.IsAdministrator
     };
 
@@ -23,12 +25,17 @@ public sealed class HardwareMonitor : IDisposable
 
     // За один тик одну и ту же железку просят и карточка обзора, и страница раздела.
     // Update() у видеокарты стоит 78 мс, поэтому обновляем её в тике один раз.
-    public void NextTick() => _tick++;
+    public void NextTick()
+    {
+        _tick++;
+    }
 
     public void Open()
     {
         if (_opened)
+        {
             return;
+        }
 
         try
         {
@@ -37,21 +44,30 @@ public sealed class HardwareMonitor : IDisposable
         }
         catch (Exception)
         {
+            // Инициализация лезет к драйверу и вендорским библиотекам. Не вышло -
+            // приложение работает дальше, а ридеры отдают "Неизвестно".
             _opened = false;
         }
     }
 
-    public IHardware? Read(HardwareType type) => Read(hardware => hardware.HardwareType == type);
+    public IHardware? Read(HardwareType type)
+    {
+        return Read(hardware => hardware.HardwareType == type);
+    }
 
     public IHardware? Read(Func<IHardware, bool> match)
     {
         var hardware = _opened ? _computer.Hardware.FirstOrDefault(match) : null;
 
         if (hardware is null)
+        {
             return null;
+        }
 
         if (_updated.TryGetValue(hardware, out var tick) && tick == _tick)
+        {
             return hardware;
+        }
 
         hardware.Update();
         _updated[hardware] = _tick;
@@ -62,7 +78,9 @@ public sealed class HardwareMonitor : IDisposable
     public void Dispose()
     {
         if (!_opened)
+        {
             return;
+        }
 
         _computer.Close();
         _opened = false;

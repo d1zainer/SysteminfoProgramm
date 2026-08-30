@@ -6,7 +6,7 @@
              xmlns:loc="clr-namespace:SystemProgramm"
              xmlns:models="clr-namespace:SystemProgramm.Models"
              xmlns:pages="clr-namespace:SystemProgramm.ViewModels.Pages"
-             x:Class="SystemProgramm.Views.SectionView"
+             x:Class="SystemProgramm.Views.Pages.SectionView"
              x:DataType="pages:SectionViewModel">
 
     <UserControl.Resources>
