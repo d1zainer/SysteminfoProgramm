@@ -12,7 +12,7 @@
         MinWidth="800"
         MinHeight="500"
         Background="Transparent"
-        TransparencyLevelHint="Mica"
+        TransparencyLevelHint="Mica, AcrylicBlur, None"
         WindowStartupLocation="CenterScreen">
 
     <Window.TransparencyBackgroundFallback>
@@ -24,25 +24,31 @@
     </Window.Resources>
 
     <Grid ColumnDefinitions="Auto,*">
-        <ListBox Grid.Column="0"
-                 Padding="0 30 0 0 "
-                 ItemsSource="{Binding Pages}"
-                 SelectedItem="{Binding CurrentPage}">
-            <ListBox.ItemTemplate>
-                <DataTemplate DataType="pages:PageViewModel">
-                    <StackPanel Orientation="Horizontal" Spacing="12">
-                        <ContentControl 
-                                        Template="{Binding Info.Icon, Converter={StaticResource PageIcon}}"
-                                        Foreground="{Binding $parent[ListBoxItem].Foreground}" />
+        <!-- Подложка под меню: там, где Mica работает, она просвечивает сквозь неё,
+             а там, где система её не рисует, окно не превращается в дыру. -->
+        <Border Grid.Column="0">
+            <Border.Background>
+                <SolidColorBrush Color="{DynamicResource SystemChromeLowColor}" Opacity="0.85" />
+            </Border.Background>
 
-                        <TextBlock Margin="0 0 10 0"
-                                   VerticalAlignment="Center"
-                                   Classes="medium"
-                                   Text="{Binding Info.Title}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+            <ListBox Padding="0 30 0 0 "
+                     ItemsSource="{Binding Pages}"
+                     SelectedItem="{Binding CurrentPage}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="pages:PageViewModel">
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <ContentControl Template="{Binding Info.Icon, Converter={StaticResource PageIcon}}"
+                                            Foreground="{Binding $parent[ListBoxItem].Foreground}" />
+
+                            <TextBlock Margin="0 0 10 0"
+                                       VerticalAlignment="Center"
+                                       Classes="medium"
+                                       Text="{Binding Info.Title}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Border>
 
 
         <Border Grid.Column="1">
