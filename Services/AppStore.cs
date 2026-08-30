@@ -10,7 +10,7 @@ public sealed class AppStore : IDisposable
     private AppSettings _settings = SettingsStore.Load();
 
     public AppStore() =>
-        OverviewReaders =
+        Overview = new HardwareSampler(
         [
             new CpuReader(_monitor),
             new GpuReader(_monitor),
@@ -18,17 +18,25 @@ public sealed class AppStore : IDisposable
             new StorageReader(),
             new NetworkReader(),
             new DeviceReader()
-        ];
+        ]);
 
-    public IReadOnlyList<IHardwareReader> OverviewReaders { get; }
+    public HardwareSampler Overview { get; }
 
     public string Theme => _settings.Theme;
 
     public string Language => CultureSetup.Resolve(_settings);
 
-    public void Open() => _monitor.Open();
+    public void Open()
+    {
+        _monitor.Open();
+        Overview.Start(TimeSpan.FromSeconds(1));
+    }
 
-    public void Dispose() => _monitor.Dispose();
+    public void Dispose()
+    {
+        Overview.Dispose();
+        _monitor.Dispose();
+    }
 
     public event EventHandler? ThemeChanged;
 

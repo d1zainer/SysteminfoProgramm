@@ -1,28 +1,36 @@
 using System.Collections.ObjectModel;
 using SystemProgramm.Models;
-using SystemProgramm.Services.Readers;
+using SystemProgramm.Services;
 using SystemProgramm.ViewModels.Cards;
 
 namespace SystemProgramm.ViewModels.Pages;
 
-public sealed class OverviewViewModel : PageViewModel
+public sealed class OverviewViewModel : PageViewModel, IDisposable
 {
-    private readonly IReadOnlyList<IHardwareReader> _readers;
+    private readonly HardwareSampler _sampler;
 
-    public OverviewViewModel(IReadOnlyList<IHardwareReader> readers) : base(new PageInfo(Localization.PageOverview, IconKind.Overview))
+    public OverviewViewModel(HardwareSampler sampler) : base(new PageInfo(Localization.PageOverview, IconKind.Overview))
     {
-        _readers = readers;
-        Cards = new ObservableCollection<OverviewCardViewModel>(
-            readers.Select(reader => new OverviewCardViewModel(reader.Title, reader.Icon)));
+        _sampler = sampler;
 
-        Refresh();
+        Cards = new ObservableCollection<OverviewCardViewModel>(
+            sampler.Readers.Select(reader => new OverviewCardViewModel(reader.Title, reader.Icon)));
+
+        if (sampler.Latest is { } readings)
+            Apply(readings);
+
+        sampler.Updated += OnUpdated;
     }
 
     public ObservableCollection<OverviewCardViewModel> Cards { get; }
-    
-    private void Refresh()
+
+    public void Dispose() => _sampler.Updated -= OnUpdated;
+
+    private void OnUpdated(object? sender, IReadOnlyList<HardwareReading> readings) => Apply(readings);
+
+    private void Apply(IReadOnlyList<HardwareReading> readings)
     {
-        for (var i = 0; i < _readers.Count; i++)
-            Cards[i].Apply(_readers[i].Read());
+        for (var i = 0; i < Cards.Count && i < readings.Count; i++)
+            Cards[i].Apply(readings[i]);
     }
 }

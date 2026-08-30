@@ -5,15 +5,25 @@ namespace SystemProgramm.Services.Readers;
 
 public sealed class DeviceReader : IHardwareReader
 {
+    private static readonly TimeSpan Lifetime = TimeSpan.FromSeconds(5);
+
+    private HardwareReading? _cached;
+
+    private DateTime _taken;
+
     public IconKind Icon => IconKind.Devices;
 
     public string Title => Localization.CardDevices;
-
+    
     public HardwareReading Read()
     {
-        string[] names = [..Removable(), ..Hid()];
+        if (_cached is not null && DateTime.UtcNow - _taken < Lifetime)
+            return _cached;
 
-        return new HardwareReading(
+        string[] names = [..Removable(), ..Hid()];
+        _taken = DateTime.UtcNow;
+
+        return _cached = new HardwareReading(
             string.Format(Localization.DeviceCount, names.Length),
             names.Length == 0 ? null : string.Join(", ", names));
     }

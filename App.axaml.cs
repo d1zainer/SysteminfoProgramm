@@ -56,5 +56,7 @@ public partial class App : Application
         desktop.MainWindow = replacement;
         replacement.Show();
         previous?.Close();
+
+        (previous?.DataContext as IDisposable)?.Dispose();
     }
 }

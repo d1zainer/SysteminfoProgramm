@@ -6,7 +6,7 @@ using SystemProgramm.ViewModels.Pages;
 
 namespace SystemProgramm.ViewModels;
 
-public partial class MainWindowViewModel : ObservableObject
+public partial class MainWindowViewModel : ObservableObject, IDisposable
 {
     [ObservableProperty]
     private PageViewModel _currentPage;
@@ -15,7 +15,7 @@ public partial class MainWindowViewModel : ObservableObject
     {
         Pages =
         [
-            new OverviewViewModel(store.OverviewReaders),
+            new OverviewViewModel(store.Overview),
             new PageViewModel(new PageInfo(Localization.PageCpu, IconKind.Cpu)),
             new PageViewModel(new PageInfo(Localization.PageGpu, IconKind.Gpu)),
             new PageViewModel(new PageInfo(Localization.PageMemory, IconKind.Memory)),
@@ -28,4 +28,10 @@ public partial class MainWindowViewModel : ObservableObject
     }
 
     public ObservableCollection<PageViewModel> Pages { get; }
+    
+    public void Dispose()
+    {
+        foreach (var page in Pages.OfType<IDisposable>())
+            page.Dispose();
+    }
 }
