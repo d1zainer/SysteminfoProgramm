@@ -8,7 +8,8 @@ public sealed class HardwareMonitor : IDisposable
     {
         IsCpuEnabled = true,
         IsMemoryEnabled = true,
-        IsGpuEnabled = true
+        IsGpuEnabled = true,
+        IsNetworkEnabled = true
     };
 
     private bool _opened;

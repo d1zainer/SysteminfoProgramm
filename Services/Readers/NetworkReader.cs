@@ -1,9 +1,10 @@
 using System.Net.NetworkInformation;
+using LibreHardwareMonitor.Hardware;
 using SystemProgramm.Models;
 
 namespace SystemProgramm.Services.Readers;
 
-public sealed class NetworkReader : IHardwareReader
+public sealed class NetworkReader(HardwareMonitor monitor) : IHardwareReader
 {
     public IconKind Icon => IconKind.Network;
 
@@ -16,11 +17,27 @@ public sealed class NetworkReader : IHardwareReader
         if (adapter is null)
             return new HardwareReading(Localization.ValueUnknown);
 
+        var nic = Nic(adapter);
+
+        var download = nic?.Value(SensorType.Throughput, "Download Speed");
+        var upload = nic?.Value(SensorType.Throughput, "Upload Speed");
+
         return new HardwareReading(
             adapter.Name,
-            adapter.Speed > 0 ? $"{adapter.Description}, {Speed(adapter.Speed)}" : adapter.Description);
+            adapter.Speed > 0 ? $"{adapter.Description}, {Speed(adapter.Speed)}" : adapter.Description,
+            nic?.Value(SensorType.Load, "Network Utilization"),
+            download is null || upload is null
+                ? null
+                : string.Format(Localization.NetworkTraffic, Speed(download.Value * 8), Speed(upload.Value * 8)));
     }
-    
+
+    // LibreHardwareMonitor опознаёт адаптер как /nic/%7BGUID%7D - тот же GUID,
+    // что и NetworkInterface.Id, только фигурные скобки в url-кодировке.
+    private IHardware? Nic(NetworkInterface adapter) =>
+        monitor.Read(hardware => hardware.HardwareType == HardwareType.Network
+                                 && Uri.UnescapeDataString(hardware.Identifier.ToString())
+                                     .Equals($"/nic/{adapter.Id}", StringComparison.OrdinalIgnoreCase));
+
     private static NetworkInterface? Active() =>
         NetworkInterface.GetAllNetworkInterfaces()
             .Where(adapter => adapter.OperationalStatus == OperationalStatus.Up
@@ -41,12 +58,15 @@ public sealed class NetworkReader : IHardwareReader
         }
     }
 
-    private static string Speed(long bitsPerSecond)
+    private static string Speed(double bitsPerSecond)
     {
-        var megabits = bitsPerSecond / 1_000_000d;
+        var megabits = bitsPerSecond / 1_000_000;
 
-        return megabits >= 1000
-            ? $"{megabits / 1000:0.#} {Localization.UnitGigabitPerSecond}"
-            : $"{megabits:0} {Localization.UnitMegabitPerSecond}";
+        return megabits switch
+        {
+            >= 1000 => $"{megabits / 1000:0.#} {Localization.UnitGigabitPerSecond}",
+            >= 1 => $"{megabits:0.#} {Localization.UnitMegabitPerSecond}",
+            _ => $"{bitsPerSecond / 1000:0} {Localization.UnitKilobitPerSecond}"
+        };
     }
 }

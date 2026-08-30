@@ -103,6 +103,9 @@
   <data name="MemoryDetail" xml:space="preserve">
     <value>{0} used, {1} free</value>
   </data>
+  <data name="NetworkTraffic" xml:space="preserve">
+    <value>↓ {0}  ↑ {1}</value>
+  </data>
   <data name="TemperatureCelsius" xml:space="preserve">
     <value>{0:0} °C</value>
   </data>
@@ -111,6 +114,9 @@
   </data>
   <data name="UnitGigabitPerSecond" xml:space="preserve">
     <value>Gbit/s</value>
+  </data>
+  <data name="UnitKilobitPerSecond" xml:space="preserve">
+    <value>Kbit/s</value>
   </data>
   <data name="UnitMegabitPerSecond" xml:space="preserve">
     <value>Mbit/s</value>

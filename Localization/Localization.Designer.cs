@@ -115,6 +115,12 @@ namespace SystemProgramm {
             }
         }
 
+        public static string NetworkTraffic {
+            get {
+                return ResourceManager.GetString("NetworkTraffic", resourceCulture);
+            }
+        }
+
         public static string OverviewPlaceholder {
             get {
                 return ResourceManager.GetString("OverviewPlaceholder", resourceCulture);
@@ -226,6 +232,12 @@ namespace SystemProgramm {
         public static string UnitGigabyte {
             get {
                 return ResourceManager.GetString("UnitGigabyte", resourceCulture);
+            }
+        }
+
+        public static string UnitKilobitPerSecond {
+            get {
+                return ResourceManager.GetString("UnitKilobitPerSecond", resourceCulture);
             }
         }
 
