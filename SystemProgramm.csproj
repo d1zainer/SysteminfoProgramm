@@ -37,6 +37,16 @@
     </Compile>
   </ItemGroup>
 
+  <!-- Рядом с exe кладутся отладочные символы нативных библиотек SkiaSharp
+       и HarfBuzz - вместе на сотню мегабайт. Приложению они не нужны. -->
+  <Target Name="DropNativeSymbols" AfterTargets="ComputeResolvedFilesToPublishList">
+    <ItemGroup>
+      <ResolvedFileToPublish
+        Remove="@(ResolvedFileToPublish)"
+        Condition="'%(Extension)' == '.pdb' And '%(ResolvedFileToPublish.AssetType)' == 'native'" />
+    </ItemGroup>
+  </Target>
+
   <ItemGroup>
     <Compile Update="Views\Pages\OverviewView.axaml.cs">
       <DependentUpon>OverviewView.axaml</DependentUpon>
