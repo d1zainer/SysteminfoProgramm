@@ -1,0 +1,26 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:SystemProgramm.Views.Controls">
+
+    <Style Selector="controls|MetricChart">
+        <Setter Property="GridStroke">
+            <SolidColorBrush Color="{DynamicResource SystemBaseHighColor}" Opacity="0.08" />
+        </Setter>
+
+        <Setter Property="Stroke">
+            <SolidColorBrush Color="{DynamicResource SystemAccentColor}" />
+        </Setter>
+
+        <Setter Property="Fill">
+          <SolidColorBrush Color="{DynamicResource SystemAccentColor}" Opacity="0.18" />
+        </Setter>
+    </Style>
+
+    <Style Selector="Border.temperature controls|MetricChart">
+        <Setter Property="Stroke" Value="#E0793A" />
+        <Setter Property="Fill">
+            <SolidColorBrush Color="#E0793A" Opacity="0.18" />
+        </Setter>
+    </Style>
+
+</Styles>

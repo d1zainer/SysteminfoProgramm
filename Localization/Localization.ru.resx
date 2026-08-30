@@ -127,4 +127,13 @@
   <data name="UnitTerabyte" xml:space="preserve">
     <value>ТБ</value>
   </data>
+  <data name="MetricLoad" xml:space="preserve">
+    <value>Загрузка</value>
+  </data>
+  <data name="MetricTemperature" xml:space="preserve">
+    <value>Температура</value>
+  </data>
+  <data name="PercentValue" xml:space="preserve">
+    <value>{0:0} %</value>
+  </data>
 </root>

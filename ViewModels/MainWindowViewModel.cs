@@ -19,7 +19,7 @@ public partial class MainWindowViewModel : ObservableObject, IDisposable
         Pages =
         [
             overview,
-            new PageViewModel(new PageInfo(Localization.PageCpu, SectionKind.Cpu)),
+            new CpuViewModel(),
             new PageViewModel(new PageInfo(Localization.PageGpu, SectionKind.Gpu)),
             new PageViewModel(new PageInfo(Localization.PageMemory, SectionKind.Memory)),
             new PageViewModel(new PageInfo(Localization.PageStorage, SectionKind.Storage)),

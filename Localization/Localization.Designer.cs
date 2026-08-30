@@ -127,6 +127,18 @@ namespace SystemProgramm {
             }
         }
 
+        public static string MetricLoad {
+            get {
+                return ResourceManager.GetString("MetricLoad", resourceCulture);
+            }
+        }
+
+        public static string MetricTemperature {
+            get {
+                return ResourceManager.GetString("MetricTemperature", resourceCulture);
+            }
+        }
+
         public static string OverviewPlaceholder {
             get {
                 return ResourceManager.GetString("OverviewPlaceholder", resourceCulture);
@@ -178,6 +190,12 @@ namespace SystemProgramm {
         public static string PageStorage {
             get {
                 return ResourceManager.GetString("PageStorage", resourceCulture);
+            }
+        }
+
+        public static string PercentValue {
+            get {
+                return ResourceManager.GetString("PercentValue", resourceCulture);
             }
         }
 

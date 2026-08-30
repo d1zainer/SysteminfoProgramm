@@ -63,6 +63,10 @@
                         <views:OverviewView />
                     </DataTemplate>
 
+                    <DataTemplate DataType="pages:CpuViewModel">
+                        <views:CpuView />
+                    </DataTemplate>
+
                     <DataTemplate DataType="pages:SettingsViewModel">
                         <views:SettingsView />
                     </DataTemplate>
