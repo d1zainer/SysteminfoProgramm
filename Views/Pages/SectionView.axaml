@@ -24,11 +24,6 @@
             <Grid RowDefinitions="Auto,*">
 
                 <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
-                    <TextBlock Grid.Column="0"
-                               Classes="title"
-                               VerticalAlignment="Center"
-                               Text="{Binding SelectedMetric.Current}" />
-
                     <ListBox Grid.Column="1"
                              VerticalAlignment="Center"
                              IsVisible="{Binding HasSwitch}"

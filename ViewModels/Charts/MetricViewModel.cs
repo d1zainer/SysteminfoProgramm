@@ -14,9 +14,6 @@ public sealed partial class MetricViewModel : ObservableObject
     private IReadOnlyList<double> _values = [];
 
     [ObservableProperty]
-    private string _current = Localization.ValueUnknown;
-
-    [ObservableProperty]
     private double _maximum;
 
     public MetricViewModel(MetricInfo info, int capacity = 60)
@@ -63,7 +60,6 @@ public sealed partial class MetricViewModel : ObservableObject
             _points.Dequeue();
 
         Values = _points.ToArray();
-        Current = Format(value.Value);
         Maximum = _fixedMaximum ?? Scale();
     }
 
@@ -75,13 +71,4 @@ public sealed partial class MetricViewModel : ObservableObject
 
         return Math.Max(Math.Ceiling(peak * 1.2 / step) * step, 1);
     }
-
-    // Число без пояснения не читается: в шапке карточки это единственная подпись графика.
-    private string Format(double value) => $"{Title} {Number(value)}";
-
-    private string Number(double value) => Kind switch
-    {
-        MetricKind.Temperature => string.Format(Localization.TemperatureCelsius, value),
-        _ => string.Format(Localization.PercentValue, value)
-    };
 }
