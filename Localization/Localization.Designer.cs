@@ -151,6 +151,12 @@ namespace SystemProgramm {
             }
         }
 
+        public static string DetailFree {
+            get {
+                return ResourceManager.GetString("DetailFree", resourceCulture);
+            }
+        }
+
         public static string DetailLoad {
             get {
                 return ResourceManager.GetString("DetailLoad", resourceCulture);
@@ -175,6 +181,12 @@ namespace SystemProgramm {
             }
         }
 
+        public static string DetailModules {
+            get {
+                return ResourceManager.GetString("DetailModules", resourceCulture);
+            }
+        }
+
         public static string DetailPower {
             get {
                 return ResourceManager.GetString("DetailPower", resourceCulture);
@@ -196,6 +208,24 @@ namespace SystemProgramm {
         public static string DetailTemperature {
             get {
                 return ResourceManager.GetString("DetailTemperature", resourceCulture);
+            }
+        }
+
+        public static string DetailTotal {
+            get {
+                return ResourceManager.GetString("DetailTotal", resourceCulture);
+            }
+        }
+
+        public static string DetailType {
+            get {
+                return ResourceManager.GetString("DetailType", resourceCulture);
+            }
+        }
+
+        public static string DetailUsed {
+            get {
+                return ResourceManager.GetString("DetailUsed", resourceCulture);
             }
         }
 

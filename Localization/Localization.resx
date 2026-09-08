@@ -199,6 +199,21 @@
   <data name="DetailVideoMemory" xml:space="preserve">
     <value>Video memory</value>
   </data>
+  <data name="DetailTotal" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="DetailUsed" xml:space="preserve">
+    <value>Used</value>
+  </data>
+  <data name="DetailFree" xml:space="preserve">
+    <value>Free</value>
+  </data>
+  <data name="DetailType" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="DetailModules" xml:space="preserve">
+    <value>Modules</value>
+  </data>
   <data name="UnitCelsius" xml:space="preserve">
     <value>°C</value>
   </data>

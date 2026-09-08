@@ -199,6 +199,21 @@
   <data name="DetailVideoMemory" xml:space="preserve">
     <value>Видеопамять</value>
   </data>
+  <data name="DetailTotal" xml:space="preserve">
+    <value>Всего</value>
+  </data>
+  <data name="DetailUsed" xml:space="preserve">
+    <value>Занято</value>
+  </data>
+  <data name="DetailFree" xml:space="preserve">
+    <value>Свободно</value>
+  </data>
+  <data name="DetailType" xml:space="preserve">
+    <value>Тип</value>
+  </data>
+  <data name="DetailModules" xml:space="preserve">
+    <value>Модули</value>
+  </data>
   <data name="UnitCelsius" xml:space="preserve">
     <value>°C</value>
   </data>
