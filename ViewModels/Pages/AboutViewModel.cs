@@ -27,3 +27,4 @@ public sealed class AboutViewModel() : PageViewModel(new PageInfo(Localization.P
         return reader.ReadToEnd();
     }
 }
+
