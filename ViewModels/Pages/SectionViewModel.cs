@@ -46,11 +46,8 @@ public sealed partial class SectionViewModel : PageViewModel, IDisposable
             return;
         }
 
-        Apply(sample.Reading);
-    }
-
-    private void Apply(SectionReading reading)
-    {
+        var reading = (sample.Reading);
+        
         for (var i = 0; i < Metrics.Count && i < reading.Points.Count; i++)
         {
             var metric = Metrics[i];
@@ -64,13 +61,7 @@ public sealed partial class SectionViewModel : PageViewModel, IDisposable
 
         SelectedMetric ??= Charts.FirstOrDefault();
 
-        Rows(reading.Details);
-    }
-
-    // Набор строк меняется, когда данные появляются или пропадают, поэтому при
-    // несовпадении имён таблицу пересобираем, а в обычном случае правим значения на месте.
-    private void Rows(IReadOnlyList<DetailRow> rows)
-    {
+        var rows = reading.Details;
         if (Details.Count != rows.Count || Details.Where((row, i) => row.Name != rows[i].Name).Any())
         {
             Details.Clear();

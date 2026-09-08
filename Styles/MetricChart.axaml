@@ -10,7 +10,7 @@
         </Setter>
 
         <Setter Property="GridStroke">
-            <SolidColorBrush Color="{DynamicResource SystemBaseHighColor}" Opacity="0.08" />
+            <SolidColorBrush Color="{DynamicResource SystemBaseHighColor}" Opacity="0.16" />
         </Setter>
 
         <Setter Property="Stroke">

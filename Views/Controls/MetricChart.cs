@@ -7,6 +7,8 @@ namespace SystemProgramm.Views.Controls;
 
 public sealed class MetricChart : Control
 {
+    private const double LabelGap = 8;
+
     public static readonly StyledProperty<IReadOnlyList<double>?> ValuesProperty =
         AvaloniaProperty.Register<MetricChart, IReadOnlyList<double>?>(nameof(Values));
 
@@ -168,10 +170,14 @@ public sealed class MetricChart : Control
         }
 
         var labels = ScaleLabels();
-        var left = labels.Count == 0 ? 0 : labels.Max(label => label.Width) + 8;
-        var bottom = HasTimeAxis() ? LabelFontSize + 8 : 0;
 
-        var plot = new Rect(left, 0, Bounds.Width - left, Bounds.Height - bottom);
+        // Подписи шкалы стоят справа от области графика: справа резервируется их ширина,
+        // а сверху - половина строки, иначе верхняя подпись срезается краем контрола.
+        var right = labels.Count == 0 ? 0 : labels.Max(label => label.Width) + LabelGap;
+        var inset = labels.Count == 0 ? 0 : labels[0].Height / 2;
+        var bottom = HasTimeAxis() ? LabelFontSize + 8 : inset;
+
+        var plot = new Rect(0, inset, Bounds.Width - right, Bounds.Height - inset - bottom);
 
         if (plot.Width <= 0 || plot.Height <= 0)
         {
@@ -225,7 +231,7 @@ public sealed class MetricChart : Control
 
             if (i < labels.Count)
             {
-                context.DrawText(labels[i], new Point(plot.Left - labels[i].Width - 8, y - labels[i].Height / 2));
+                context.DrawText(labels[i], new Point(plot.Right + LabelGap, y - labels[i].Height / 2));
             }
         }
 
