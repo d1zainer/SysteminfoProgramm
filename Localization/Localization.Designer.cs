@@ -163,6 +163,12 @@ namespace SystemProgramm {
             }
         }
 
+        public static string DetailMemoryClock {
+            get {
+                return ResourceManager.GetString("DetailMemoryClock", resourceCulture);
+            }
+        }
+
         public static string DetailModel {
             get {
                 return ResourceManager.GetString("DetailModel", resourceCulture);
@@ -187,9 +193,21 @@ namespace SystemProgramm {
             }
         }
 
+        public static string DetailTemperature {
+            get {
+                return ResourceManager.GetString("DetailTemperature", resourceCulture);
+            }
+        }
+
         public static string DetailVendor {
             get {
                 return ResourceManager.GetString("DetailVendor", resourceCulture);
+            }
+        }
+
+        public static string DetailVideoMemory {
+            get {
+                return ResourceManager.GetString("DetailVideoMemory", resourceCulture);
             }
         }
 

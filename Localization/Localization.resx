@@ -190,6 +190,15 @@
   <data name="DetailCache" xml:space="preserve">
     <value>Cache</value>
   </data>
+  <data name="DetailTemperature" xml:space="preserve">
+    <value>Temperature</value>
+  </data>
+  <data name="DetailMemoryClock" xml:space="preserve">
+    <value>Memory clock</value>
+  </data>
+  <data name="DetailVideoMemory" xml:space="preserve">
+    <value>Video memory</value>
+  </data>
   <data name="UnitCelsius" xml:space="preserve">
     <value>°C</value>
   </data>
