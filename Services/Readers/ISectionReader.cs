@@ -8,5 +8,7 @@ public interface ISectionReader
 
     IReadOnlyList<MetricInfo> Metrics { get; }
     
+    IReadOnlyList<DetailRow> Describe();
+
     SectionReading ReadSection();
 }

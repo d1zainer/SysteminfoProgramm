@@ -21,6 +21,8 @@ public sealed class GpuReader(HardwareMonitor monitor) : IHardwareReader, ISecti
 
     private const string BoardPower = "GPU Power";
 
+    private IReadOnlyList<DetailRow>? _describe;
+
     public SectionKind Section => SectionKind.Gpu;
 
     public string Title => Localization.CardGpu;
@@ -55,6 +57,35 @@ public sealed class GpuReader(HardwareMonitor monitor) : IHardwareReader, ISecti
             load,
             load is null ? null : string.Format(Localization.LoadPercent, load));
     }
+    
+    public IReadOnlyList<DetailRow> Describe()
+    {
+        if (_describe is not null)
+        {
+            return _describe;
+        }
+
+        if (Gpu is not { } gpu)
+        {
+            return [];
+        }
+
+        var vendor = gpu.HardwareType switch
+        {
+            HardwareType.GpuNvidia => "NVIDIA",
+            HardwareType.GpuAmd => "AMD",
+            HardwareType.GpuIntel => "Intel",
+            _ => null
+        };
+
+        DetailRow[] rows =
+        [
+            new(Localization.DetailModel, gpu.Name),
+            new(Localization.DetailVendor, vendor)
+        ];
+
+        return _describe = [..rows.Where(row => row.Value is not null)];
+    }
 
     public SectionReading ReadSection()
     {
@@ -66,22 +97,12 @@ public sealed class GpuReader(HardwareMonitor monitor) : IHardwareReader, ISecti
         var load = gpu.Value(SensorType.Load, CoreLoad);
         var temperature = gpu.Value(SensorType.Temperature, CoreTemperature);
 
-        var vendor = gpu.HardwareType switch
-        {
-            HardwareType.GpuNvidia => "NVIDIA",
-            HardwareType.GpuAmd => "AMD",
-            HardwareType.GpuIntel => "Intel",
-            _ => null
-        };
-
         // У встроенной графики нет ни своей памяти, ни датчика мощности,
         // поэтому набор строк у разных карт разный.
         var power = gpu.Value(SensorType.Power, PackagePower) ?? gpu.Value(SensorType.Power, BoardPower);
 
         DetailRow[] rows =
         [
-            new(Localization.DetailModel, gpu.Name),
-            new(Localization.DetailVendor, vendor),
             new(Localization.DetailLoad, Format.Percent(load)),
             new(Localization.DetailTemperature, Format.Celsius(temperature)),
             new(Localization.DetailClock, Format.Megahertz(gpu.Value(SensorType.Clock, CoreClock))),

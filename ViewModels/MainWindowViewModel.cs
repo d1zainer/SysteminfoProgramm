@@ -75,7 +75,7 @@ public partial class MainWindowViewModel : ObservableObject, IDisposable
             return new PageViewModel(info);
         }
 
-        return new SectionViewModel(info, store.Overview, reader.Metrics);
+        return new SectionViewModel(info, store.Overview, reader);
     }
 
     partial void OnCurrentPageChanged(PageViewModel value)
