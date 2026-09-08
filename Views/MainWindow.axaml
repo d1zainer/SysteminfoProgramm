@@ -73,6 +73,10 @@
                         <views:SettingsView />
                     </DataTemplate>
 
+                    <DataTemplate DataType="pages:AboutViewModel">
+                        <views:AboutView />
+                    </DataTemplate>
+
                     <DataTemplate DataType="pages:PageViewModel">
                         <TextBlock Margin="24"
                                    Text="{x:Static loc:Localization.PageNotImplemented}" />

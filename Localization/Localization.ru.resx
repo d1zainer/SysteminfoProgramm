@@ -39,6 +39,19 @@
     <value>Настройки</value>
   </data>
 
+  <data name="PageAbout" xml:space="preserve">
+    <value>О программе</value>
+  </data>
+  <data name="AboutVersion" xml:space="preserve">
+    <value>Версия {0}</value>
+  </data>
+  <data name="AboutLicenses" xml:space="preserve">
+    <value>Лицензии сторонних компонентов</value>
+  </data>
+  <data name="AboutLhmNotice" xml:space="preserve">
+    <value>Показания датчиков читаются через LibreHardwareMonitorLib, распространяемую по лицензии Mozilla Public License 2.0. Приложение не изменяет библиотеку; её исходный код доступен по ссылке ниже.</value>
+  </data>
+
   <data name="OverviewPlaceholder" xml:space="preserve">
     <value>Здесь будет сводка по компьютеру.</value>
   </data>

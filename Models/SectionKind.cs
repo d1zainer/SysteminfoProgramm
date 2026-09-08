@@ -9,5 +9,6 @@ public enum SectionKind
     Storage,
     Network,
     Devices,
-    Settings
+    Settings,
+    About
 }

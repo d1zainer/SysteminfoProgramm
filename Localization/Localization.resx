@@ -39,6 +39,19 @@
     <value>Settings</value>
   </data>
 
+  <data name="PageAbout" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="AboutVersion" xml:space="preserve">
+    <value>Version {0}</value>
+  </data>
+  <data name="AboutLicenses" xml:space="preserve">
+    <value>Third-party licenses</value>
+  </data>
+  <data name="AboutLhmNotice" xml:space="preserve">
+    <value>Hardware sensor data is read through LibreHardwareMonitorLib, distributed under the Mozilla Public License 2.0. This application does not modify the library; its source code is available at the link below.</value>
+  </data>
+
   <data name="OverviewPlaceholder" xml:space="preserve">
     <value>A summary of this computer will appear here.</value>
   </data>

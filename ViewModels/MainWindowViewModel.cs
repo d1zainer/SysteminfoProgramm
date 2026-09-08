@@ -27,8 +27,8 @@ public partial class MainWindowViewModel : ObservableObject, IDisposable
             Page(store, Localization.PageMemory, SectionKind.Memory),
             Page(store, Localization.PageStorage, SectionKind.Storage),
             Page(store, Localization.PageNetwork, SectionKind.Network),
-            new SettingsViewModel(store)
-            
+            new SettingsViewModel(store),
+            new AboutViewModel()
         };
         Pages = pages;
         _currentPage = overview;

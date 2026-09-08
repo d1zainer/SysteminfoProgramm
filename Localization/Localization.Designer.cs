@@ -49,6 +49,24 @@ namespace SystemProgramm {
             }
         }
 
+        public static string AboutLhmNotice {
+            get {
+                return ResourceManager.GetString("AboutLhmNotice", resourceCulture);
+            }
+        }
+
+        public static string AboutLicenses {
+            get {
+                return ResourceManager.GetString("AboutLicenses", resourceCulture);
+            }
+        }
+
+        public static string AboutVersion {
+            get {
+                return ResourceManager.GetString("AboutVersion", resourceCulture);
+            }
+        }
+
         public static string AppTitle {
             get {
                 return ResourceManager.GetString("AppTitle", resourceCulture);
@@ -316,6 +334,12 @@ namespace SystemProgramm {
         public static string OverviewPlaceholder {
             get {
                 return ResourceManager.GetString("OverviewPlaceholder", resourceCulture);
+            }
+        }
+
+        public static string PageAbout {
+            get {
+                return ResourceManager.GetString("PageAbout", resourceCulture);
             }
         }
 
