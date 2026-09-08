@@ -5,23 +5,39 @@ namespace SystemProgramm.Services.Readers;
 
 public sealed class StorageReader(HardwareMonitor monitor) : IHardwareReader
 {
-    private const double Gigabyte = 1024d * 1024 * 1024;
-
     public SectionKind Section => SectionKind.Storage;
 
     public string Title => Localization.CardStorage;
 
     public HardwareReading Read()
     {
-        var drive = SystemDrive();
+        var root = Path.GetPathRoot(Environment.SystemDirectory);
+
+        DriveInfo? drive = null;
+
+        if (root is not null)
+        {
+            try
+            {
+                var candidate = new DriveInfo(root);
+
+                if (candidate.IsReady)
+                {
+                    drive = candidate;
+                }
+            }
+            catch (Exception e) when (e is ArgumentException or IOException or UnauthorizedAccessException)
+            {
+            }
+        }
 
         if (drive is null)
         {
             return new HardwareReading(Localization.ValueUnknown);
         }
 
-        var total = drive.TotalSize / Gigabyte;
-        var used = total - drive.AvailableFreeSpace / Gigabyte;
+        var total = ((double)drive.TotalSize).BytesToGigabytes();
+        var used = total - ((double)drive.AvailableFreeSpace).BytesToGigabytes();
         var load = used / total * 100;
 
         // Модель диска и его температуру отдаёт только LibreHardwareMonitor,
@@ -37,26 +53,5 @@ public sealed class StorageReader(HardwareMonitor monitor) : IHardwareReader
             heat is null ? space : $"{space}, {heat}",
             load,
             string.Format(Localization.UsedPercent, load));
-    }
-
-    private static DriveInfo? SystemDrive()
-    {
-        var root = Path.GetPathRoot(Environment.SystemDirectory);
-
-        if (root is null)
-        {
-            return null;
-        }
-
-        try
-        {
-            var drive = new DriveInfo(root);
-
-            return drive.IsReady ? drive : null;
-        }
-        catch (Exception e) when (e is ArgumentException or IOException or UnauthorizedAccessException)
-        {
-            return null;
-        }
     }
 }

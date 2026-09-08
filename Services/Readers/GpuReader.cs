@@ -129,7 +129,7 @@ public sealed class GpuReader(HardwareMonitor monitor) : IHardwareReader, ISecti
         // Сенсоры памяти у видеокарты в мегабайтах.
         return string.Format(
             Localization.StorageDetail,
-            Format.Gigabytes(used.Value / 1024),
-            Format.Gigabytes(total.Value / 1024));
+            Format.Gigabytes(used.Value.MegabytesToGigabytes()),
+            Format.Gigabytes(total.Value.MegabytesToGigabytes()));
     }
 }

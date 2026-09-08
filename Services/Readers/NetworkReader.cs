@@ -38,8 +38,8 @@ public sealed class NetworkReader(HardwareMonitor monitor) : IHardwareReader
             ? null
             : string.Format(
                 Localization.NetworkTraffic,
-                Format.BitsPerSecond(download.Value * 8),
-                Format.BitsPerSecond(upload.Value * 8));
+                Format.BitsPerSecond(download.Value.BytesToBits()),
+                Format.BitsPerSecond(upload.Value.BytesToBits()));
 
         return new HardwareReading(adapter.Name, detail, nic?.Value(SensorType.Load, Utilization), traffic);
     }
