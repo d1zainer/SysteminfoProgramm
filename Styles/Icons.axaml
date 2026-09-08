@@ -103,7 +103,7 @@
                   StrokeThickness="2"
                   StrokeLineCap="Round"
                   StrokeJoin="Round"
-                  Data="M2 12A10 10 0 1 0 22 12A10 10 0 1 0 2 12Z M12 16v-4 M12 8h.01" />
+                  Data="M2 12A10 10 0 1 0 22 12A10 10 0 1 0 2 12Z M12 16v-4 M11.5 8A0.5 0.5 0 1 0 12.5 8A0.5 0.5 0 1 0 11.5 8Z" />
         </Viewbox>
     </ControlTemplate>
 
