@@ -24,24 +24,17 @@
             <Grid RowDefinitions="Auto,*">
 
                 <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
-                    <ListBox Grid.Column="1"
+                    <ComboBox Grid.Column="1"
                              VerticalAlignment="Center"
                              IsVisible="{Binding HasSwitch}"
                              ItemsSource="{Binding Charts}"
                              SelectedItem="{Binding SelectedMetric}">
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal" />
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
-
-                        <ListBox.ItemTemplate>
+                        <ComboBox.ItemTemplate>
                             <DataTemplate DataType="charts:MetricViewModel">
                                 <TextBlock Classes="small" Text="{Binding Title}" />
                             </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </Grid>
 
                 <controls:MetricChart Grid.Row="1"

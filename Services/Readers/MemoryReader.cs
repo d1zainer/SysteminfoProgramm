@@ -68,6 +68,16 @@ public sealed class MemoryReader(HardwareMonitor monitor) : IHardwareReader, ISe
             .ToArray();
 
         var speed = modules is [{ ConfiguredSpeed: > 0 } module, ..] ? (double?)module.ConfiguredSpeed : null;
+        
+        string? Modules(IReadOnlyList<MemoryDevice> modules)
+        {
+            if (modules.Count == 0)
+            {
+                return null;
+            }
+
+            return $"{modules.Count} × {Format.Gigabytes(((double)modules[0].Size).MegabytesToGigabytes())}";
+        }
 
         DetailRow[] rows =
         [
@@ -79,18 +89,7 @@ public sealed class MemoryReader(HardwareMonitor monitor) : IHardwareReader, ISe
 
         return _describe = [..rows.Where(row => row.Value is not null)];
     }
-
-    // Модули в комплекте обычно одного объёма - показываем количество и размер одного.
-    private static string? Modules(IReadOnlyList<MemoryDevice> modules)
-    {
-        if (modules.Count == 0)
-        {
-            return null;
-        }
-
-        return $"{modules.Count} × {Format.Gigabytes(((double)modules[0].Size).MegabytesToGigabytes())}";
-    }
-
+    
     public SectionReading ReadSection()
     {
         if (Ram is not { } memory)
