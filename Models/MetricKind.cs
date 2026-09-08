@@ -3,5 +3,6 @@ namespace SystemProgramm.Models;
 public enum MetricKind
 {
     Load,
-    Temperature
+    Temperature,
+    Network
 }

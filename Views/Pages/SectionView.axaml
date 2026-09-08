@@ -19,12 +19,16 @@
                 Classes="card"
                 Classes.temperature="{Binding SelectedMetric.Kind,
                                               Converter={StaticResource Same},
-                                              ConverterParameter={x:Static models:MetricKind.Temperature}}">
+                                              ConverterParameter={x:Static models:MetricKind.Temperature}}"
+                Classes.network="{Binding SelectedMetric.Kind,
+                                          Converter={StaticResource Same},
+                                          ConverterParameter={x:Static models:MetricKind.Network}}">
 
             <Grid RowDefinitions="Auto,*">
 
                 <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
                     <ComboBox Grid.Column="1"
+                             MinWidth="140"
                              VerticalAlignment="Center"
                              IsVisible="{Binding HasSwitch}"
                              ItemsSource="{Binding Charts}"
@@ -45,7 +49,8 @@
                                       Unit="{Binding SelectedMetric.Unit}"
                                       WindowLabel="{Binding SelectedMetric.Window}"
                                       NowLabel="{x:Static loc:Localization.ChartNow}"
-                                      Values="{Binding SelectedMetric.Values}" />
+                                      Values="{Binding SelectedMetric.Values}"
+                                      SecondaryValues="{Binding SelectedMetric.SecondaryValues}" />
 
             </Grid>
         </Border>

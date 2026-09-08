@@ -30,8 +30,14 @@ public sealed class MetricChart : Control
     public static readonly StyledProperty<string?> NowLabelProperty =
         AvaloniaProperty.Register<MetricChart, string?>(nameof(NowLabel));
 
+    public static readonly StyledProperty<IReadOnlyList<double>?> SecondaryValuesProperty =
+        AvaloniaProperty.Register<MetricChart, IReadOnlyList<double>?>(nameof(SecondaryValues));
+
     public static readonly StyledProperty<IBrush?> StrokeProperty =
         AvaloniaProperty.Register<MetricChart, IBrush?>(nameof(Stroke));
+
+    public static readonly StyledProperty<IBrush?> SecondaryStrokeProperty =
+        AvaloniaProperty.Register<MetricChart, IBrush?>(nameof(SecondaryStroke));
 
     public static readonly StyledProperty<IBrush?> FillProperty =
         AvaloniaProperty.Register<MetricChart, IBrush?>(nameof(Fill));
@@ -59,15 +65,21 @@ public sealed class MetricChart : Control
 
     static MetricChart() =>
         AffectsRender<MetricChart>(
-            ValuesProperty, MinimumProperty, MaximumProperty, CapacityProperty,
+            ValuesProperty, SecondaryValuesProperty, MinimumProperty, MaximumProperty, CapacityProperty,
             UnitProperty, WindowLabelProperty, NowLabelProperty,
-            StrokeProperty, FillProperty, GridStrokeProperty, LabelBrushProperty,
+            StrokeProperty, SecondaryStrokeProperty, FillProperty, GridStrokeProperty, LabelBrushProperty,
             LabelFontFamilyProperty, LabelFontSizeProperty, StrokeThicknessProperty, DivisionsProperty, ColumnsProperty);
 
     public IReadOnlyList<double>? Values
     {
         get => GetValue(ValuesProperty);
         set => SetValue(ValuesProperty, value);
+    }
+    
+    public IReadOnlyList<double>? SecondaryValues
+    {
+        get => GetValue(SecondaryValuesProperty);
+        set => SetValue(SecondaryValuesProperty, value);
     }
 
     public double Minimum
@@ -112,6 +124,12 @@ public sealed class MetricChart : Control
     {
         get => GetValue(StrokeProperty);
         set => SetValue(StrokeProperty, value);
+    }
+
+    public IBrush? SecondaryStroke
+    {
+        get => GetValue(SecondaryStrokeProperty);
+        set => SetValue(SecondaryStrokeProperty, value);
     }
 
     public IBrush? Fill
@@ -250,13 +268,30 @@ public sealed class MetricChart : Control
 
     private void DrawSeries(DrawingContext context, Rect plot)
     {
-        if (Values is not { Count: > 1 } values)
+        if (Values is { Count: > 1 } values)
         {
-            return;
+            var points = Points(values, plot);
+
+            if (Fill is { } fill)
+            {
+                context.DrawGeometry(fill, null, Area(points, plot.Bottom));
+            }
+
+            if (Stroke is { } stroke)
+            {
+                context.DrawGeometry(null, new Pen(stroke, StrokeThickness), Line(points));
+            }
         }
 
-        // Свежая точка всегда у правого края, история уходит влево:
-        // пока окно не заполнено, пустое место остаётся слева, а не справа.
+        // Вторая линия - приём и отдача сети на одной шкале - только штрихом, без заливки.
+        if (SecondaryValues is { Count: > 1 } secondary && SecondaryStroke is { } secondaryStroke)
+        {
+            context.DrawGeometry(null, new Pen(secondaryStroke, StrokeThickness), Line(Points(secondary, plot)));
+        }
+    }
+    
+    private Point[] Points(IReadOnlyList<double> values, Rect plot)
+    {
         var step = plot.Width / Math.Max(Capacity - 1, 1);
         var points = new Point[values.Count];
 
@@ -265,15 +300,7 @@ public sealed class MetricChart : Control
             points[i] = new Point(plot.Right - (values.Count - 1 - i) * step, Offset(values[i], plot));
         }
 
-        if (Fill is { } fill)
-        {
-            context.DrawGeometry(fill, null, Area(points, plot.Bottom));
-        }
-
-        if (Stroke is { } stroke)
-        {
-            context.DrawGeometry(null, new Pen(stroke, StrokeThickness), Line(points));
-        }
+        return points;
     }
 
     private void DrawTimeAxis(DrawingContext context, Rect plot)

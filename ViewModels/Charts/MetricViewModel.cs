@@ -8,11 +8,16 @@ public sealed partial class MetricViewModel : ObservableObject
 {
     private readonly Queue<double> _points = new();
 
+    private readonly Queue<double> _secondaryPoints = new();
+
     private readonly double? _fixedMaximum;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HasData))]
     private IReadOnlyList<double> _values = [];
+
+    [ObservableProperty]
+    private IReadOnlyList<double>? _secondaryValues;
 
     [ObservableProperty]
     private double _maximum;
@@ -30,12 +35,14 @@ public sealed partial class MetricViewModel : ObservableObject
         Title = info.Kind switch
         {
             MetricKind.Temperature => Localization.MetricTemperature,
+            MetricKind.Network => Localization.MetricNetwork,
             _ => Localization.MetricLoad
         };
 
         Unit = info.Kind switch
         {
             MetricKind.Temperature => Localization.UnitCelsius,
+            MetricKind.Network => Localization.UnitMegabitPerSecond,
             _ => Localization.UnitPercent
         };
 
@@ -56,7 +63,8 @@ public sealed partial class MetricViewModel : ObservableObject
 
     public bool HasData => Values.Count > 0;
 
-    public void Push(double? value)
+  
+    public void Push(double? value, double? secondary = null)
     {
         if (value is null)
         {
@@ -71,13 +79,26 @@ public sealed partial class MetricViewModel : ObservableObject
         }
 
         Values = _points.ToArray();
+
+        if (secondary is not null)
+        {
+            _secondaryPoints.Enqueue(secondary.Value);
+
+            while (_secondaryPoints.Count > Capacity)
+            {
+                _secondaryPoints.Dequeue();
+            }
+
+            SecondaryValues = _secondaryPoints.ToArray();
+        }
+
         Maximum = _fixedMaximum ?? Scale();
     }
 
     // Своя шкала нужна там, где потолка не существует: скорость сети, например.
     private double Scale()
     {
-        var peak = _points.Max();
+        var peak = _points.Concat(_secondaryPoints).DefaultIfEmpty(0).Max();
         var step = Math.Pow(10, Math.Floor(Math.Log10(Math.Max(peak, 1))));
 
         return Math.Max(Math.Ceiling(peak * 1.2 / step) * step, 1);

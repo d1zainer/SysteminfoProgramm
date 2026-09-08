@@ -115,6 +115,12 @@ namespace SystemProgramm {
             }
         }
 
+        public static string DetailAdapter {
+            get {
+                return ResourceManager.GetString("DetailAdapter", resourceCulture);
+            }
+        }
+
         public static string DetailBusClock {
             get {
                 return ResourceManager.GetString("DetailBusClock", resourceCulture);
@@ -139,6 +145,12 @@ namespace SystemProgramm {
             }
         }
 
+        public static string DetailDownload {
+            get {
+                return ResourceManager.GetString("DetailDownload", resourceCulture);
+            }
+        }
+
         public static string DetailFamily {
             get {
                 return ResourceManager.GetString("DetailFamily", resourceCulture);
@@ -160,6 +172,12 @@ namespace SystemProgramm {
         public static string DetailFree {
             get {
                 return ResourceManager.GetString("DetailFree", resourceCulture);
+            }
+        }
+
+        public static string DetailLinkSpeed {
+            get {
+                return ResourceManager.GetString("DetailLinkSpeed", resourceCulture);
             }
         }
 
@@ -229,6 +247,12 @@ namespace SystemProgramm {
             }
         }
 
+        public static string DetailUpload {
+            get {
+                return ResourceManager.GetString("DetailUpload", resourceCulture);
+            }
+        }
+
         public static string DetailUsed {
             get {
                 return ResourceManager.GetString("DetailUsed", resourceCulture);
@@ -274,6 +298,12 @@ namespace SystemProgramm {
         public static string MetricLoad {
             get {
                 return ResourceManager.GetString("MetricLoad", resourceCulture);
+            }
+        }
+
+        public static string MetricNetwork {
+            get {
+                return ResourceManager.GetString("MetricNetwork", resourceCulture);
             }
         }
 

@@ -217,6 +217,18 @@
   <data name="DetailModules" xml:space="preserve">
     <value>Модули</value>
   </data>
+  <data name="DetailAdapter" xml:space="preserve">
+    <value>Адаптер</value>
+  </data>
+  <data name="DetailLinkSpeed" xml:space="preserve">
+    <value>Скорость соединения</value>
+  </data>
+  <data name="DetailDownload" xml:space="preserve">
+    <value>Приём</value>
+  </data>
+  <data name="DetailUpload" xml:space="preserve">
+    <value>Отдача</value>
+  </data>
   <data name="UnitCelsius" xml:space="preserve">
     <value>°C</value>
   </data>
@@ -237,6 +249,9 @@
   </data>
   <data name="MetricLoad" xml:space="preserve">
     <value>Загрузка</value>
+  </data>
+  <data name="MetricNetwork" xml:space="preserve">
+    <value>Трафик</value>
   </data>
   <data name="MetricTemperature" xml:space="preserve">
     <value>Температура</value>

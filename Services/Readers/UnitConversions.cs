@@ -9,4 +9,6 @@ internal static class UnitConversions
     public static double MegabytesToGigabytes(this double megabytes) => megabytes / Kilo;
 
     public static double BytesToBits(this double bytes) => bytes * 8;
+
+    public static double BytesToMegabitsPerSecond(this double bytes) => bytes.BytesToBits() / 1_000_000;
 }

@@ -7,5 +7,9 @@ public sealed record MetricInfo(MetricKind Kind, double? Maximum);
 
 public sealed record DetailRow(string Name, string? Value);
 
-// Points идут в том же порядке, что и Metrics у ридера.
-public sealed record SectionReading(IReadOnlyList<double?> Points, IReadOnlyList<DetailRow> Details);
+// Points идут в том же порядке, что и Metrics у ридера. Secondary - вторая линия
+// того же графика (приём и отдача на одной шкале сети), у большинства разделов её нет.
+public sealed record SectionReading(
+    IReadOnlyList<double?> Points,
+    IReadOnlyList<DetailRow> Details,
+    IReadOnlyList<double?>? Secondary = null);

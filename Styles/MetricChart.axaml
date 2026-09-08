@@ -13,12 +13,10 @@
             <SolidColorBrush Color="{DynamicResource SystemBaseHighColor}" Opacity="0.16" />
         </Setter>
 
-        <Setter Property="Stroke">
-            <SolidColorBrush Color="{DynamicResource SystemAccentColor}" />
-        </Setter>
+        <Setter Property="Stroke" Value="#3B82F6" />
 
         <Setter Property="Fill">
-          <SolidColorBrush Color="{DynamicResource SystemAccentColor}" Opacity="0.18" />
+          <SolidColorBrush Color="#3B82F6" Opacity="0.18" />
         </Setter>
     </Style>
 
@@ -27,6 +25,12 @@
         <Setter Property="Fill">
             <SolidColorBrush Color="#E0793A" Opacity="0.18" />
         </Setter>
+    </Style>
+
+    <Style Selector="Border.network controls|MetricChart">
+        <Setter Property="Stroke" Value="#3B82F6" />
+        <Setter Property="SecondaryStroke" Value="#EC4899" />
+        <Setter Property="Fill" Value="{x:Null}" />
     </Style>
 
 </Styles>

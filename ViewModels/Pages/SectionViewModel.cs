@@ -55,7 +55,8 @@ public sealed partial class SectionViewModel : PageViewModel, IDisposable
         for (var i = 0; i < Metrics.Count && i < reading.Points.Count; i++)
         {
             var metric = Metrics[i];
-            metric.Push(reading.Points[i]);
+            var secondary = reading.Secondary is { } values && i < values.Count ? values[i] : null;
+            metric.Push(reading.Points[i], secondary);
 
             if (metric.HasData && !Charts.Contains(metric))
             {
