@@ -151,6 +151,12 @@ namespace SystemProgramm {
             }
         }
 
+        public static string DetailFileSystem {
+            get {
+                return ResourceManager.GetString("DetailFileSystem", resourceCulture);
+            }
+        }
+
         public static string DetailFree {
             get {
                 return ResourceManager.GetString("DetailFree", resourceCulture);

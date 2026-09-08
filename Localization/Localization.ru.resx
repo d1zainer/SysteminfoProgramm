@@ -205,6 +205,9 @@
   <data name="DetailUsed" xml:space="preserve">
     <value>Занято</value>
   </data>
+  <data name="DetailFileSystem" xml:space="preserve">
+    <value>Файловая система</value>
+  </data>
   <data name="DetailFree" xml:space="preserve">
     <value>Свободно</value>
   </data>

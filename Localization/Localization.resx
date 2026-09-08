@@ -205,6 +205,9 @@
   <data name="DetailUsed" xml:space="preserve">
     <value>Used</value>
   </data>
+  <data name="DetailFileSystem" xml:space="preserve">
+    <value>File system</value>
+  </data>
   <data name="DetailFree" xml:space="preserve">
     <value>Free</value>
   </data>
