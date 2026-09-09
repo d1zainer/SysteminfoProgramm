@@ -5,6 +5,7 @@
     <StyleInclude Source="avares://SystemProgramm/Styles/ListBox.axaml" />
     <StyleInclude Source="avares://SystemProgramm/Styles/NavMenu.axaml" />
     <StyleInclude Source="avares://SystemProgramm/Styles/Card.axaml" />
+    <StyleInclude Source="avares://SystemProgramm/Styles/ComboBox.axaml" />
     <StyleInclude Source="avares://SystemProgramm/Styles/HyperlinkButton.axaml" />
     <StyleInclude Source="avares://SystemProgramm/Styles/MetricChart.axaml" />
 

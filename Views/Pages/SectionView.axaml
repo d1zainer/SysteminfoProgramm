@@ -28,6 +28,7 @@
 
                 <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
                     <ComboBox Grid.Column="1"
+                             Classes="chart"
                              MinWidth="140"
                              VerticalAlignment="Center"
                              IsVisible="{Binding HasSwitch}"
