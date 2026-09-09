@@ -38,13 +38,15 @@
                      SelectedItem="{Binding CurrentPage}">
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="pages:PageViewModel">
-                        <StackPanel Orientation="Horizontal" Spacing="12">
-                            <ContentControl Template="{Binding Info.Section, Converter={StaticResource PageIcon}}"
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <ContentControl Width="16"
+                                            Height="16"
+                                            VerticalAlignment="Center"
+                                            Template="{Binding Info.Section, Converter={StaticResource PageIcon}}"
                                             Foreground="{Binding $parent[ListBoxItem].Foreground}" />
 
                             <TextBlock Margin="0 0 10 0"
                                        VerticalAlignment="Center"
-                                       Classes="medium"
                                        Text="{Binding Info.Title}" />
                         </StackPanel>
                     </DataTemplate>
