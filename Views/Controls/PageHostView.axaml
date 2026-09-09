@@ -1,0 +1,43 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:loc="clr-namespace:SystemProgramm"
+             xmlns:pages="clr-namespace:SystemProgramm.ViewModels.Pages"
+             xmlns:views="clr-namespace:SystemProgramm.Views.Pages"
+             xmlns:vm="clr-namespace:SystemProgramm.ViewModels"
+             x:Class="SystemProgramm.Views.Controls.PageHostView"
+             x:DataType="vm:MainWindowViewModel">
+
+    <Border>
+        <Border.Background>
+            <SolidColorBrush Color="{DynamicResource SystemChromeMediumColor}" />
+        </Border.Background>
+
+        <ContentControl Content="{Binding CurrentPage}">
+            <ContentControl.DataTemplates>
+
+                <DataTemplate DataType="pages:OverviewViewModel">
+                    <views:OverviewView />
+                </DataTemplate>
+
+                <DataTemplate DataType="pages:SectionViewModel">
+                    <views:SectionView />
+                </DataTemplate>
+
+                <DataTemplate DataType="pages:SettingsViewModel">
+                    <views:SettingsView />
+                </DataTemplate>
+
+                <DataTemplate DataType="pages:AboutViewModel">
+                    <views:AboutView />
+                </DataTemplate>
+
+                <DataTemplate DataType="pages:PageViewModel">
+                    <TextBlock Margin="24"
+                               Text="{x:Static loc:Localization.PageNotImplemented}" />
+                </DataTemplate>
+
+            </ContentControl.DataTemplates>
+        </ContentControl>
+    </Border>
+
+</UserControl>

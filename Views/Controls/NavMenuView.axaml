@@ -3,7 +3,7 @@
              xmlns:conv="clr-namespace:SystemProgramm.Views.Converters"
              xmlns:pages="clr-namespace:SystemProgramm.ViewModels.Pages"
              xmlns:vm="clr-namespace:SystemProgramm.ViewModels"
-             x:Class="SystemProgramm.Views.NavMenuView"
+             x:Class="SystemProgramm.Views.Controls.NavMenuView"
              x:DataType="vm:MainWindowViewModel">
 
     <UserControl.Resources>
