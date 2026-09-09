@@ -28,11 +28,8 @@
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 Padding="18 8"
-                BorderThickness="0 1 0 0">
-
-            <Border.Background>
-                <SolidColorBrush Color="{DynamicResource SystemChromeLowColor}" Opacity="0.85" />
-            </Border.Background>
+                BorderThickness="0 1 0 0"
+                Background="{DynamicResource AppNavBrush}">
 
             <Border.BorderBrush>
                 <SolidColorBrush Color="{DynamicResource SystemBaseHighColor}" Opacity="0.1" />

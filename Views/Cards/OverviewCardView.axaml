@@ -43,6 +43,7 @@
 
                 <ProgressBar Maximum="100"
                              Minimum="0"
+                             Background="{DynamicResource AppTrackBrush}"
                              Value="{Binding Load}" />
 
                 <TextBlock Classes="small"

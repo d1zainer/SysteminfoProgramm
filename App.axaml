@@ -9,6 +9,25 @@
                 <ResourceInclude Source="avares://SystemProgramm/Styles/Icons.axaml" />
             </ResourceDictionary.MergedDictionaries>
 
+            <ResourceDictionary.ThemeDictionaries>
+                <!-- Светлая тема: подложка контента - чистый белый,
+                     меню чуть темнее, карточки - самый заметный серый, без обводки. -->
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="AppRegionBrush" Color="White" />
+                    <SolidColorBrush x:Key="AppNavBrush" Color="#FCFCFD" Opacity="0.95" />
+                    <SolidColorBrush x:Key="AppCardBrush" Color="#F4F5F7" />
+                    <SolidColorBrush x:Key="AppTrackBrush" Color="White" />
+                </ResourceDictionary>
+
+                <!-- Тёмная тема: как было - полупрозрачные слои поверх Mica. -->
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="AppRegionBrush" Color="#1D1D1D" />
+                    <SolidColorBrush x:Key="AppNavBrush" Color="#151515" Opacity="0.85" />
+                    <SolidColorBrush x:Key="AppCardBrush" Color="White" Opacity="0.04" />
+                    <SolidColorBrush x:Key="AppTrackBrush" Color="#1D1D1D" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+
             <FontFamily x:Key="AppFont">avares://SystemProgramm/Assets/Fonts#Onest</FontFamily>
         </ResourceDictionary>
     </Application.Resources>

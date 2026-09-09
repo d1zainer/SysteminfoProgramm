@@ -10,11 +10,7 @@
         <conv:SectionToIconConverter x:Key="PageIcon" />
     </UserControl.Resources>
     
-    <Border>
-        <Border.Background>
-            <SolidColorBrush Color="{DynamicResource SystemChromeLowColor}" Opacity="0.85" />
-        </Border.Background>
-
+    <Border Background="{DynamicResource AppNavBrush}">
         <ListBox Classes="menu"
                  Padding="0 30 0 0 "
                  ItemsSource="{Binding Pages}"

@@ -7,11 +7,7 @@
              x:Class="SystemProgramm.Views.Controls.PageHostView"
              x:DataType="vm:MainWindowViewModel">
 
-    <Border>
-        <Border.Background>
-            <SolidColorBrush Color="{DynamicResource SystemChromeMediumColor}" />
-        </Border.Background>
-
+    <Border Background="{DynamicResource AppRegionBrush}">
         <ContentControl Content="{Binding CurrentPage}">
             <ContentControl.DataTemplates>
 
