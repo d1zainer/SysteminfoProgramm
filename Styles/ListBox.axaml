@@ -5,28 +5,5 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
     </Style>
-    
-
-    <Style Selector="ListBoxItem /template/ ContentPresenter#PART_ContentPresenter">
-        <Setter Property="Background" Value="Transparent" />
-    </Style>
-
-    <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-        <Setter Property="Background">
-            <SolidColorBrush Color="{DynamicResource SystemBaseHighColor}" Opacity="0.08" />
-        </Setter>
-    </Style>
-
-    <Style Selector="ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
-        <Setter Property="Background">
-            <SolidColorBrush Color="{DynamicResource SystemBaseHighColor}" Opacity="0.14" />
-        </Setter>
-    </Style>
-
-    <Style Selector="ListBoxItem:selected:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-        <Setter Property="Background">
-            <SolidColorBrush Color="{DynamicResource SystemBaseHighColor}" Opacity="0.2" />
-        </Setter>
-    </Style>
 
 </Styles>

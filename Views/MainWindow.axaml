@@ -1,7 +1,7 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:conv="clr-namespace:SystemProgramm.Views.Converters"
         xmlns:loc="clr-namespace:SystemProgramm"
+        xmlns:nav="clr-namespace:SystemProgramm.Views"
         xmlns:pages="clr-namespace:SystemProgramm.ViewModels.Pages"
         xmlns:views="clr-namespace:SystemProgramm.Views.Pages"
         xmlns:vm="clr-namespace:SystemProgramm.ViewModels"
@@ -21,39 +21,8 @@
         <SolidColorBrush Color="{DynamicResource SystemChromeMediumColor}" />
     </Window.TransparencyBackgroundFallback>
 
-    <Window.Resources>
-        <conv:SectionToIconConverter x:Key="PageIcon" />
-    </Window.Resources>
-
     <Grid ColumnDefinitions="Auto,*" RowDefinitions="*,Auto">
-        <!-- Подложка под меню: там, где Mica работает, она просвечивает сквозь неё,
-             а там, где система её не рисует, окно не превращается в дыру. -->
-        <Border Grid.Row="0" Grid.Column="0">
-            <Border.Background>
-                <SolidColorBrush Color="{DynamicResource SystemChromeLowColor}" Opacity="0.85" />
-            </Border.Background>
-
-            <ListBox Padding="0 30 0 0 "
-                     ItemsSource="{Binding Pages}"
-                     SelectedItem="{Binding CurrentPage}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate DataType="pages:PageViewModel">
-                        <StackPanel Orientation="Horizontal" Spacing="10">
-                            <ContentControl Width="16"
-                                            Height="16"
-                                            VerticalAlignment="Center"
-                                            Template="{Binding Info.Section, Converter={StaticResource PageIcon}}"
-                                            Foreground="{Binding $parent[ListBoxItem].Foreground}" />
-
-                            <TextBlock Margin="0 0 10 0"
-                                       VerticalAlignment="Center"
-                                       Text="{Binding Info.Title}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </Border>
-
+        <nav:NavMenuView Grid.Row="0" Grid.Column="0" />
 
         <Border Grid.Row="0" Grid.Column="1">
             <Border.Background>

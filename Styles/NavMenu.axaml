@@ -1,0 +1,58 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Боковое меню: выбранный пункт помечается полоской слева,
+         фон самого пункта при выборе не заливается, только наведение даёт лёгкую подсветку. -->
+
+    <Style Selector="ListBox.menu ListBoxItem">
+        <Setter Property="Padding" Value="12 8" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel>
+                    <ContentPresenter Name="PART_ContentPresenter"
+                                      Padding="{TemplateBinding Padding}"
+                                      Content="{TemplateBinding Content}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      Background="{TemplateBinding Background}"
+                                      CornerRadius="6" />
+
+                    <Border Name="Indicator"
+                            Width="3"
+                            Margin="4 0 0 0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Stretch"
+                            CornerRadius="1.5"
+                            Opacity="0">
+                        <Border.Background>
+                            <SolidColorBrush Color="{DynamicResource SystemAccentColor}" />
+                        </Border.Background>
+                    </Border>
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+    <Style Selector="ListBox.menu ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background">
+            <SolidColorBrush Color="{DynamicResource SystemBaseHighColor}" Opacity="0.06" />
+        </Setter>
+    </Style>
+
+    <!-- Выбор не заливает фон: перебиваем штатную подсветку темы. -->
+    <Style Selector="ListBox.menu ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+
+    <Style Selector="ListBox.menu ListBoxItem:selected:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background">
+            <SolidColorBrush Color="{DynamicResource SystemBaseHighColor}" Opacity="0.06" />
+        </Setter>
+    </Style>
+
+    <Style Selector="ListBox.menu ListBoxItem:selected /template/ Border#Indicator">
+        <Setter Property="Opacity" Value="1" />
+    </Style>
+
+</Styles>
