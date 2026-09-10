@@ -3,7 +3,7 @@ using SystemProgramm.Models;
 
 namespace SystemProgramm.Services.Readers;
 
-public sealed class CpuReader(HardwareMonitor monitor) : IHardwareReader, ISectionReader
+public sealed class CpuReader(HardwareMonitor monitor) : SectionReader(monitor)
 {
     private const string TotalLoad = "CPU Total";
 
@@ -15,24 +15,22 @@ public sealed class CpuReader(HardwareMonitor monitor) : IHardwareReader, ISecti
 
     private const string CoresPower = "CPU Cores";
 
-    private IReadOnlyList<DetailRow>? _describe;
+    public override SectionKind Section => SectionKind.Cpu;
 
-    public SectionKind Section => SectionKind.Cpu;
+    public override string Title => Localization.CardCpu;
 
-    public string Title => Localization.CardCpu;
-
-    public IReadOnlyList<MetricInfo> Metrics { get; } =
+    public override IReadOnlyList<MetricInfo> Metrics { get; } =
     [
         new MetricInfo(MetricKind.Load, 100),
         new MetricInfo(MetricKind.Temperature, 100)
     ];
 
     // SMBIOS - слепок, снятый при старте машины, и за время работы не меняется.
-    private ProcessorInformation? Processor => monitor.Smbios?.Processors?.FirstOrDefault();
+    private ProcessorInformation? Processor => Monitor.Smbios?.Processors?.FirstOrDefault();
 
-    public HardwareReading Read()
+    public override HardwareReading Read()
     {
-        var cpu = monitor.Read(HardwareType.Cpu);
+        var cpu = Monitor.Read(HardwareType.Cpu);
 
         if (cpu is null)
         {
@@ -53,16 +51,10 @@ public sealed class CpuReader(HardwareMonitor monitor) : IHardwareReader, ISecti
             load is null ? null : string.Format(Localization.LoadPercent, load));
     }
 
-    // Модель, сокет и кэш читаются один раз: пока монитор не открылся, cpu ещё null,
-    // и мы пробуем снова на следующий тик, а не запоминаем пустой результат навсегда.
-    public IReadOnlyList<DetailRow> Describe()
+    // Модель, сокет и кэш - из SMBIOS.
+    protected override IReadOnlyList<DetailRow> DescribeRows()
     {
-        if (_describe is not null)
-        {
-            return _describe;
-        }
-
-        var cpu = monitor.Read(HardwareType.Cpu);
+        var cpu = Monitor.Read(HardwareType.Cpu);
 
         if (cpu is null)
         {
@@ -75,7 +67,7 @@ public sealed class CpuReader(HardwareMonitor monitor) : IHardwareReader, ISecti
         var maxClock = processor is { MaxSpeed: > 0 } ? processor.MaxSpeed : (double?)null;
         var busClock = processor is { ExternalClock: > 0 } ? processor.ExternalClock : (double?)null;
 
-        DetailRow[] rows =
+        return
         [
             new(Localization.DetailModel, cpu.Name),
             new(Localization.DetailVendor, processor?.ManufacturerName?.Trim()),
@@ -86,18 +78,15 @@ public sealed class CpuReader(HardwareMonitor monitor) : IHardwareReader, ISecti
             new(Localization.DetailBusClock, Format.Megahertz(busClock)),
             new(Localization.DetailCache, Cache())
         ];
-
-        // Строки без значения не показываем: пустой прочерк ничего не объясняет.
-        return _describe = [..rows.Where(row => row.Value is not null)];
     }
 
-    public SectionReading ReadSection()
+    public override SectionReading ReadSection()
     {
-        var cpu = monitor.Read(HardwareType.Cpu);
+        var cpu = Monitor.Read(HardwareType.Cpu);
 
         if (cpu is null)
         {
-            return new SectionReading([..Metrics.Select(_ => (double?)null)], []);
+            return Blank();
         }
 
         var load = cpu.Value(SensorType.Load, TotalLoad);
@@ -124,7 +113,7 @@ public sealed class CpuReader(HardwareMonitor monitor) : IHardwareReader, ISecti
             new(Localization.DetailPowerCores, Format.Watt(coresPower))
         ];
 
-        return new SectionReading([load, temperature], [..rows.Where(row => row.Value is not null)]);
+        return new SectionReading([load, temperature], Rows(rows));
     }
 
     // Перечисление сокетов у LHM неполное: для LGA1700 приходит безымянное число,
@@ -146,7 +135,7 @@ public sealed class CpuReader(HardwareMonitor monitor) : IHardwareReader, ISecti
 
     private string? Cache()
     {
-        var caches = monitor.Smbios?.ProcessorCaches;
+        var caches = Monitor.Smbios?.ProcessorCaches;
 
         if (caches is null || caches.Length == 0)
         {

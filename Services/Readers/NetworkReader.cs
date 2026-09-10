@@ -4,7 +4,7 @@ using SystemProgramm.Models;
 
 namespace SystemProgramm.Services.Readers;
 
-public sealed class NetworkReader(HardwareMonitor monitor) : IHardwareReader, ISectionReader
+public sealed class NetworkReader(HardwareMonitor monitor) : SectionReader(monitor)
 {
     private const string DownloadSpeed = "Download Speed";
 
@@ -12,15 +12,13 @@ public sealed class NetworkReader(HardwareMonitor monitor) : IHardwareReader, IS
 
     private const string Utilization = "Network Utilization";
 
-    private IReadOnlyList<DetailRow>? _describe;
+    public override SectionKind Section => SectionKind.Network;
 
-    public SectionKind Section => SectionKind.Network;
+    public override string Title => Localization.CardNetwork;
 
-    public string Title => Localization.CardNetwork;
+    public override IReadOnlyList<MetricInfo> Metrics { get; } = [new MetricInfo(MetricKind.Network, null)];
 
-    public IReadOnlyList<MetricInfo> Metrics { get; } = [new MetricInfo(MetricKind.Network, null)];
-
-    public HardwareReading Read()
+    public override HardwareReading Read()
     {
         var adapter = Active();
 
@@ -49,34 +47,27 @@ public sealed class NetworkReader(HardwareMonitor monitor) : IHardwareReader, IS
     }
 
     // Адаптер и его максимальная скорость соединения не меняются, пока он не переключился.
-    public IReadOnlyList<DetailRow> Describe()
+    protected override IReadOnlyList<DetailRow> DescribeRows()
     {
-        if (_describe is not null)
-        {
-            return _describe;
-        }
-
         if (Active() is not { } adapter)
         {
             return [];
         }
 
-        DetailRow[] rows =
+        return
         [
             new(Localization.DetailAdapter, adapter.Description),
             new(Localization.DetailLinkSpeed, adapter.Speed > 0 ? Format.BitsPerSecond(adapter.Speed) : null)
         ];
-
-        return _describe = [..rows.Where(row => row.Value is not null)];
     }
 
-    public SectionReading ReadSection()
+    public override SectionReading ReadSection()
     {
         var adapter = Active();
 
         if (adapter is null)
         {
-            return new SectionReading([..Metrics.Select(_ => (double?)null)], []);
+            return Blank();
         }
 
         var nic = Nic(adapter);
@@ -92,7 +83,7 @@ public sealed class NetworkReader(HardwareMonitor monitor) : IHardwareReader, IS
 
         return new SectionReading(
             [download?.BytesToMegabitsPerSecond()],
-            [..rows.Where(row => row.Value is not null)],
+            Rows(rows),
             [upload?.BytesToMegabitsPerSecond()]);
     }
 
@@ -100,7 +91,7 @@ public sealed class NetworkReader(HardwareMonitor monitor) : IHardwareReader, IS
     // что и NetworkInterface.Id, только фигурные скобки в url-кодировке.
     private IHardware? Nic(NetworkInterface adapter)
     {
-        return monitor.Read(hardware => hardware.HardwareType == HardwareType.Network
+        return Monitor.Read(hardware => hardware.HardwareType == HardwareType.Network
                                         && Uri.UnescapeDataString(hardware.Identifier.ToString())
                                             .Equals($"/nic/{adapter.Id}", StringComparison.OrdinalIgnoreCase));
     }

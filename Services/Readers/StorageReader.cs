@@ -3,21 +3,19 @@ using SystemProgramm.Models;
 
 namespace SystemProgramm.Services.Readers;
 
-public sealed class StorageReader(HardwareMonitor monitor) : IHardwareReader, ISectionReader
+public sealed class StorageReader(HardwareMonitor monitor) : SectionReader(monitor)
 {
-    private IReadOnlyList<DetailRow>? _describe;
+    public override SectionKind Section => SectionKind.Storage;
 
-    public SectionKind Section => SectionKind.Storage;
+    public override string Title => Localization.CardStorage;
 
-    public string Title => Localization.CardStorage;
-
-    public IReadOnlyList<MetricInfo> Metrics { get; } =
+    public override IReadOnlyList<MetricInfo> Metrics { get; } =
     [
         new MetricInfo(MetricKind.Load, 100),
         new MetricInfo(MetricKind.Temperature, 100)
     ];
 
-    public HardwareReading Read()
+    public override HardwareReading Read()
     {
         if (SystemDrive() is not { } drive)
         {
@@ -30,7 +28,7 @@ public sealed class StorageReader(HardwareMonitor monitor) : IHardwareReader, IS
 
         // Модель диска и его температуру отдаёт только LibreHardwareMonitor,
         // и только под администратором. Без них показываем сам том.
-        var disk = monitor.Read(HardwareType.Storage);
+        var disk = Monitor.Read(HardwareType.Storage);
         var temperature = disk?.Sensors.FirstOrDefault(sensor => sensor.SensorType == SensorType.Temperature)?.Value;
 
         var space = string.Format(Localization.StorageDetail, Format.Gigabytes(used), Format.Gigabytes(total));
@@ -44,36 +42,29 @@ public sealed class StorageReader(HardwareMonitor monitor) : IHardwareReader, IS
     }
 
     // Модель, файловая система и объём тома не меняются, пока приложение открыто.
-    public IReadOnlyList<DetailRow> Describe()
+    protected override IReadOnlyList<DetailRow> DescribeRows()
     {
-        if (_describe is not null)
-        {
-            return _describe;
-        }
-
         if (SystemDrive() is not { } drive)
         {
             return [];
         }
 
-        var disk = monitor.Read(HardwareType.Storage);
+        var disk = Monitor.Read(HardwareType.Storage);
         var total = ((double)drive.TotalSize).BytesToGigabytes();
 
-        DetailRow[] rows =
+        return
         [
             new(Localization.DetailModel, disk?.Name ?? drive.Name),
             new(Localization.DetailFileSystem, drive.DriveFormat),
             new(Localization.DetailTotal, Format.Gigabytes(total))
         ];
-
-        return _describe = [..rows.Where(row => row.Value is not null)];
     }
 
-    public SectionReading ReadSection()
+    public override SectionReading ReadSection()
     {
         if (SystemDrive() is not { } drive)
         {
-            return new SectionReading([..Metrics.Select(_ => (double?)null)], []);
+            return Blank();
         }
 
         var total = ((double)drive.TotalSize).BytesToGigabytes();
@@ -81,7 +72,7 @@ public sealed class StorageReader(HardwareMonitor monitor) : IHardwareReader, IS
         var used = total - free;
         var load = used / total * 100;
 
-        var disk = monitor.Read(HardwareType.Storage);
+        var disk = Monitor.Read(HardwareType.Storage);
         var temperature = disk?.Sensors.FirstOrDefault(sensor => sensor.SensorType == SensorType.Temperature)?.Value;
 
         DetailRow[] rows =
@@ -92,7 +83,7 @@ public sealed class StorageReader(HardwareMonitor monitor) : IHardwareReader, IS
             new(Localization.DetailTemperature, Format.Celsius(temperature))
         ];
 
-        return new SectionReading([load, temperature], [..rows.Where(row => row.Value is not null)]);
+        return new SectionReading([load, temperature], Rows(rows));
     }
 
     private static DriveInfo? SystemDrive()

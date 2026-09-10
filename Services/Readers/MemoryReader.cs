@@ -3,7 +3,7 @@ using SystemProgramm.Models;
 
 namespace SystemProgramm.Services.Readers;
 
-public sealed class MemoryReader(HardwareMonitor monitor) : IHardwareReader, ISectionReader
+public sealed class MemoryReader(HardwareMonitor monitor) : SectionReader(monitor)
 {
     private const string PhysicalMemory = "/ram";
 
@@ -13,17 +13,15 @@ public sealed class MemoryReader(HardwareMonitor monitor) : IHardwareReader, ISe
 
     private const string LoadSensor = "Memory";
 
-    private IReadOnlyList<DetailRow>? _describe;
+    public override SectionKind Section => SectionKind.Memory;
 
-    public SectionKind Section => SectionKind.Memory;
+    public override string Title => Localization.CardMemory;
 
-    public string Title => Localization.CardMemory;
+    public override IReadOnlyList<MetricInfo> Metrics { get; } = [new MetricInfo(MetricKind.Load, 100)];
 
-    public IReadOnlyList<MetricInfo> Metrics { get; } = [new MetricInfo(MetricKind.Load, 100)];
-    
-    private IHardware? Ram => monitor.Read(hardware => hardware.Identifier.ToString() == PhysicalMemory);
+    private IHardware? Ram => Monitor.Read(hardware => hardware.Identifier.ToString() == PhysicalMemory);
 
-    public HardwareReading Read()
+    public override HardwareReading Read()
     {
         if (Ram is not { } memory)
         {
@@ -46,14 +44,9 @@ public sealed class MemoryReader(HardwareMonitor monitor) : IHardwareReader, ISe
             load,
             load is null ? null : string.Format(Localization.UsedPercent, load));
     }
-    
-    public IReadOnlyList<DetailRow> Describe()
-    {
-        if (_describe is not null)
-        {
-            return _describe;
-        }
 
+    protected override IReadOnlyList<DetailRow> DescribeRows()
+    {
         var used = Ram?.Value(SensorType.Data, UsedData);
         var available = Ram?.Value(SensorType.Data, AvailableData);
 
@@ -63,38 +56,36 @@ public sealed class MemoryReader(HardwareMonitor monitor) : IHardwareReader, ISe
         }
 
         // Пустые слоты SMBIOS тоже перечисляет - с нулевым размером и без типа.
-        var modules = (monitor.Smbios?.MemoryDevices ?? [])
+        var modules = (Monitor.Smbios?.MemoryDevices ?? [])
             .Where(module => module.Size > 0)
             .ToArray();
 
         var speed = modules is [{ ConfiguredSpeed: > 0 } module, ..] ? (double?)module.ConfiguredSpeed : null;
-        
-        string? Modules(IReadOnlyList<MemoryDevice> modules)
+
+        string? Modules(IReadOnlyList<MemoryDevice> devices)
         {
-            if (modules.Count == 0)
+            if (devices.Count == 0)
             {
                 return null;
             }
 
-            return $"{modules.Count} × {Format.Gigabytes(((double)modules[0].Size).MegabytesToGigabytes())}";
+            return $"{devices.Count} × {Format.Gigabytes(((double)devices[0].Size).MegabytesToGigabytes())}";
         }
 
-        DetailRow[] rows =
+        return
         [
             new(Localization.DetailTotal, Format.Gigabytes(used.Value + available.Value)),
             new(Localization.DetailType, modules.Length == 0 ? null : modules[0].Type.ToString()),
             new(Localization.DetailModules, Modules(modules)),
             new(Localization.DetailClock, Format.Megahertz(speed))
         ];
-
-        return _describe = [..rows.Where(row => row.Value is not null)];
     }
-    
-    public SectionReading ReadSection()
+
+    public override SectionReading ReadSection()
     {
         if (Ram is not { } memory)
         {
-            return new SectionReading([..Metrics.Select(_ => (double?)null)], []);
+            return Blank();
         }
 
         var used = memory.Value(SensorType.Data, UsedData);
@@ -108,6 +99,6 @@ public sealed class MemoryReader(HardwareMonitor monitor) : IHardwareReader, ISe
             new(Localization.DetailFree, available is null ? null : Format.Gigabytes(available.Value))
         ];
 
-        return new SectionReading([load], [..rows.Where(row => row.Value is not null)]);
+        return new SectionReading([load], Rows(rows));
     }
 }
