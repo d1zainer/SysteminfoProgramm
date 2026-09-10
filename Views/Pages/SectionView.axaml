@@ -11,6 +11,21 @@
 
     <UserControl.Resources>
         <conv:EqualsConverter x:Key="Same" />
+        <conv:ListHalfConverter x:Key="Half" />
+
+        <DataTemplate x:Key="DetailRow" DataType="pages:DetailRowViewModel">
+            <Grid Margin="0 0 0 8" ColumnDefinitions="Auto,*">
+                <TextBlock Grid.Column="0"
+                           Margin="0 0 8 0"
+                           Opacity="0.65"
+                           VerticalAlignment="Top"
+                           Text="{Binding Name, StringFormat='{}{0}:'}" />
+
+                <TextBlock Grid.Column="1"
+                           TextWrapping="Wrap"
+                           Text="{Binding Value, TargetNullValue=—}" />
+            </Grid>
+        </DataTemplate>
     </UserControl.Resources>
 
     <Grid Margin="{StaticResource InsetMd}" RowDefinitions="2*,*" RowSpacing="{StaticResource GapMd}">
@@ -58,22 +73,16 @@
 
         <Border Grid.Row="1" Classes="card">
             <ScrollViewer>
-                <ItemsControl ItemsSource="{Binding Details}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="pages:DetailRowViewModel">
-                            <Grid Margin="0 0 0 8" ColumnDefinitions="220,*">
-                                <TextBlock Grid.Column="0"
-                                           Opacity="0.65"
-                                           VerticalAlignment="Top"
-                                           Text="{Binding Name, StringFormat='{}{0}:'}" />
+                <Grid ColumnDefinitions="*,*">
+                    <ItemsControl Grid.Column="0"
+                                  Margin="0 0 24 0"
+                                  ItemTemplate="{StaticResource DetailRow}"
+                                  ItemsSource="{Binding Details, Converter={StaticResource Half}, ConverterParameter=first}" />
 
-                                <TextBlock Grid.Column="1"
-                                           TextWrapping="Wrap"
-                                           Text="{Binding Value, TargetNullValue=—}" />
-                            </Grid>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                    <ItemsControl Grid.Column="1"
+                                  ItemTemplate="{StaticResource DetailRow}"
+                                  ItemsSource="{Binding Details, Converter={StaticResource Half}, ConverterParameter=second}" />
+                </Grid>
             </ScrollViewer>
         </Border>
     </Grid>
