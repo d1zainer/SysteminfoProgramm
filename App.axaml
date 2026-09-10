@@ -6,8 +6,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceInclude Source="avares://SystemProgramm/Styles/Icons.axaml" />
-                <ResourceInclude Source="avares://SystemProgramm/Styles/Spacing.axaml" />
+                <ResourceInclude Source="avares://SysVue/Styles/Icons.axaml" />
+                <ResourceInclude Source="avares://SysVue/Styles/Spacing.axaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <ResourceDictionary.ThemeDictionaries>
@@ -29,7 +29,7 @@
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
 
-            <FontFamily x:Key="AppFont">avares://SystemProgramm/Assets/Fonts#Onest</FontFamily>
+            <FontFamily x:Key="AppFont">avares://SysVue/Assets/Fonts#Onest</FontFamily>
         </ResourceDictionary>
     </Application.Resources>
 
@@ -42,7 +42,7 @@
             </FluentTheme.Palettes>
         </FluentTheme>
 
-        <StyleInclude Source="avares://SystemProgramm/Styles/Styles.axaml" />
+        <StyleInclude Source="avares://SysVue/Styles/Styles.axaml" />
     </Application.Styles>
 
 </Application>

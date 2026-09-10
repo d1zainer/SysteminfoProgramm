@@ -8,9 +8,9 @@ public sealed class AboutViewModel() : PageViewModel(new PageInfo(Localization.P
 {
     public string Version { get; } = string.Format(Localization.AboutVersion, VersionText());
     
-    public string OnestLicense { get; } = Read("avares://SystemProgramm/Assets/Fonts/OFL.txt");
+    public string OnestLicense { get; } = Read("avares://SysVue/Assets/Fonts/OFL.txt");
 
-    public string LucideLicense { get; } = Read("avares://SystemProgramm/Assets/Licenses/Lucide.txt");
+    public string LucideLicense { get; } = Read("avares://SysVue/Assets/Licenses/Lucide.txt");
 
     private static string VersionText()
     {

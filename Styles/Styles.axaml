@@ -1,12 +1,12 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <StyleInclude Source="avares://SystemProgramm/Styles/Text.axaml" />
-    <StyleInclude Source="avares://SystemProgramm/Styles/ListBox.axaml" />
-    <StyleInclude Source="avares://SystemProgramm/Styles/NavMenu.axaml" />
-    <StyleInclude Source="avares://SystemProgramm/Styles/Card.axaml" />
-    <StyleInclude Source="avares://SystemProgramm/Styles/ComboBox.axaml" />
-    <StyleInclude Source="avares://SystemProgramm/Styles/HyperlinkButton.axaml" />
-    <StyleInclude Source="avares://SystemProgramm/Styles/MetricChart.axaml" />
+    <StyleInclude Source="avares://SysVue/Styles/Text.axaml" />
+    <StyleInclude Source="avares://SysVue/Styles/ListBox.axaml" />
+    <StyleInclude Source="avares://SysVue/Styles/NavMenu.axaml" />
+    <StyleInclude Source="avares://SysVue/Styles/Card.axaml" />
+    <StyleInclude Source="avares://SysVue/Styles/ComboBox.axaml" />
+    <StyleInclude Source="avares://SysVue/Styles/HyperlinkButton.axaml" />
+    <StyleInclude Source="avares://SysVue/Styles/MetricChart.axaml" />
 
 </Styles>
