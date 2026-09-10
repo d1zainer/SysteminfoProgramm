@@ -91,16 +91,17 @@ public sealed partial class MetricViewModel : ObservableObject
 
             SecondaryValues = _secondaryPoints.ToArray();
         }
+        
+        if (_fixedMaximum is not null)
+        {
+            Maximum = _fixedMaximum.Value;
+        }
+        else
+        {
+            var peak = _points.Concat(_secondaryPoints).DefaultIfEmpty(0).Max();
+            var step = Math.Pow(10, Math.Floor(Math.Log10(Math.Max(peak, 1))));
 
-        Maximum = _fixedMaximum ?? Scale();
-    }
-
-    // Своя шкала нужна там, где потолка не существует: скорость сети, например.
-    private double Scale()
-    {
-        var peak = _points.Concat(_secondaryPoints).DefaultIfEmpty(0).Max();
-        var step = Math.Pow(10, Math.Floor(Math.Log10(Math.Max(peak, 1))));
-
-        return Math.Max(Math.Ceiling(peak * 1.2 / step) * step, 1);
+            Maximum = Math.Max(Math.Ceiling(peak * 1.2 / step) * step, 1);
+        }
     }
 }
