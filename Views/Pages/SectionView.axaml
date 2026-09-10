@@ -13,7 +13,7 @@
         <conv:EqualsConverter x:Key="Same" />
     </UserControl.Resources>
 
-    <Grid Margin="10" RowDefinitions="2*,*" RowSpacing="10">
+    <Grid Margin="{StaticResource InsetMd}" RowDefinitions="2*,*" RowSpacing="{StaticResource GapMd}">
 
         <Border Grid.Row="0"
                 Classes="card"
@@ -43,7 +43,7 @@
                 </Grid>
 
                 <controls:MetricChart Grid.Row="1"
-                                      Margin="0 14 0 0"
+                                      Margin="{StaticResource BlockGap}"
                                       Capacity="{Binding SelectedMetric.Capacity}"
                                       Minimum="{Binding SelectedMetric.Minimum}"
                                       Maximum="{Binding SelectedMetric.Maximum}"

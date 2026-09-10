@@ -12,19 +12,19 @@
     
     <Border Background="{DynamicResource AppNavBrush}">
         <ListBox Classes="menu"
-                 Padding="0 30 0 0 "
+                 Padding="0 24 0 0"
                  ItemsSource="{Binding Pages}"
                  SelectedItem="{Binding CurrentPage}">
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="pages:PageViewModel">
-                    <StackPanel Orientation="Horizontal" Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource GapMd}">
                         <ContentControl Width="16"
                                         Height="16"
                                         VerticalAlignment="Center"
                                         Template="{Binding Info.Section, Converter={StaticResource PageIcon}}"
                                         Foreground="{Binding $parent[ListBoxItem].Foreground}" />
 
-                        <TextBlock Margin="0 0 10 0"
+                        <TextBlock Margin="0 0 12 0"
                                    VerticalAlignment="Center"
                                    Text="{Binding Info.Title}" />
                     </StackPanel>

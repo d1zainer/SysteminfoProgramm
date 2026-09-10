@@ -28,7 +28,7 @@
                 </DataTemplate>
 
                 <DataTemplate DataType="pages:PageViewModel">
-                    <TextBlock Margin="24"
+                    <TextBlock Margin="{StaticResource InsetXl}"
                                Text="{x:Static loc:Localization.PageNotImplemented}" />
                 </DataTemplate>
 

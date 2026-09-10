@@ -6,26 +6,26 @@
              x:DataType="pages:AboutViewModel">
 
     <ScrollViewer>
-        <StackPanel Margin="24" MaxWidth="640" HorizontalAlignment="Left" Spacing="20">
+        <StackPanel Margin="{StaticResource InsetXl}" MaxWidth="640" HorizontalAlignment="Left" Spacing="{StaticResource GapXl}">
 
-            <StackPanel Spacing="4">
+            <StackPanel Spacing="{StaticResource GapXs}">
                 <TextBlock Classes="title" Text="{x:Static loc:Localization.AppTitle}" />
                 <TextBlock Classes="small" Opacity="0.65" Text="{Binding Version}" />
             </StackPanel>
 
             <TextBlock Classes="title" Text="{x:Static loc:Localization.AboutLicenses}" />
 
-            <StackPanel Spacing="6">
+            <StackPanel Spacing="{StaticResource GapSm}">
                 <TextBlock Classes="medium" Text="Onest — SIL Open Font License 1.1" />
                 <TextBlock TextWrapping="Wrap" Text="{Binding OnestLicense}" />
             </StackPanel>
 
-            <StackPanel Spacing="6">
+            <StackPanel Spacing="{StaticResource GapSm}">
                 <TextBlock Classes="medium" Text="Lucide — ISC / MIT" />
                 <TextBlock TextWrapping="Wrap" Text="{Binding LucideLicense}" />
             </StackPanel>
 
-            <StackPanel Spacing="6">
+            <StackPanel Spacing="{StaticResource GapSm}">
                 <TextBlock Classes="medium" Text="LibreHardwareMonitorLib — Mozilla Public License 2.0" />
                 <TextBlock TextWrapping="Wrap" Text="{x:Static loc:Localization.AboutLhmNotice}" />
                 <HyperlinkButton Padding="0"
