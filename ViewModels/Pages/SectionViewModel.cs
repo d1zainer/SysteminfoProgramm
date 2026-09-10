@@ -15,6 +15,9 @@ public sealed partial class SectionViewModel : PageViewModel, IDisposable
 
     [ObservableProperty]
     private MetricViewModel? _selectedMetric;
+    
+    [ObservableProperty]
+    private IReadOnlyList<DetailRowViewModel> _details = [];
 
     public SectionViewModel(PageInfo info, HardwareSampler sampler, ISectionReader reader) : base(info)
     {
@@ -32,8 +35,6 @@ public sealed partial class SectionViewModel : PageViewModel, IDisposable
     // В переключатель попадают только те графики, по которым данные реально пришли:
     // без доступа к MSR у процессора нет температуры, и вкладки для неё не будет.
     public ObservableCollection<MetricViewModel> Charts { get; } = [];
-
-    public ObservableCollection<DetailRowViewModel> Details { get; } = [];
 
     // Переключатель из одной кнопки только сбивает с толку: выбирать нечего.
     public bool HasSwitch => Charts.Count > 1;
@@ -72,12 +73,7 @@ public sealed partial class SectionViewModel : PageViewModel, IDisposable
 
         if (Details.Count != rows.Length || Details.Where((row, i) => row.Name != rows[i].Name).Any())
         {
-            Details.Clear();
-
-            foreach (var row in rows)
-            {
-                Details.Add(new DetailRowViewModel(row.Name) { Value = row.Value });
-            }
+            Details = [..rows.Select(row => new DetailRowViewModel(row.Name) { Value = row.Value })];
 
             return;
         }

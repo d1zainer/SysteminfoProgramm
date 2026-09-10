@@ -7,7 +7,27 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceInclude Source="avares://SystemProgramm/Styles/Icons.axaml" />
+                <ResourceInclude Source="avares://SystemProgramm/Styles/Spacing.axaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <ResourceDictionary.ThemeDictionaries>
+                <!-- Светлая тема: подложка контента - чистый белый,
+                     меню чуть темнее, карточки - самый заметный серый, без обводки. -->
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="AppRegionBrush" Color="White" />
+                    <SolidColorBrush x:Key="AppNavBrush" Color="#FCFCFD" Opacity="0.95" />
+                    <SolidColorBrush x:Key="AppCardBrush" Color="#F4F5F7" />
+                    <SolidColorBrush x:Key="AppTrackBrush" Color="White" />
+                </ResourceDictionary>
+
+                <!-- Тёмная тема: как было - полупрозрачные слои поверх Mica. -->
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="AppRegionBrush" Color="#1D1D1D" />
+                    <SolidColorBrush x:Key="AppNavBrush" Color="#151515" Opacity="0.85" />
+                    <SolidColorBrush x:Key="AppCardBrush" Color="White" Opacity="0.04" />
+                    <SolidColorBrush x:Key="AppTrackBrush" Color="#1D1D1D" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
 
             <FontFamily x:Key="AppFont">avares://SystemProgramm/Assets/Fonts#Onest</FontFamily>
         </ResourceDictionary>
@@ -17,8 +37,8 @@
 
         <FluentTheme>
             <FluentTheme.Palettes>
-                <ColorPaletteResources x:Key="Light" Accent="#ff107c10" AltHigh="White" AltLow="White" AltMedium="White" AltMediumHigh="White" AltMediumLow="White" BaseHigh="Black" BaseLow="#ffcccccc" BaseMedium="#ff898989" BaseMediumHigh="#ff5d5d5d" BaseMediumLow="#ff737373" ChromeAltLow="#ff5d5d5d" ChromeBlackHigh="Black" ChromeBlackLow="#ffcccccc" ChromeBlackMedium="#ff5d5d5d" ChromeBlackMediumLow="#ff898989" ChromeDisabledHigh="#ffcccccc" ChromeDisabledLow="#ff898989" ChromeGray="#ff737373" ChromeHigh="#ffcccccc" ChromeLow="#ffececec" ChromeMedium="#ffe6e6e6" ChromeMediumLow="#ffececec" ChromeWhite="White" ListLow="#ffe6e6e6" ListMedium="#ffcccccc" RegionColor="White" />
-                <ColorPaletteResources x:Key="Dark" Accent="#ff107c10" AltHigh="Black" AltLow="Black" AltMedium="Black" AltMediumHigh="Black" AltMediumLow="Black" BaseHigh="White" BaseLow="#ff333333" BaseMedium="#ff9a9a9a" BaseMediumHigh="#ffb4b4b4" BaseMediumLow="#ff676767" ChromeAltLow="#ffb4b4b4" ChromeBlackHigh="Black" ChromeBlackLow="#ffb4b4b4" ChromeBlackMedium="Black" ChromeBlackMediumLow="Black" ChromeDisabledHigh="#ff333333" ChromeDisabledLow="#ff9a9a9a" ChromeGray="Gray" ChromeHigh="Gray" ChromeLow="#ff151515" ChromeMedium="#ff1d1d1d" ChromeMediumLow="#ff2c2c2c" ChromeWhite="White" ListLow="#ff1d1d1d" ListMedium="#ff333333" RegionColor="Black" />
+                <ColorPaletteResources x:Key="Light" Accent="#ff2563eb" AltHigh="White" AltLow="White" AltMedium="White" AltMediumHigh="White" AltMediumLow="White" BaseHigh="Black" BaseLow="#ffcccccc" BaseMedium="#ff898989" BaseMediumHigh="#ff5d5d5d" BaseMediumLow="#ff737373" ChromeAltLow="#ff5d5d5d" ChromeBlackHigh="Black" ChromeBlackLow="#ffcccccc" ChromeBlackMedium="#ff5d5d5d" ChromeBlackMediumLow="#ff898989" ChromeDisabledHigh="#ffcccccc" ChromeDisabledLow="#ff898989" ChromeGray="#ff737373" ChromeHigh="#ffcccccc" ChromeLow="#ffececec" ChromeMedium="#ffe6e6e6" ChromeMediumLow="#ffececec" ChromeWhite="White" ListLow="#ffe6e6e6" ListMedium="#ffcccccc" RegionColor="White" />
+                <ColorPaletteResources x:Key="Dark" Accent="#ff2563eb" AltHigh="Black" AltLow="Black" AltMedium="Black" AltMediumHigh="Black" AltMediumLow="Black" BaseHigh="White" BaseLow="#ff333333" BaseMedium="#ff9a9a9a" BaseMediumHigh="#ffb4b4b4" BaseMediumLow="#ff676767" ChromeAltLow="#ffb4b4b4" ChromeBlackHigh="Black" ChromeBlackLow="#ffb4b4b4" ChromeBlackMedium="Black" ChromeBlackMediumLow="Black" ChromeDisabledHigh="#ff333333" ChromeDisabledLow="#ff9a9a9a" ChromeGray="Gray" ChromeHigh="Gray" ChromeLow="#ff151515" ChromeMedium="#ff1d1d1d" ChromeMediumLow="#ff2c2c2c" ChromeWhite="White" ListLow="#ff1d1d1d" ListMedium="#ff333333" RegionColor="Black" />
             </FluentTheme.Palettes>
         </FluentTheme>
 

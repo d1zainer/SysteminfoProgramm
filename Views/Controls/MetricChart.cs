@@ -53,6 +53,9 @@ public sealed class MetricChart : Control
 
     public static readonly StyledProperty<double> LabelFontSizeProperty =
         AvaloniaProperty.Register<MetricChart, double>(nameof(LabelFontSize), 11);
+    
+    public static readonly StyledProperty<double> LabelGutterProperty =
+        AvaloniaProperty.Register<MetricChart, double>(nameof(LabelGutter), 68);
 
     public static readonly StyledProperty<double> StrokeThicknessProperty =
         AvaloniaProperty.Register<MetricChart, double>(nameof(StrokeThickness), 1.5);
@@ -68,7 +71,8 @@ public sealed class MetricChart : Control
             ValuesProperty, SecondaryValuesProperty, MinimumProperty, MaximumProperty, CapacityProperty,
             UnitProperty, WindowLabelProperty, NowLabelProperty,
             StrokeProperty, SecondaryStrokeProperty, FillProperty, GridStrokeProperty, LabelBrushProperty,
-            LabelFontFamilyProperty, LabelFontSizeProperty, StrokeThicknessProperty, DivisionsProperty, ColumnsProperty);
+            LabelFontFamilyProperty, LabelFontSizeProperty, LabelGutterProperty,
+            StrokeThicknessProperty, DivisionsProperty, ColumnsProperty);
 
     public IReadOnlyList<double>? Values
     {
@@ -180,6 +184,12 @@ public sealed class MetricChart : Control
         set => SetValue(ColumnsProperty, value);
     }
 
+    public double LabelGutter
+    {
+        get => GetValue(LabelGutterProperty);
+        set => SetValue(LabelGutterProperty, value);
+    }
+
     public override void Render(DrawingContext context)
     {
         if (Bounds.Width <= 0 || Bounds.Height <= 0)
@@ -189,9 +199,10 @@ public sealed class MetricChart : Control
 
         var labels = ScaleLabels();
 
-        // Подписи шкалы стоят справа от области графика: справа резервируется их ширина,
-        // а сверху - половина строки, иначе верхняя подпись срезается краем контрола.
-        var right = labels.Count == 0 ? 0 : labels.Max(label => label.Width) + LabelGap;
+        // Подписи шкалы стоят справа от области графика: справа резервируется фиксированная
+        // ширина (иначе график скачет от смены числа знаков), а сверху - половина строки,
+        // иначе верхняя подпись срезается краем контрола.
+        var right = labels.Count == 0 ? 0 : LabelGutter;
         var inset = labels.Count == 0 ? 0 : labels[0].Height / 2;
         var bottom = HasTimeAxis() ? LabelFontSize + 8 : inset;
 

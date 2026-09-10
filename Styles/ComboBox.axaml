@@ -1,0 +1,26 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style Selector="ComboBox.chart">
+        <Setter Property="Background" Value="{DynamicResource AppCardBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush">
+            <SolidColorBrush Color="{DynamicResource SystemAccentColor}" />
+        </Setter>
+    </Style>
+
+    <Style Selector="ComboBox.chart:pointerover /template/ Border#Background">
+        <Setter Property="Background" Value="{DynamicResource AppCardBrush}" />
+        <Setter Property="BorderBrush">
+            <SolidColorBrush Color="{DynamicResource SystemAccentColor}" />
+        </Setter>
+    </Style>
+
+    <Style Selector="ComboBox.chart:pressed /template/ Border#Background">
+        <Setter Property="Background" Value="{DynamicResource AppCardBrush}" />
+        <Setter Property="BorderBrush">
+            <SolidColorBrush Color="{DynamicResource SystemAccentColor}" />
+        </Setter>
+    </Style>
+
+</Styles>

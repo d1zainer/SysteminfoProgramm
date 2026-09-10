@@ -7,7 +7,7 @@
              x:DataType="pages:OverviewViewModel">
 
     <ScrollViewer>
-        <ItemsControl Margin="10" ItemsSource="{Binding Cards}">
+        <ItemsControl Margin="{StaticResource InsetLg}" ItemsSource="{Binding Cards}">
 
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -17,7 +17,7 @@
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="cards:OverviewCardViewModel">
-                    <views:OverviewCardView Margin="0 0 20 20" />
+                    <views:OverviewCardView Margin="{StaticResource InsetXs}" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
 

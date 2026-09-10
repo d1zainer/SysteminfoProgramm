@@ -105,7 +105,7 @@
     <value>Занято {0:0} %</value>
   </data>
   <data name="CardDetails" xml:space="preserve">
-    <value>Подробности…</value>
+    <value>Подробнее…</value>
   </data>
   <data name="DeviceCount" xml:space="preserve">
     <value>Устройств: {0}</value>

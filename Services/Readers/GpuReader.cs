@@ -3,7 +3,7 @@ using SystemProgramm.Models;
 
 namespace SystemProgramm.Services.Readers;
 
-public sealed class GpuReader(HardwareMonitor monitor) : IHardwareReader, ISectionReader
+public sealed class GpuReader(HardwareMonitor monitor) : SectionReader(monitor)
 {
     private const string CoreLoad = "GPU Core";
 
@@ -21,13 +21,11 @@ public sealed class GpuReader(HardwareMonitor monitor) : IHardwareReader, ISecti
 
     private const string BoardPower = "GPU Power";
 
-    private IReadOnlyList<DetailRow>? _describe;
+    public override SectionKind Section => SectionKind.Gpu;
 
-    public SectionKind Section => SectionKind.Gpu;
+    public override string Title => Localization.CardGpu;
 
-    public string Title => Localization.CardGpu;
-
-    public IReadOnlyList<MetricInfo> Metrics { get; } =
+    public override IReadOnlyList<MetricInfo> Metrics { get; } =
     [
         new MetricInfo(MetricKind.Load, 100),
         new MetricInfo(MetricKind.Temperature, 100)
@@ -35,10 +33,10 @@ public sealed class GpuReader(HardwareMonitor monitor) : IHardwareReader, ISecti
 
     // Дискретная карта важнее встроенной, поэтому сначала ищем её.
     private IHardware? Gpu =>
-        monitor.Read(hardware => hardware.HardwareType is HardwareType.GpuNvidia or HardwareType.GpuAmd)
-        ?? monitor.Read(HardwareType.GpuIntel);
+        Monitor.Read(hardware => hardware.HardwareType is HardwareType.GpuNvidia or HardwareType.GpuAmd)
+        ?? Monitor.Read(HardwareType.GpuIntel);
 
-    public HardwareReading Read()
+    public override HardwareReading Read()
     {
         if (Gpu is not { } gpu)
         {
@@ -57,14 +55,9 @@ public sealed class GpuReader(HardwareMonitor monitor) : IHardwareReader, ISecti
             load,
             load is null ? null : string.Format(Localization.LoadPercent, load));
     }
-    
-    public IReadOnlyList<DetailRow> Describe()
-    {
-        if (_describe is not null)
-        {
-            return _describe;
-        }
 
+    protected override IReadOnlyList<DetailRow> DescribeRows()
+    {
         if (Gpu is not { } gpu)
         {
             return [];
@@ -78,20 +71,18 @@ public sealed class GpuReader(HardwareMonitor monitor) : IHardwareReader, ISecti
             _ => null
         };
 
-        DetailRow[] rows =
+        return
         [
             new(Localization.DetailModel, gpu.Name),
             new(Localization.DetailVendor, vendor)
         ];
-
-        return _describe = [..rows.Where(row => row.Value is not null)];
     }
 
-    public SectionReading ReadSection()
+    public override SectionReading ReadSection()
     {
         if (Gpu is not { } gpu)
         {
-            return new SectionReading([..Metrics.Select(_ => (double?)null)], []);
+            return Blank();
         }
 
         var load = gpu.Value(SensorType.Load, CoreLoad);
@@ -111,8 +102,7 @@ public sealed class GpuReader(HardwareMonitor monitor) : IHardwareReader, ISecti
             new(Localization.DetailPower, Format.Watt(power))
         ];
 
-        // Строки без значения не показываем: пустой прочерк ничего не объясняет.
-        return new SectionReading([load, temperature], [..rows.Where(row => row.Value is not null)]);
+        return new SectionReading([load, temperature], Rows(rows));
     }
 
     // Занятая и общая видеопамять нужны и карточке обзора, и таблице подробностей.

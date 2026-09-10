@@ -1,0 +1,21 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <x:Double x:Key="GapXs">4</x:Double>
+    <x:Double x:Key="GapSm">8</x:Double>
+    <x:Double x:Key="GapMd">12</x:Double>
+    <x:Double x:Key="GapLg">16</x:Double>
+    <x:Double x:Key="GapXl">24</x:Double>
+
+    <Thickness x:Key="InsetXs">4</Thickness>
+    <Thickness x:Key="InsetSm">8</Thickness>
+    <Thickness x:Key="InsetMd">12</Thickness>
+    <Thickness x:Key="InsetLg">16</Thickness>
+    <Thickness x:Key="InsetXl">24</Thickness>
+
+    <Thickness x:Key="BlockGap">0 16 0 0</Thickness>
+
+    <Thickness x:Key="CardPadding">12</Thickness>
+    <CornerRadius x:Key="CardRadius">10</CornerRadius>
+
+</ResourceDictionary>
