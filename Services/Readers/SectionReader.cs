@@ -1,3 +1,4 @@
+using System.Globalization;
 using SystemProgramm.Models;
 
 namespace SystemProgramm.Services.Readers;
@@ -7,6 +8,8 @@ namespace SystemProgramm.Services.Readers;
 public abstract class SectionReader(HardwareMonitor monitor) : IHardwareReader, ISectionReader
 {
     private IReadOnlyList<DetailRow>? _describe;
+
+    private CultureInfo? _culture;
 
     protected HardwareMonitor Monitor { get; } = monitor;
 
@@ -24,7 +27,9 @@ public abstract class SectionReader(HardwareMonitor monitor) : IHardwareReader, 
     // и мы пробуем снова на следующий тик, а не запоминаем пустой результат навсегда.
     public IReadOnlyList<DetailRow> Describe()
     {
-        if (_describe is not null)
+        var culture = CultureInfo.CurrentUICulture;
+
+        if (_describe is not null && Equals(_culture, culture))
         {
             return _describe;
         }
@@ -35,6 +40,8 @@ public abstract class SectionReader(HardwareMonitor monitor) : IHardwareReader, 
         {
             return rows;
         }
+
+        _culture = culture;
 
         return _describe = rows;
     }

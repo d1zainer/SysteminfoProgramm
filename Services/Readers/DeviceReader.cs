@@ -7,7 +7,7 @@ public sealed class DeviceReader : IHardwareReader
 {
     private static readonly TimeSpan Lifetime = TimeSpan.FromSeconds(5);
 
-    private HardwareReading? _cached;
+    private string[]? _names;
 
     private DateTime _taken;
 
@@ -15,23 +15,19 @@ public sealed class DeviceReader : IHardwareReader
 
     public string Title => Localization.CardDevices;
 
-    // Перебор HID стоит около 90 мс, а устройства меняются редко:
-    // держим прошлый ответ и обновляем его не каждый тик.
+    // Перебор HID стоит около 90 мс, а устройства меняются редко: держим прошлый список
+    // и обновляем его не каждый тик.
     public HardwareReading Read()
     {
-        if (_cached is not null && DateTime.UtcNow - _taken < Lifetime)
+        if (_names is null || DateTime.UtcNow - _taken >= Lifetime)
         {
-            return _cached;
+            _names = [..Removable(), ..Hid()];
+            _taken = DateTime.UtcNow;
         }
 
-        string[] names = [..Removable(), ..Hid()];
-
-        _taken = DateTime.UtcNow;
-        _cached = new HardwareReading(
-            string.Format(Localization.DeviceCount, names.Length),
-            names.Length == 0 ? null : string.Join(", ", names));
-
-        return _cached;
+        return new HardwareReading(
+            string.Format(Localization.DeviceCount, _names.Length),
+            _names.Length == 0 ? null : string.Join(", ", _names));
     }
 
     private static IEnumerable<string> Removable()
